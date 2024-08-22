@@ -9,18 +9,18 @@ const Footer = () => {
   return (
     <div>
       <Grid
-        className="bg-black text-white text-centre mt-10"
+        className="text-white text-centre mt-10" style={{ backgroundColor: '#101010' }}
         container
         sx={{ bgcolor: "black", color: "white", py: 3 }}
       >
-        <Grid item xs={true} sm={true} md={true}>
+        <Grid item xs={12} sm={6} md={4}>
           <Typography className="pb-5" variant="h6">
             <strong>Contact Information</strong>
           </Typography>
-          <h3>CARTREND Autoparts Pvt Ltd</h3>
+          <h3>Caraid Automotive Pvt Ltd</h3>
           <h3>Delhi</h3>
           <p className="mt-10">
-            <EmailIcon></EmailIcon> support@cartrends.co.in
+            <EmailIcon></EmailIcon> xyz@gmail.com
           </p>
 
           <p className="mt-2">
@@ -45,7 +45,7 @@ const Footer = () => {
           </div>
         </Grid>
 
-        <Grid item xs={true} sm={true} md={true}>
+        <Grid item xs={12} sm={6} md={4}>
           <Typography className="pb-5" variant="h6">
             <strong>About</strong>
           </Typography>
@@ -86,7 +86,7 @@ const Footer = () => {
           </div>
         </Grid>
 
-        <Grid item xs={true} sm={true} md={true}>
+        <Grid item xs={12} sm={6} md={4}>
           <Typography className="pb-5" variant="h6">
             <strong>Brands</strong>
           </Typography>
@@ -139,7 +139,7 @@ const Footer = () => {
 
         <Grid className="pt-20" item xs={12}>
           <Typography variant="body2" component="p" align="center">
-            &copy; 2024 My Company. All rights reserved.
+            &copy; 2024 Caraid. All rights reserved.
           </Typography>
           <Typography variant="body2" component="p" align="center">
             Made with love by{" "}

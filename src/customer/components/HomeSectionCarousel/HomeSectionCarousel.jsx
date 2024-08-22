@@ -25,8 +25,8 @@ const HomeSectionCarousel = ({data,sectionName}) => {
     <HomeSectionCard product = {item}/>
   ));
   return (
-    <div className="border">
-      <h2 className="text-2xl font-extrabold text-gray-800 py-5 text-left mx-5">{sectionName}</h2>
+    <div className="border bg-white">
+      <h2 className="text-2xl font-bold text-gray-800 py-5 text-left mx-5">{sectionName}</h2>
       <div className="relative p-5">
         <AliceCarousel
           key={activeIndex}

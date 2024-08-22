@@ -15,6 +15,9 @@ const HomeSectionCard = ({product}) => {
         <h3 className="text-lg font-medium text-gray-900">
           {product.title}
         </h3>
+        <h3 className="text-lg font-bold text-black mt-2 ">
+          Rs {product.price}
+        </h3>
       </div>
     </div>
   );
