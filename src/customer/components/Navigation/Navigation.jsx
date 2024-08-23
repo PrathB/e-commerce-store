@@ -38,24 +38,21 @@ const navigation = {
           name: "New Arrivals",
           href: "#",
           imageSrc:
-          "https://cartrends.in/cdn/shop/files/2_06a68d48-eef5-47fa-9abc-52d1afa12b0b_1920x.png?v=1723270930",
-          imageAlt:
-            "Different car parts on display.",
+            "https://cartrends.in/cdn/shop/files/2_06a68d48-eef5-47fa-9abc-52d1afa12b0b_1920x.png?v=1723270930",
+          imageAlt: "Different car parts on display.",
         },
         {
           name: "Service Kits",
           href: "#",
           imageSrc:
-          "https://cartrends.in/cdn/shop/files/Oil-Filter-2-banner_720x.jpg?v=1723029431",
-          imageAlt:
-            "Service kit.",
+            "https://cartrends.in/cdn/shop/files/Oil-Filter-2-banner_720x.jpg?v=1723029431",
+          imageAlt: "Service kit.",
         },
-        
       ],
       sections: [
         {
-          id: 'brands',
-          name: 'Brands',
+          id: "brands",
+          name: "Brands",
           items: [
             { name: "Audi", href: "#" },
             { name: "Honda", href: "#" },
@@ -69,8 +66,8 @@ const navigation = {
           ],
         },
         {
-          id: 'categories',
-          name: 'Categories',
+          id: "categories",
+          name: "Categories",
           items: [
             { name: "Service Kits", href: "#" },
             { name: "Oils and Lubricants", href: "#" },
@@ -253,24 +250,23 @@ export default function Navigation() {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                  <Avatar
-                        className="text-white"
-                        onClick={handleUserClick}
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        // onClick={handleUserClick}
-                        sx={{
-                          bgcolor: "#7f0000",
-                          color: "white",
-                          cursor: "pointer",
-                        }}
-                      >
-                        P
-                      </Avatar>
+                    <Avatar
+                      className="text-white"
+                      onClick={handleUserClick}
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      // onClick={handleUserClick}
+                      sx={{
+                        bgcolor: "#7f0000",
+                        color: "white",
+                        cursor: "pointer",
+                      }}
+                    >
+                      P
+                    </Avatar>
                   </div>
                 </div>
-
               </DialogPanel>
             </TransitionChild>
           </div>
@@ -278,17 +274,23 @@ export default function Navigation() {
       </Transition>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center px-4 text-sm font-medium text-white sm:px-6 lg:px-8" style={{ backgroundColor: '#7f0000' }}>
+        <p
+          className="flex h-10 items-center justify-center px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
+          style={{ backgroundColor: "#7f0000" }}
+        >
           Get free delivery on orders over Rs 1000
         </p>
 
         <nav aria-label="Top" className="mx-auto">
-          <div className="border-b border-gray-200">
-            <div className="flex h-16 items-center px-11" style={{ backgroundColor: '#2c2c2c' }}>
+          <div className="border-y border-gray-500">
+            <div
+              className="flex h-16 items-center px-11"
+              style={{ backgroundColor: "#2c2c2c" }}
+            >
               <button
                 type="button"
-                className="rounded-md p-2 text-gray-400 lg:hidden" 
-                style={{ backgroundColor: '#2c2c2c' }}
+                className="rounded-md p-2 text-gray-400 lg:hidden"
+                style={{ backgroundColor: "#2c2c2c" }}
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Open menu</span>
@@ -299,9 +301,9 @@ export default function Navigation() {
               <div className="ml-4 flex lg:ml-0">
                 <span className="sr-only">Caraid</span>
                 <img
-                  src="https://cartrends.in/cdn/shop/files/logo_dd957e5d-cd0e-426d-9c65-be8dfa938371_250x.png?v=1631198256"
-                  alt="Caraid"
-                  className="h-8 w-auto mr-2"
+                  src="logo-no-background.png"
+                  alt="Caraid logo"
+                  className="h-12 w-auto mr-2"
                 />
               </div>
 
@@ -341,7 +343,7 @@ export default function Navigation() {
                                 aria-hidden="true"
                               />
 
-                              <div className="relative bg-white"> 
+                              <div className="relative bg-white">
                                 <div className="mx-auto max-w-7xl px-8">
                                   <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">

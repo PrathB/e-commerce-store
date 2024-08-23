@@ -9,7 +9,8 @@ const Footer = () => {
   return (
     <div>
       <Grid
-        className="text-white text-centre mt-10" style={{ backgroundColor: '#101010' }}
+        className="text-white text-centre mt-10"
+        style={{ backgroundColor: "#101010" }}
         container
         sx={{ bgcolor: "black", color: "white", py: 3 }}
       >
@@ -33,14 +34,20 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <InstagramIcon className="mx-2" fontSize="large"></InstagramIcon>
+              <InstagramIcon
+                className="mx-2 hover:text-gray-500"
+                fontSize="large"
+              ></InstagramIcon>
             </a>
             <a
               href="https://www.instagram.com/prath__b"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FacebookIcon className="mx-2" fontSize="large"></FacebookIcon>
+              <FacebookIcon
+                className="mx-2 hover:text-gray-500"
+                fontSize="large"
+              ></FacebookIcon>
             </a>
           </div>
         </Grid>
@@ -50,37 +57,37 @@ const Footer = () => {
             <strong>About</strong>
           </Typography>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               About Us
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Shipping
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Returns
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Contact Us
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Reviews
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Privacy Policy
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Terms & Conditions
             </Button>
           </div>
@@ -91,47 +98,47 @@ const Footer = () => {
             <strong>Brands</strong>
           </Typography>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Audi
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Honda
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Hyundai
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Kia
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Mahindra
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Maruti Suzuki
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Tata
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Toyota
             </Button>
           </div>
           <div>
-            <Button className="pb-5" variant="h6">
+            <Button className="pb-5 hover:text-gray-500" variant="h6">
               Volkswagen
             </Button>
           </div>
@@ -148,7 +155,9 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <strong className="text-blue-400">PrathB</strong>
+              <strong className="text-blue-400 hover:text-blue-600">
+                PrathB
+              </strong>
             </a>
           </Typography>
         </Grid>
