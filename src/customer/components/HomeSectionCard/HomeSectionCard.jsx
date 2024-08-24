@@ -8,14 +8,14 @@ const HomeSectionCard = ({ product }) => {
         <img
           className="object-cover w-full h-full"
           src={product.imageUrl}
-          alt=""
+          alt="Product Image"
         />
       </div>
 
       <div className="p-4">
         <h3 className="font-medium text-gray-800">{product.title}</h3>
         <h3 className="text-lg font-medium text-black mt-2 ">
-          Rs {product.price}
+          ₹{product.price}
         </h3>
       </div>
     </div>

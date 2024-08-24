@@ -21,11 +21,11 @@ const Footer = () => {
           <h3>Caraid Automotive Pvt Ltd</h3>
           <h3>Delhi</h3>
           <p className="mt-10">
-            <EmailIcon></EmailIcon> xyz@gmail.com
+            <EmailIcon></EmailIcon>Piyushbisht4954@gmail.com
           </p>
 
           <p className="mt-2">
-            <PhoneIcon></PhoneIcon> +91 9999999999
+            <PhoneIcon></PhoneIcon> +91 88102 77242
           </p>
 
           <div className="flex flex-row justify-center mt-5">
@@ -40,7 +40,7 @@ const Footer = () => {
               ></InstagramIcon>
             </a>
             <a
-              href="https://www.instagram.com/prath__b"
+              href="https://www.facebook.com/p/Car-aid-automotive-100063959868176/"
               target="_blank"
               rel="noopener noreferrer"
             >

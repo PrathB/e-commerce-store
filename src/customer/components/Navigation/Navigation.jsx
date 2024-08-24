@@ -278,7 +278,7 @@ export default function Navigation() {
           className="flex h-10 items-center justify-center px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
           style={{ backgroundColor: "#7f0000" }}
         >
-          Get free delivery on orders over Rs 1000
+          Get free delivery on orders over ₹1000
         </p>
 
         <nav aria-label="Top" className="mx-auto">
@@ -407,7 +407,7 @@ export default function Navigation() {
                                                       close
                                                     )
                                                   }
-                                                  className="cursor-pointer font-semibold hover:text-gray-800"
+                                                  className="cursor-pointer hover:font-semibold text-gray-900"
                                                 >
                                                   {item.name}
                                                 </p>
