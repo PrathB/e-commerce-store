@@ -121,9 +121,12 @@ export default function Product() {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
               {/* Product Browse*/}
-              <div className="border-b border-gray-200 pb-4">
+              <div className="hidden lg:block pb-4">
                 {productNavigation.sections.map((section) => (
-                  <div key={section.id} className="mb-8">
+                  <div
+                    key={section.id}
+                    className="mb-6 pb-4 border-b border-gray-200"
+                  >
                     <h3 className="text-lg font-medium text-gray-900">
                       {section.name}
                     </h3>
