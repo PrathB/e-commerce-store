@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
-import { Radio, RadioGroup } from "@headlessui/react";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -44,34 +42,45 @@ const product = {
     { name: "3XL", inStock: true },
   ],
   description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
+    "Clutch Set OE Part No. 8V2Z7B546V is a genuine Ford spare part for Ford Figo and Fiesta, Ecosport, Figo Aspire (Diesel). This Product comes in Genuine Ford Packing and sold by Ford India Private Limited. This item is sold as set of 2 Pieces containing Clutch Plate and Pressure Plate in a box",
   highlights: [
-    "Hand cut and sewn locally",
-    "Dyed with our proprietary colors",
-    "Pre-washed & pre-shrunk",
-    "Ultra-soft 100% cotton",
+    "Ford Ecosport, Figo, Fiesta, Figo Aspire Clutch Set",
+    "Brand Name: Ford Genuine Part",
+    "Part Number: 8V2Z7B546V",
   ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
-const reviews = { href: "#", average: 4, totalCount: 117 };
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Example() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+  const [quantity, setQuantity] = useState(1);
+
+  // Function to handle incrementing quantity
+  const incrementQuantity = () => {
+    setQuantity((prevQuantity) => (prevQuantity === "" ? 1 : prevQuantity + 1));
+  };
+
+  // Function to handle decrementing quantity
+  const decrementQuantity = () => {
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  };
+
+  // Function to handle manual input changes
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+
+    if (value === "" || (!isNaN(value) && parseInt(value, 10) > 0)) {
+      setQuantity(value === "" ? "" : parseInt(value, 10));
+    }
+  };
 
   return (
     <div className="bg-white">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
-          <ol
-            role="list"
-            className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-          >
+          <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
@@ -106,222 +115,131 @@ export default function Example() {
           </ol>
         </nav>
 
-        {/* Image gallery */}
-        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
-          <div className="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-            <img
-              alt={product.images[0].alt}
-              src={product.images[0].src}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-          <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
-            <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10">
+          {/* Image gallery */}
+          <div className="flex flex-col items-center">
+            <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                alt={product.images[1].alt}
-                src={product.images[1].src}
+                alt={product.images[0].alt}
+                src={product.images[0].src}
                 className="h-full w-full object-cover object-center"
               />
             </div>
-            <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
-              <img
-                alt={product.images[2].alt}
-                src={product.images[2].src}
-                className="h-full w-full object-cover object-center"
-              />
+            <div className="flex flex-wrap space-x-5 justify-center">
+              {product.images.map((item) => (
+                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
+                  <img
+                    alt={item.alt}
+                    src={item.src}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+              ))}
             </div>
           </div>
-          <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-            <img
-              alt={product.images[3].alt}
-              src={product.images[3].src}
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-        </div>
 
-        {/* Product info */}
-        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
-          <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-              {product.name}
-            </h1>
-          </div>
+          {/* Product info */}
+          <div className="lg:col-span-1 max-h-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24 text-left">
+            <div className="lg:col-span-2 border-b pb-2 mb-5">
+              <h1 className="text-base lg:text-lg font-semibold text-gray-900 opacity-60 cursor-pointer hover:opacity-80">
+                Clutch Set
+              </h1>
+              <h1 className="text-xl lg:text-2xl font-semibold text-gray-900 pt-1">
+                Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford
+                Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)
+              </h1>
+              <div className="mt-3">
+                <span className=" text-gray-600">Availability: </span>
+                <span className="text-green-600 font-semibold">In Stock</span>
+              </div>
+            </div>
 
-          {/* Options */}
-          <div className="mt-4 lg:row-span-3 lg:mt-0">
-            <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">
-              {product.price}
-            </p>
+            {/* Options */}
+            <div className="mt-4 lg:row-span-3 lg:mt-0">
+              <h2 className="sr-only">Product information</h2>
+              <div className="flex space-x-5 items-center">
+                <p className="text-3xl tracking-tight text-gray-900">
+                  ₹5,029.00
+                </p>
+                <p className="text-xl tracking-tight text-gray-900 opacity-60 line-through">
+                  ₹5,529.00
+                </p>
+                <p className="text-xl text-green-600 font-semibold">9% off</p>
+              </div>
 
-            {/* Reviews */}
-            <div className="mt-6">
-              <h3 className="sr-only">Reviews</h3>
-              <div className="flex items-center">
+              <form className="mt-10">
                 <div className="flex items-center">
-                  {[0, 1, 2, 3, 4].map((rating) => (
-                    <StarIcon
-                      key={rating}
-                      aria-hidden="true"
-                      className={classNames(
-                        reviews.average > rating
-                          ? "text-gray-900"
-                          : "text-gray-200",
-                        "h-5 w-5 flex-shrink-0"
-                      )}
-                    />
-                  ))}
+                  {/* Quantity Selector */}
+                  <div className="flex flex-col items-start mr-4">
+                    <span className="mb-2 text-base font-medium text-gray-700">
+                      Quantity
+                    </span>
+
+                    <div className="flex items-center mb-4">
+                      <button
+                        type="button"
+                        onClick={decrementQuantity}
+                        className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-md"
+                      >
+                        -
+                      </button>
+                      <input
+                        type="text"
+                        value={quantity}
+                        onChange={handleInputChange}
+                        className="w-12 text-center border-t border-b border-gray-200"
+                      />
+                      <button
+                        type="button"
+                        onClick={incrementQuantity}
+                        className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-md"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Add to Cart Button */}
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
+                  >
+                    Add to cart
+                  </button>
                 </div>
-                <p className="sr-only">{reviews.average} out of 5 stars</p>
-                <a
-                  href={reviews.href}
-                  className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  {reviews.totalCount} reviews
-                </a>
-              </div>
+              </form>
             </div>
 
-            <form className="mt-10">
-              {/* Colors */}
+            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+              {/* Description and Highlights*/}
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Color</h3>
+                <h3 className="sr-only">Description</h3>
 
-                <fieldset aria-label="Choose a color" className="mt-4">
-                  <RadioGroup
-                    value={selectedColor}
-                    onChange={setSelectedColor}
-                    className="flex items-center space-x-3"
-                  >
-                    {product.colors.map((color) => (
-                      <Radio
-                        key={color.name}
-                        value={color}
-                        aria-label={color.name}
-                        className={classNames(
-                          color.selectedClass,
-                          "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1"
-                        )}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className={classNames(
-                            color.class,
-                            "h-8 w-8 rounded-full border border-black border-opacity-10"
-                          )}
-                        />
-                      </Radio>
-                    ))}
-                  </RadioGroup>
-                </fieldset>
-              </div>
-
-              {/* Sizes */}
-              <div className="mt-10">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Size guide
-                  </a>
+                <div className="space-y-6">
+                  <p className="text-base text-gray-900">
+                    {product.description}
+                  </p>
                 </div>
+              </div>
 
-                <fieldset aria-label="Choose a size" className="mt-4">
-                  <RadioGroup
-                    value={selectedSize}
-                    onChange={setSelectedSize}
-                    className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                  >
-                    {product.sizes.map((size) => (
-                      <Radio
-                        key={size.name}
-                        value={size}
-                        disabled={!size.inStock}
-                        className={classNames(
-                          size.inStock
-                            ? "cursor-pointer bg-white text-gray-900 shadow-sm"
-                            : "cursor-not-allowed bg-gray-50 text-gray-200",
-                          "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
-                        )}
-                      >
-                        <span>{size.name}</span>
-                        {size.inStock ? (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                          />
-                        ) : (
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                          >
-                            <svg
-                              stroke="currentColor"
-                              viewBox="0 0 100 100"
-                              preserveAspectRatio="none"
-                              className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                            >
-                              <line
-                                x1={0}
-                                x2={100}
-                                y1={100}
-                                y2={0}
-                                vectorEffect="non-scaling-stroke"
-                              />
-                            </svg>
-                          </span>
-                        )}
-                      </Radio>
+              <div className="mt-10">
+                <h3 className="text-sm font-medium text-gray-900">
+                  Highlights
+                </h3>
+
+                <div className="mt-4">
+                  <ul className="list-disc space-y-2 pl-4 text-sm">
+                    {product.highlights.map((highlight) => (
+                      <li key={highlight} className="text-gray-400">
+                        <span className="text-gray-600">{highlight}</span>
+                      </li>
                     ))}
-                  </RadioGroup>
-                </fieldset>
-              </div>
-
-              <button
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Add to bag
-              </button>
-            </form>
-          </div>
-
-          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
-            {/* Description and details */}
-            <div>
-              <h3 className="sr-only">Description</h3>
-
-              <div className="space-y-6">
-                <p className="text-base text-gray-900">{product.description}</p>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
-
-              <div className="mt-4">
-                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                  {product.highlights.map((highlight) => (
-                    <li key={highlight} className="text-gray-400">
-                      <span className="text-gray-600">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-              <div className="mt-4 space-y-6">
-                <p className="text-sm text-gray-600">{product.details}</p>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

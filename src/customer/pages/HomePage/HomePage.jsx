@@ -23,7 +23,7 @@ const HomePage = () => {
         />
         <HomeSectionCarousel
           data={volkswagen_parts}
-          sectionName={"Shop by Car Brand"}
+          sectionName={"Shop by Car Make"}
         />
       </div>
     </div>
