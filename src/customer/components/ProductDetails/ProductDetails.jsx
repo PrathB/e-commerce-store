@@ -1,45 +1,22 @@
 import { useState } from "react";
 
 const product = {
-  name: "Basic Tee 6-Pack",
-  price: "$192",
+  name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
+  price: "₹5,029.00",
   href: "#",
   breadcrumbs: [
-    { id: 1, name: "Men", href: "#" },
-    { id: 2, name: "Clothing", href: "#" },
+    { id: 1, name: "Home", href: "#" },
+    { id: 2, name: "Clutch Set", href: "#" },
   ],
   images: [
     {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
-      alt: "Two each of gray, white, and black shirts laying flat.",
+      src: "https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg",
+      alt: "Clutch set image 1",
     },
     {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
-      alt: "Model wearing plain black basic tee.",
+      src: "https://cartrends.in/cdn/shop/products/twice_clutch_540x.jpg?v=1643914049",
+      alt: "Clutch set image 2",
     },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-      alt: "Model wearing plain gray basic tee.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
-      alt: "Model wearing plain white basic tee.",
-    },
-  ],
-  colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-  ],
-  sizes: [
-    { name: "XXS", inStock: false },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "2XL", inStock: true },
-    { name: "3XL", inStock: true },
   ],
   description:
     "Clutch Set OE Part No. 8V2Z7B546V is a genuine Ford spare part for Ford Figo and Fiesta, Ecosport, Figo Aspire (Diesel). This Product comes in Genuine Ford Packing and sold by Ford India Private Limited. This item is sold as set of 2 Pieces containing Clutch Plate and Pressure Plate in a box",
@@ -47,6 +24,25 @@ const product = {
     "Ford Ecosport, Figo, Fiesta, Figo Aspire Clutch Set",
     "Brand Name: Ford Genuine Part",
     "Part Number: 8V2Z7B546V",
+  ],
+  details: [
+    { label: "Weight", value: "6 kg" },
+    { label: "Dimensions (L*B*H)", value: "46 × 46 × 16 cm" },
+    { label: "Car Make", value: "Ford" },
+    { label: "Car Model", value: "Ecosport, Fiesta, Figo, Figo Aspire" },
+    { label: "Car Sub Model", value: "All Diesel Models., Type 2." },
+    { label: "Parts Brand", value: "Ford Genuine Part" },
+    { label: "Parts Origin", value: "Genuine" },
+    { label: "Net Quantity", value: "Set Of 2 Pcs." },
+    { label: "Country Of Origin", value: "India" },
+    { label: "Part Number", value: "8V2Z7B546V" },
+    { label: "Parts Category", value: "Ford Genuine Clutch Sets" },
+  ],
+  compatibility: [
+    "Ford Ecosport 1st & Facelift Model | 1.5L Diesel | 06.2013 – 09.2021",
+    "Ford Fiesta 2nd Gen & Facelift Model | 1.5L Diesel | 09.2011 – 09.2015",
+    "Ford Figo 2nd Gen | 1.5L Diesel | 08.2015 – 03.2019",
+    "Ford Figo Aspire 1st Gen | 1.5L Diesel | 08.2015 – 03.2018",
   ],
 };
 
@@ -139,7 +135,7 @@ export default function Example() {
           </div>
 
           {/* Product info */}
-          <div className="lg:col-span-1 max-h-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24 text-left">
+          <div className="lg:col-span-1 max-h-auto max-w-2xl px-4 pb-2 sm:px-6 lg:max-w-7xl lg:px-8 text-left">
             <div className="lg:col-span-2 border-b pb-2 mb-5">
               <h1 className="text-base lg:text-lg font-semibold text-gray-900 opacity-60 cursor-pointer hover:opacity-80">
                 Clutch Set
@@ -210,7 +206,7 @@ export default function Example() {
               </form>
             </div>
 
-            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+            <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-4 lg:pr-8 lg:pt-6">
               {/* Description and Highlights*/}
               <div>
                 <h3 className="sr-only">Description</h3>
@@ -223,7 +219,7 @@ export default function Example() {
               </div>
 
               <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">
+                <h3 className="text-sm font-semibold text-gray-900">
                   Highlights
                 </h3>
 
@@ -238,6 +234,37 @@ export default function Example() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="flex flex-col justify-center px-8 lg:px-24 pb-8 text-left ">
+          {/* Specifications */}
+          <h2 className="text-lg font-semibold mb-4">Specifications</h2>
+          <div className="border border-gray-300 rounded-lg p-4 w-full mb-10">
+            {product.details.map((detail, index) => (
+              <div
+                key={index}
+                className={`grid grid-cols-2 py-2 ${
+                  index !== product.details.length - 1
+                    ? "border-b border-gray-300"
+                    : ""
+                }`}
+              >
+                <span className="font-semibold">{detail.label}</span>
+                <span>{detail.value}</span>
+              </div>
+            ))}
+          </div>
+          {/* Compatibility */}
+          <h2 className="text-lg font-semibold mb-2">Compatibility</h2>
+          <div className="mt-4">
+            <ul className="list-disc space-y-2 pl-4 text-base">
+              {product.compatibility.map((compatibleVehicle) => (
+                <li key={compatibleVehicle} className="text-gray-400">
+                  <span className="text-gray-600">{compatibleVehicle}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </div>

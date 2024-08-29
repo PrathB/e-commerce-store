@@ -14,7 +14,7 @@ const Footer = () => {
         container
         sx={{ bgcolor: "black", color: "white", py: 3 }}
       >
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid className="pb-10" item xs={12} sm={6} md={4}>
           <Typography className="pb-5" variant="h6">
             <strong>Contact Information</strong>
           </Typography>
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid className="pb-10" item xs={12} sm={6} md={4}>
           <Typography className="pb-5" variant="h6">
             <strong>About</strong>
           </Typography>
@@ -93,7 +93,7 @@ const Footer = () => {
           </div>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid className="pb-10" item xs={12} sm={6} md={4}>
           <Typography className="pb-5" variant="h6">
             <strong>Brands</strong>
           </Typography>
@@ -144,7 +144,7 @@ const Footer = () => {
           </div>
         </Grid>
 
-        <Grid className="pt-20" item xs={12}>
+        <Grid className="pt-20 pb-2" item xs={12}>
           <Typography variant="body2" component="p" align="center">
             &copy; 2024 Caraid. All rights reserved.
           </Typography>

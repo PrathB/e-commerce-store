@@ -284,7 +284,7 @@ export default function Navigation() {
         <nav aria-label="Top" className="mx-auto">
           <div className="border-y border-gray-500">
             <div
-              className="flex h-16 items-center px-11"
+              className="flex h-16 items-center px-2 lg:px-11 "
               style={{ backgroundColor: "#2c2c2c" }}
             >
               <button
