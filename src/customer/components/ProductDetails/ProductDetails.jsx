@@ -1,4 +1,6 @@
 import { useState } from "react";
+import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
+import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 
 const product = {
   name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
@@ -25,7 +27,7 @@ const product = {
     "Brand Name: Ford Genuine Part",
     "Part Number: 8V2Z7B546V",
   ],
-  details: [
+  specs: [
     { label: "Weight", value: "6 kg" },
     { label: "Dimensions (L*B*H)", value: "46 × 46 × 16 cm" },
     { label: "Car Make", value: "Ford" },
@@ -50,20 +52,19 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function ProductDetails() {
+  // Functions to handle quantity selector
+  
   const [quantity, setQuantity] = useState(1);
 
-  // Function to handle incrementing quantity
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity === "" ? 1 : prevQuantity + 1));
   };
 
-  // Function to handle decrementing quantity
   const decrementQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
 
-  // Function to handle manual input changes
   const handleInputChange = (event) => {
     const value = event.target.value;
 
@@ -82,7 +83,7 @@ export default function Example() {
                 <div className="flex items-center">
                   <a
                     href={breadcrumb.href}
-                    className="mr-2 text-sm font-medium text-gray-900"
+                    className="mr-2 text-sm font-medium text-gray-900 hover:text-gray-600"
                   >
                     {breadcrumb.name}
                   </a>
@@ -103,7 +104,7 @@ export default function Example() {
               <a
                 href={product.href}
                 aria-current="page"
-                className="font-medium text-gray-500 hover:text-gray-600"
+                className="font-medium text-gray-500 hover:cursor-text"
               >
                 {product.name}
               </a>
@@ -241,11 +242,11 @@ export default function Example() {
           {/* Specifications */}
           <h2 className="text-lg font-semibold mb-4">Specifications</h2>
           <div className="border border-gray-300 rounded-lg p-4 w-full mb-10">
-            {product.details.map((detail, index) => (
+            {product.specs.map((detail, index) => (
               <div
                 key={index}
                 className={`grid grid-cols-2 py-2 ${
-                  index !== product.details.length - 1
+                  index !== product.specs.length - 1
                     ? "border-b border-gray-300"
                     : ""
                 }`}
@@ -261,11 +262,20 @@ export default function Example() {
             <ul className="list-disc space-y-2 pl-4 text-base">
               {product.compatibility.map((compatibleVehicle) => (
                 <li key={compatibleVehicle} className="text-gray-400">
-                  <span className="text-gray-600">{compatibleVehicle}</span>
+                  <span className="text-gray-900">{compatibleVehicle}</span>
                 </li>
               ))}
             </ul>
           </div>
+        </section>
+        
+        {/* Related Products */}
+        <section className="px-8 lg:px-24 pb-8 text-left">
+          <h1 className="py-5 text-xl font-semibold">Related Products</h1>
+          <div className="flex flex-wrap space-y-5">
+              {volkswagen_parts.slice(0,5).map((item)=><HomeSectionCard product={item}/>)}
+          </div>
+
         </section>
       </div>
     </div>

@@ -1,4 +1,3 @@
-import { BorderColor } from "@mui/icons-material";
 import React from "react";
 
 const HomeSectionCard = ({ product }) => {
