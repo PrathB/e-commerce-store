@@ -54,7 +54,7 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   // Functions to handle quantity selector
-  
+
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
@@ -176,7 +176,7 @@ export default function ProductDetails() {
                       <button
                         type="button"
                         onClick={decrementQuantity}
-                        className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-md"
+                        className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-l-md text-white"
                       >
                         -
                       </button>
@@ -184,12 +184,12 @@ export default function ProductDetails() {
                         type="text"
                         value={quantity}
                         onChange={handleInputChange}
-                        className="w-12 text-center border-t border-b border-gray-200"
+                        className="w-12 text-center border-t border-b border-[#2c2c2c]"
                       />
                       <button
                         type="button"
                         onClick={incrementQuantity}
-                        className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-md"
+                        className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-r-md text-white"
                       >
                         +
                       </button>
@@ -268,14 +268,15 @@ export default function ProductDetails() {
             </ul>
           </div>
         </section>
-        
+
         {/* Related Products */}
         <section className="px-8 lg:px-24 pb-8 text-left">
           <h1 className="py-5 text-xl font-semibold">Related Products</h1>
           <div className="flex flex-wrap space-y-5">
-              {volkswagen_parts.slice(0,5).map((item)=><HomeSectionCard product={item}/>)}
+            {volkswagen_parts.slice(0, 5).map((item) => (
+              <HomeSectionCard product={item} />
+            ))}
           </div>
-
         </section>
       </div>
     </div>
