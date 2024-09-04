@@ -19,7 +19,7 @@ const CartItem = () => {
             / Figo / Fiesta (T2) / Figo Aspire (Dsl)
           </p>
           <p className="opacity-70 mt-2">Seller: Ford Genuine Part</p>
-          <div className="flex space-x-5 items-center">
+          <div className="flex space-x-5 items-center pt-4">
             <p className="tracking-tight text-gray-900">₹5,029.00</p>
             <p className="tracking-tight text-gray-900 opacity-60 line-through">
               ₹5,529.00
@@ -31,27 +31,30 @@ const CartItem = () => {
 
       <div className="lg:flex items-center lg:space-x-10 pt-4">
         <div className="flex flex-col items-start mr-4">
-          <div className="flex items-center">
-            <button
-              type="button"
-              // onClick={decrementQuantity}
-              className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-l-md text-white"
-            >
-              -
-            </button>
-            <input
-              type="text"
-              value="1"
-              // onChange={handleInputChange}
-              className="w-12 text-center border-t border-b border-[#2c2c2c]"
-            />
-            <button
-              type="button"
-              // onClick={incrementQuantity}
-              className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-r-md text-white"
-            >
-              +
-            </button>
+          <div className="flex flex-row items-center space-x-3">
+            <p className="font-semibold"> Qty:</p>
+            <div className="flex items-center">
+              <button
+                type="button"
+                // onClick={decrementQuantity}
+                className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-l-md text-white"
+              >
+                -
+              </button>
+              <input
+                type="text"
+                value="1"
+                // onChange={handleInputChange}
+                className="w-12 text-center border-t border-b border-[#2c2c2c]"
+              />
+              <button
+                type="button"
+                // onClick={incrementQuantity}
+                className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-r-md text-white"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
 

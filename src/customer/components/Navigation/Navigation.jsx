@@ -277,9 +277,7 @@ export default function Navigation() {
         <p
           className="flex h-10 items-center justify-center px-4 text-sm font-medium text-white sm:px-6 lg:px-8"
           style={{ backgroundColor: "#7f0000" }}
-        >
-          Get free delivery on orders over ₹1000
-        </p>
+        ></p>
 
         <nav aria-label="Top" className="mx-auto">
           <div className="border-y border-gray-500">
