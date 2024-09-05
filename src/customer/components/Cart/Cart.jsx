@@ -11,7 +11,7 @@ const Cart = () => {
           ))}
         </div>
         <div className="px-5 h-auto mt-5 lg:mt-0">
-          <div className="border rounded-md shadow-lg p-4">
+          <div className="border-2 rounded-md shadow-lg p-4">
             <p className="uppercase font-bold opacity-60 pb-4 text-left">
               Cart Total
             </p>
