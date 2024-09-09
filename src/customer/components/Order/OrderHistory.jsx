@@ -9,14 +9,14 @@ const orderStatus = [
   { label: "Returned", value: "returned" },
 ];
 
-const Order = () => {
+const OrderHistory = () => {
   return (
     <div className="py-5 lg:px-20 px-5">
       <Grid container sx={{ justifyContent: "space-between" }}>
-        <Grid item lg={2.5}>
+        <Grid item lg={2.5} md={2.5}>
           <div className="h-auto shadow-lg bg-white p-5 sticky top-5">
             <h1 className="font-bold text-lg text-left">Filter</h1>
-            <div className="space-y-4 mt-10">
+            <div className="space-y-4 mt-5">
               <h1 className="font-semibold text-left">ORDER STATUS</h1>
               {orderStatus.map((option) => (
                 <div className="flex items-center">
@@ -28,18 +28,22 @@ const Order = () => {
                   <label
                     className="ml-3 text-sm text-gray-600"
                     htmlFor={option.value}
-                  >{option.label}</label>
+                  >
+                    {option.label}
+                  </label>
                 </div>
               ))}
             </div>
           </div>
         </Grid>
-        <Grid item xs={9} className="pt-4 space-y-5">
-          {[1,1,1,1].map((item)=><OrderCard/>)} 
+        <Grid item lg={9} md={9} className="pt-4 space-y-5">
+          {[1, 1, 1, 1].map((item) => (
+            <OrderCard />
+          ))}
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default Order;
+export default OrderHistory;

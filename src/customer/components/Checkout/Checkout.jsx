@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import { useLocation } from "react-router-dom";
 import DeliveryAddressForm from "./DeliveryAddressForm";
 import OrderSummary from "./OrderSummary";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const steps = ["Login", "Delivery Address", "Order Summary", "Payment"];
 
@@ -25,20 +26,35 @@ export default function Checkout() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
   return (
-    <div className="px-10 py-10 lg:px-20">
+    <div className="px-5 py-5 lg:px-20">
       <Box sx={{ width: "100%" }}>
-        <Stepper activeStep={step}>
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel {...labelProps}>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
+        <Box sx={{ width: "100%" }}>
+          <Stepper
+            activeStep={step}
+            orientation={isSmallScreen ? "vertical" : "horizontal"}
+          >
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel
+                    {...labelProps}
+                    sx={{
+                      "& .MuiStepLabel-label": {
+                        typography: isSmallScreen ? "caption" : "body1",
+                      },
+                    }}
+                  >
+                    {label}
+                  </StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+        </Box>
         {activeStep === steps.length ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
@@ -47,7 +63,15 @@ export default function Checkout() {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            {/* Content */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mt: 2,
+              }}
+            >
               <Button
                 color="inherit"
                 disabled={activeStep === 0}
@@ -57,7 +81,10 @@ export default function Checkout() {
                 Back
               </Button>
             </Box>
-            <div className="mt-10">{step == 2 ? <DeliveryAddressForm /> : <OrderSummary />}</div>
+            {/* Step content */}
+            <div className="mt-10">
+              {step == 2 ? <DeliveryAddressForm /> : <OrderSummary />}
+            </div>
           </React.Fragment>
         )}
       </Box>

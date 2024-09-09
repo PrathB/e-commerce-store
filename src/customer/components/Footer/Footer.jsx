@@ -30,7 +30,7 @@ const Footer = () => {
 
           <div className="flex flex-row justify-center mt-5">
             <a
-              href="https://www.instagram.com/prath__b"
+              href="https://www.instagram.com/piyushbishhtt"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -144,7 +144,7 @@ const Footer = () => {
           </div>
         </Grid>
 
-        <Grid className="pt-20 pb-2" item xs={12}>
+        <Grid className="pt-10 pb-2" item xs={12}>
           <Typography variant="body2" component="p" align="center">
             &copy; 2024 Caraid. All rights reserved.
           </Typography>

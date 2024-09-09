@@ -4,17 +4,23 @@ import CartItem from "../Cart/CartItem";
 
 const OrderSummary = () => {
   return (
-    <div>
-      <div className="p-5 shadow-lg rounded-s-md border">
+    <div className="p-4">
+      {/* Address card section */}
+      <div className="p-5 shadow-lg rounded-md border mb-6">
         <AddressCard />
       </div>
+
+      {/* Main order summary */}
       <div>
-        <div className="lg:grid grid-cols-3 pt-6 relative">
+        <div className="lg:grid grid-cols-3 gap-6 relative">
+          {/* Cart items */}
           <div className="col-span-2 space-y-4">
-            {[1, 1, 1, 1].map((item) => (
-              <CartItem/>
+            {[1, 1, 1, 1].map((item, index) => (
+              <CartItem key={index} />
             ))}
           </div>
+
+          {/* Cart total section */}
           <div className="px-5 h-auto mt-5 lg:mt-0">
             <div className="border-2 rounded-md shadow-lg p-4">
               <p className="uppercase font-bold opacity-60 pb-4 text-left">
@@ -36,6 +42,8 @@ const OrderSummary = () => {
                   <span>₹5,345.00</span>
                 </div>
               </div>
+
+              {/* Proceed to Pay button */}
               <button
                 type="submit"
                 className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"

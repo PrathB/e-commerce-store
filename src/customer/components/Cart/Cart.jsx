@@ -4,7 +4,7 @@ import CartItem from "./CartItem";
 const Cart = () => {
   return (
     <div>
-      <div className="lg:grid grid-cols-3 pt-6 lg:px-16 relative">
+      <div className="lg:grid grid-cols-3 pt-6 px-4 lg:px-16 relative">
         <div className="col-span-2 space-y-4">
           {[1, 1, 1, 1].map((item) => (
             <CartItem />

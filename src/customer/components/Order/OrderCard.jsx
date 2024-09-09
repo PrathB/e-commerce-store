@@ -9,7 +9,7 @@ const OrderCard = () => {
         <Grid item xs={12} sm={6}>
           <div className="flex cursor-pointer">
             <img
-              className="w-[5rem] h-[5rem] object-cover"
+              className="w-[6rem] h-[6rem] object-cover"
               src="https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg"
               alt="product image"
             />
@@ -23,20 +23,20 @@ const OrderCard = () => {
           </div>
         </Grid>
         <Grid item xs={6} sm={2}>
-          <p>₹5,345.00</p>
+          <p className="text-left">₹5,345.00</p>
         </Grid>
 
         <Grid item xs={12} sm={4}>
           {true && (
             <div>
-              <p>
+              <p className="text-left">
                 <AdjustIcon
                   sx={{ width: "15px", height: "15px" }}
                   className="text-green-600 mr-2 text-sm"
                 />
                 <span>Delivered on March 03</span>
               </p>
-              <p className="text-xs">Your item has been delivered</p>
+              <p className="text-xs text-left">Your item has been delivered</p>
             </div>
           )}
           {false && (
@@ -46,7 +46,6 @@ const OrderCard = () => {
           )}
         </Grid>
       </Grid>
-      
     </div>
   );
 };

@@ -301,7 +301,7 @@ export default function Navigation() {
                 <img
                   src="logo-no-background.png"
                   alt="Caraid logo"
-                  className="h-12 w-auto mr-2"
+                  className="h-8 w-auto sm:h-10 lg:h-12"
                 />
               </div>
 
