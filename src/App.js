@@ -8,18 +8,20 @@ import ProductDetails from "./customer/components/ProductDetails/ProductDetails"
 import Cart from "./customer/components/Cart/Cart";
 import Checkout from "./customer/components/Checkout/Checkout";
 import OrderHistory from "./customer/components/Order/OrderHistory";
+import OrderDetails from "./customer/components/Order/OrderDetails";
 
 function App() {
   return (
     <div className="App">
       <Navigation />
       <div>
-        <HomePage />
+        {/* <HomePage /> */}
         {/* <Product/> */}
         {/* <ProductDetails/> */}
         {/* <Cart/> */}
         {/* <Checkout/> */}
         {/* <OrderHistory/> */}
+        <OrderDetails/>
       </div>
       <Footer />
     </div>
