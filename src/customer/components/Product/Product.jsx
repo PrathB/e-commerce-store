@@ -52,7 +52,7 @@ export default function Product() {
       <div>
         <main className="mx-auto px-4 sm:px-6 lg:px-20">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900">
               New Arrivals
             </h1>
 
@@ -91,14 +91,6 @@ export default function Product() {
                   </div>
                 </MenuItems>
               </Menu>
-
-              {/* <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-              </button> */}
             </div>
           </div>
 
@@ -136,9 +128,9 @@ export default function Product() {
 
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
-                <div className="flex flex-wrap justify-center bg-white py-5">
+                <div className="flex flex-wrap justify-center sm:justify-start bg-white py-5">
                   {volkswagen_parts.map((item) => (
-                    <ProductCard product={item} />
+                    <ProductCard product={item} key={item.title} />
                   ))}
                 </div>
               </div>

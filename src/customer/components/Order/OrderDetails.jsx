@@ -6,8 +6,8 @@ import { Grid } from "@mui/material";
 const OrderDetails = () => {
   return (
     <div className="lg:px-20 px-5">
-      <div>
-        <h1 className="font-bold text-xl py-7 text-left">Delivery Address</h1>
+      <div className="p-5 mt-10 border rounded-md shadow-lg">
+        <h1 className="font-bold text-xl pb-7 text-left">Delivery Address</h1>
         <AddressCard />
       </div>
       <div className="py-20">

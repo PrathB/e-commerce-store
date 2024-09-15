@@ -1,6 +1,7 @@
 import { useState } from "react";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
+import ProductCard from "../Product/ProductCard";
 
 const product = {
   name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
@@ -272,9 +273,9 @@ export default function ProductDetails() {
         {/* Related Products */}
         <section className="px-8 lg:px-24 pb-8 text-left">
           <h1 className="py-5 text-xl font-semibold">Related Products</h1>
-          <div className="flex flex-wrap space-y-5">
+          <div className="flex flex-wrap">
             {volkswagen_parts.slice(0, 5).map((item) => (
-              <HomeSectionCard product={item} />
+              <ProductCard product={item} />
             ))}
           </div>
         </section>

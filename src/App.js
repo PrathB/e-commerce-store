@@ -17,11 +17,11 @@ function App() {
       <div>
         {/* <HomePage /> */}
         {/* <Product/> */}
-        {/* <ProductDetails/> */}
+        <ProductDetails/>
         {/* <Cart/> */}
         {/* <Checkout/> */}
         {/* <OrderHistory/> */}
-        <OrderDetails/>
+        {/* <OrderDetails/> */}
       </div>
       <Footer />
     </div>
