@@ -2,6 +2,8 @@ import React from "react";
 import MainCarousel from "../../components/HomeCarousel/MainCarousel";
 import HomeSectionCarousel from "../../components/HomeSectionCarousel/HomeSectionCarousel";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
+import CarBrandsGrid from "../../components/CarBrandsGrid/CarBrandsGrid";
+import PartscategoryGrid from "../../components/PartsCategoryGrid/PartsCategoryGrid";
 
 const HomePage = () => {
   return (
@@ -17,14 +19,9 @@ const HomePage = () => {
           data={volkswagen_parts}
           sectionName={"Featured Products"}
         />
-        <HomeSectionCarousel
-          data={volkswagen_parts}
-          sectionName={"Shop By Category"}
-        />
-        <HomeSectionCarousel
-          data={volkswagen_parts}
-          sectionName={"Shop by Car Make"}
-        />
+        <PartscategoryGrid />
+
+        <CarBrandsGrid />
       </div>
     </div>
   );

@@ -84,7 +84,7 @@ const navigation = {
               name: "Suspension and Arms",
               href: "#",
             },
-            { id: "Lighting", name: "Lighting", href: "#" },
+            { id: "lighting", name: "Lighting", href: "#" },
             { id: "body-parts", name: "Body Parts", href: "#" },
           ],
         },
@@ -325,7 +325,7 @@ export default function Navigation() {
               </button>
 
               {/* Logo */}
-              <div onClick={() => navigate("/")} className="ml-4 flex lg:ml-0">
+              <div onClick={() => navigate("/")} className="ml-4 flex lg:ml-0 cursor-pointer">
                 <span className="sr-only">Caraid</span>
                 <img
                   src="logo-no-background.png"
