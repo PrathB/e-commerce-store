@@ -23,6 +23,7 @@ import {
 
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -51,32 +52,40 @@ const navigation = {
       ],
       sections: [
         {
-          id: "brands",
-          name: "Brands",
+          id: "car-make",
+          name: "Car Make",
           items: [
-            { name: "Audi", href: "#" },
-            { name: "Honda", href: "#" },
-            { name: "Hyundai", href: "#" },
-            { name: "Kia", href: "#" },
-            { name: "Mahindra", href: "#" },
-            { name: "Maruti Suzuki", href: "#" },
-            { name: "Tata", href: "#" },
-            { name: "Toyota", href: "#" },
-            { name: "Volkswagen", href: "#" },
+            { id: "audi", name: "Audi", href: "#" },
+            { id: "honda", name: "Honda", href: "#" },
+            { id: "hyundai", name: "Hyundai", href: "#" },
+            { id: "kia", name: "Kia", href: "#" },
+            { id: "mahindra", name: "Mahindra", href: "#" },
+            { id: "maruti-suzuki", name: "Maruti Suzuki", href: "#" },
+            { id: "tata", name: "Tata", href: "#" },
+            { id: "toyota", name: "Toyota", href: "#" },
+            { id: "volkswagen", name: "Volkswagen", href: "#" },
           ],
         },
         {
           id: "categories",
           name: "Categories",
           items: [
-            { name: "Service Kits", href: "#" },
-            { name: "Oils and Lubricants", href: "#" },
-            { name: "Filters", href: "#" },
-            { name: "Brake System", href: "#" },
-            { name: "Clutch System", href: "#" },
-            { name: "Suspension and Arms", href: "#" },
-            { name: "Lighting", href: "#" },
-            { name: "Body Parts", href: "#" },
+            { id: "service-kits", name: "Service Kits", href: "#" },
+            {
+              id: "oils-and-lubricants",
+              name: "Oils and Lubricants",
+              href: "#",
+            },
+            { id: "filters", name: "Filters", href: "#" },
+            { id: "brake-system", name: "Brake System", href: "#" },
+            { id: "clutch-system", name: "Clutch System", href: "#" },
+            {
+              id: "suspension-and-arms",
+              name: "Suspension and Arms",
+              href: "#",
+            },
+            { id: "Lighting", name: "Lighting", href: "#" },
+            { id: "body-parts", name: "Body Parts", href: "#" },
           ],
         },
       ],
@@ -87,6 +96,7 @@ const navigation = {
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
@@ -107,8 +117,17 @@ export default function Navigation() {
   };
 
   const handleCategoryClick = (category, section, item, close) => {
-    // navigate(`/${category.id}/${section.id}/${item.id}`);
+    navigate(`/${category.id}/${section.id}/${item.id}`);
     close();
+  };
+
+  const handleMyOrdersClick = (close) => {
+    navigate("/account/order-history");
+    close();
+  };
+
+  const handleAddToCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -222,7 +241,17 @@ export default function Navigation() {
                             >
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
-                                  <p className="-m-2 block p-2 text-gray-500">
+                                  <p
+                                    onClick={() =>
+                                      handleCategoryClick(
+                                        category,
+                                        section,
+                                        item,
+                                        () => setOpen(false)
+                                      )
+                                    }
+                                    className="-m-2 block p-2 text-gray-500"
+                                  >
                                     {item.name}
                                   </p>
                                 </li>
@@ -296,7 +325,7 @@ export default function Navigation() {
               </button>
 
               {/* Logo */}
-              <div className="ml-4 flex lg:ml-0">
+              <div onClick={() => navigate("/")} className="ml-4 flex lg:ml-0">
                 <span className="sr-only">Caraid</span>
                 <img
                   src="logo-no-background.png"
@@ -477,7 +506,14 @@ export default function Navigation() {
                         <MenuItem onClick={handleCloseUserMenu}>
                           Profile
                         </MenuItem>
-                        <MenuItem>My Orders</MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleCloseUserMenu();
+                            handleMyOrdersClick(() => setOpen(false));
+                          }}
+                        >
+                          My Orders
+                        </MenuItem>
                         <MenuItem>Logout</MenuItem>
                       </Menu>
                     </div>
@@ -505,7 +541,10 @@ export default function Navigation() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <Button className="group -m-2 flex items-center p-2">
+                  <Button
+                    onClick={handleAddToCart}
+                    className="group -m-2 flex items-center p-2"
+                  >
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-white group-hover:text-gray-500"
                       aria-hidden="true"

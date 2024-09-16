@@ -33,9 +33,9 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
   const windowSize = useWindowSize();
 
   const responsive = {
-    0: { items: 1 },    // For mobile devices
-    600: { items: 3 },  // For smaller tablets
-    900: { items: 3 },  // For larger tablets
+    0: { items: 1 }, // For mobile devices
+    600: { items: 3 }, // For smaller tablets
+    900: { items: 3 }, // For larger tablets
     1200: { items: 4 }, // For laptops
     1440: { items: 5 }, // For larger screens
   };
@@ -47,7 +47,9 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
     setActiveIndex(item);
   };
 
-  const items = data.map((item) => <HomeSectionCard key={item.id} product={item} />);
+  const items = data.map((item) => (
+    <HomeSectionCard key={item.id} product={item} />
+  ));
 
   // If the window width is less than 720px, use a grid layout
   if (windowSize.width && windowSize.width < 720) {

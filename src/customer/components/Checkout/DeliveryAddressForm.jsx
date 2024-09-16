@@ -3,21 +3,21 @@ import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
 
 const DeliveryAddressForm = () => {
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const address = {
-      firstName:data.get("firstName"),
-      lastName:data.get("lastName"),
-      streetAddress:data.get("address"),
-      city:data.get("city"),
-      state:data.get("state"),
-      pinCode:data.get("pinCode"),
-      phoneNumber:data.get("phoneNumber")
-    }
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      streetAddress: data.get("address"),
+      city: data.get("city"),
+      state: data.get("state"),
+      pinCode: data.get("pinCode"),
+      phoneNumber: data.get("phoneNumber"),
+    };
 
-    console.log(address)
-  }
+    console.log(address);
+  };
   return (
     <div>
       <Grid container gap={4}>
@@ -27,7 +27,7 @@ const DeliveryAddressForm = () => {
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
           <div className="p-5 py-7 border-b">
-            <AddressCard/>
+            <AddressCard />
             <Button
               sx={{ mt: 2, bgcolor: "#7f0000" }}
               size="large"
@@ -113,7 +113,7 @@ const DeliveryAddressForm = () => {
                     autocomplete="given-name"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6} sx={{ textAlign: 'left' }}>
+                <Grid item xs={12} sm={6} sx={{ textAlign: "left" }}>
                   <Button
                     sx={{ mt: 2, bgcolor: "#7f0000" }}
                     size="large"

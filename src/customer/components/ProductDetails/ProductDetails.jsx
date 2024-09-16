@@ -2,6 +2,7 @@ import { useState } from "react";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
+import { useNavigate } from "react-router-dom";
 
 const product = {
   name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
@@ -72,6 +73,12 @@ export default function ProductDetails() {
     if (value === "" || (!isNaN(value) && parseInt(value, 10) > 0)) {
       setQuantity(value === "" ? "" : parseInt(value, 10));
     }
+  };
+
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -199,7 +206,7 @@ export default function ProductDetails() {
 
                   {/* Add to Cart Button */}
                   <button
-                    type="submit"
+                    onClick={handleAddToCart}
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
                   >
                     Add to cart
