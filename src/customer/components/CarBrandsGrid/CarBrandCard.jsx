@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const CarBrandCard = ({ name, logo }) => {
+const CarBrandCard = ({ id, name, logo }) => {
   const navigate = useNavigate();
-  const handleCardClick = (brand) => {
-    navigate(`browse/car-make/${brand}`);
+  const handleCardClick = (brandId) => {
+    navigate(`browse/car-make/${brandId}`);
   };
   return (
     <div
-      onClick={() => handleCardClick(name)}
+      onClick={() => handleCardClick(id)}
       className="flex flex-col items-center justify-center cursor-pointer p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:border-[#7f0000]"
     >
       <img
