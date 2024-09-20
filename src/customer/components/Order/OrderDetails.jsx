@@ -1,7 +1,6 @@
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import OrderTracker from "./OrderTracker";
-import { Grid, IconButton } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const OrderDetails = () => {

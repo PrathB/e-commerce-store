@@ -1,5 +1,4 @@
 import { useState } from "react";
-import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
 import { useNavigate } from "react-router-dom";
@@ -303,7 +302,7 @@ export default function ProductDetails() {
           </Typography>
           <div className="border p-5">
             <Grid container spacing={7}>
-              <Grid item xs={12} lg={5}>
+              <Grid item xs={12} md={5}>
                 <Typography
                   variant="h6"
                   sx={{ fontSize: { xs: "1.25rem", sm: "1.5rem" } }}
@@ -352,7 +351,7 @@ export default function ProductDetails() {
                   ))}
                 </Box>
               </Grid>
-              <Grid item xs={12} lg={7}>
+              <Grid item xs={12} md={7}>
                 <div className="space-y-5">
                   <Typography
                     variant="h6"

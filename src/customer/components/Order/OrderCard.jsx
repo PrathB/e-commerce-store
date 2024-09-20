@@ -8,11 +8,11 @@ const OrderCard = () => {
   return (
     <div
       onClick={() => navigate(`/account/order-history/${5}`)}
-      className="lg:p-5 p-2 shadow-md hover:shadow-xl border"
+      className="lg:p-5 p-2 shadow-md hover:shadow-xl border cursor-pointer"
     >
       <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
         <Grid item xs={12} sm={6}>
-          <div className="flex cursor-pointer">
+          <div className="flex">
             <img
               className="w-[6rem] h-[6rem] object-cover"
               src="https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg"
