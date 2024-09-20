@@ -3,6 +3,8 @@ import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { Box, Grid, LinearProgress, Rating, Typography } from "@mui/material";
+import ProductReviewCard from "./ProductReviewCard";
 
 const product = {
   name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
@@ -120,6 +122,7 @@ export default function ProductDetails() {
           </ol>
         </nav>
 
+        {/* Product overview */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10">
           {/* Image gallery */}
           <div className="flex flex-col items-center">
@@ -159,7 +162,7 @@ export default function ProductDetails() {
               </div>
             </div>
 
-            {/* Options */}
+            {/* Price */}
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
               <div className="flex space-x-5 items-center">
@@ -170,6 +173,17 @@ export default function ProductDetails() {
                   ₹5,529.00
                 </p>
                 <p className="text-xl text-green-600 font-semibold">9% off</p>
+              </div>
+
+              {/* Rating and reviews preview*/}
+              <div className="mt-6">
+                <div className="flex items-center space-x-3">
+                  <Rating name="read-only" value={4.5} readOnly />
+                  <p className="opacity-60 text-sm">100 Ratings</p>
+                  <p className="ml-3 text-sm font-medium text-[#7f0000] hover:opacity-50">
+                    80 Reviews
+                  </p>
+                </div>
               </div>
 
               <form className="mt-10">
@@ -207,7 +221,7 @@ export default function ProductDetails() {
                   {/* Add to Cart Button */}
                   <button
                     onClick={handleAddToCart}
-                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
+                    className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-2 sm:px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
                   >
                     Add to cart
                   </button>
@@ -215,8 +229,8 @@ export default function ProductDetails() {
               </form>
             </div>
 
+            {/* Description and Highlights*/}
             <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-4 lg:pr-8 lg:pt-6">
-              {/* Description and Highlights*/}
               <div>
                 <h3 className="sr-only">Description</h3>
 
@@ -246,6 +260,7 @@ export default function ProductDetails() {
           </div>
         </section>
 
+        {/* Product specs and compatibility*/}
         <section className="flex flex-col justify-center px-8 lg:px-24 pb-8 text-left ">
           {/* Specifications */}
           <h2 className="text-lg font-semibold mb-4">Specifications</h2>
@@ -274,6 +289,84 @@ export default function ProductDetails() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* Rating and reviews*/}
+        <section className="px-8 lg:px-24 pb-8">
+          <Typography
+            variant="h5"
+            sx={{ fontSize: { xs: "1.25rem", sm: "1.5rem" } }}
+            className="font-semibold pb-4 text-left"
+          >
+            Ratings and Reviews
+          </Typography>
+          <div className="border p-5">
+            <Grid container spacing={7}>
+              <Grid item xs={12} lg={5}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: { xs: "1.25rem", sm: "1.5rem" } }}
+                  className="font-semibold pb-1 text-left"
+                >
+                  Product Ratings
+                </Typography>
+                <div className="flex items-center space-x-3 pt-2">
+                  <Rating value={4.6} precision={0.5} readOnly />
+                  <Typography sx={{ opacity: 0.6, fontSize: { xs: "0.9rem" } }}>
+                    100 Ratings
+                  </Typography>
+                </div>
+                <Box className="mt-5 space-y-3">
+                  {[
+                    { label: "Excellent", value: 40, color: "#4BB543" },
+                    { label: "Very Good", value: 30, color: "#81C784" },
+                    { label: "Good", value: 25, color: "#FFBF00" },
+                    { label: "Average", value: 20, color: "#FF7800" },
+                    { label: "Poor", value: 10, color: "#F44336" },
+                  ].map((rating, index) => (
+                    <Grid container alignItems="center" gap={2} key={index}>
+                      <Grid item xs={3}>
+                        <Typography
+                          sx={{ fontSize: { xs: "0.8rem", sm: "1rem" } }}
+                          className="text-left"
+                        >
+                          {rating.label}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={7}>
+                        <LinearProgress
+                          sx={{
+                            bgcolor: "#d0d0d0",
+                            borderRadius: 4,
+                            height: 7,
+                            "& .MuiLinearProgress-bar": {
+                              backgroundColor: rating.color,
+                            },
+                          }}
+                          variant="determinate"
+                          value={rating.value}
+                        />
+                      </Grid>
+                    </Grid>
+                  ))}
+                </Box>
+              </Grid>
+              <Grid item xs={12} lg={7}>
+                <div className="space-y-5">
+                  <Typography
+                    variant="h6"
+                    sx={{ fontSize: { xs: "1.25rem", sm: "1.5rem" } }}
+                    className="font-semibold pb-1 text-left"
+                  >
+                    Product Reviews
+                  </Typography>
+                  {[1, 1, 1].map((item, index) => (
+                    <ProductReviewCard key={index} />
+                  ))}
+                </div>
+              </Grid>
+            </Grid>
           </div>
         </section>
 

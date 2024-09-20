@@ -1,7 +1,8 @@
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import OrderTracker from "./OrderTracker";
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const OrderDetails = () => {
   return (
@@ -14,10 +15,13 @@ const OrderDetails = () => {
         <OrderTracker activeStep={3} />
       </div>
 
-      <Grid className="space-y-5" container>
-        {[1, 1, 1, 1, 1].map((item) => (
-          <div className="p-5 shadow-lg border rounded-md mb-5">
-            <div className="flex flex-col lg:flex-row items-center lg:items-start">
+      <div className="flex-col space-y-5">
+        {[1, 1, 1, 1, 1].map((item, index) => (
+          <div
+            key={index}
+            className="p-5 shadow-lg border rounded-md mb-5 flex flex-col lg:flex-row"
+          >
+            <div className="flex flex-col lg:flex-row items-center lg:items-start flex-grow">
               {/* Product Image */}
               <div className="w-[7.5rem] h-[7.5rem] lg:w-[9rem] lg:h-[9rem] flex-shrink-0">
                 <img
@@ -42,12 +46,21 @@ const OrderDetails = () => {
                   <p className="tracking-tight text-gray-900 text-sm lg:text-base">
                     ₹5,029.00
                   </p>
+                  <p className="opacity-50 text-xs font-semibold">Qty:1</p>
                 </div>
               </div>
             </div>
+
+            {/* Rate and Review Section */}
+            <div className="flex space-x-1 justify-center items-center lg:ml-auto mt-4 lg:mt-0">
+              <StarBorderIcon sx={{ fontSize: 28, color: "#FFBF00" }} />
+              <p className="text-sm lg:text-base font-semibold text-[#FFBF00] cursor-pointer">
+                Rate and Review
+              </p>
+            </div>
           </div>
         ))}
-      </Grid>
+      </div>
     </div>
   );
 };

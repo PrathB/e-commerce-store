@@ -18,12 +18,11 @@ const OrderCard = () => {
               src="https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg"
               alt="product image"
             />
-            <div className="ml-5 space-y-2 text-left">
+            <div className="ml-5 text-left">
               <p>
                 Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford
                 Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)
               </p>
-              <p className="opacity-50 text-xs font-semibold">Qty:1</p>
             </div>
           </div>
         </Grid>
