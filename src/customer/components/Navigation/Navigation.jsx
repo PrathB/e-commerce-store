@@ -131,6 +131,10 @@ export default function Navigation() {
     navigate("/cart");
   };
 
+  const navigateRegister = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -326,7 +330,10 @@ export default function Navigation() {
               </button>
 
               {/* Logo */}
-              <div onClick={() => navigate("/")} className="ml-4 flex lg:ml-0 cursor-pointer">
+              <div
+                onClick={() => navigate("/")}
+                className="ml-4 flex lg:ml-0 cursor-pointer"
+              >
                 <span className="sr-only">Caraid</span>
                 <img
                   src="logo-no-background.png"
@@ -520,9 +527,12 @@ export default function Navigation() {
                     </div>
                   ) : (
                     <Button
-                      onClick={handleOpen}
+                      onClick={() => {
+                        navigateRegister();
+                        handleOpen();
+                      }}
                       className="text-sm font-medium hover:text-gray-500"
-                      sx={{color:"white"}}
+                      sx={{ color: "white" }}
                     >
                       Signin
                     </Button>
@@ -563,7 +573,7 @@ export default function Navigation() {
         </nav>
       </header>
 
-      <AuthModal handleClose={handleClose} open={openAuthModal}/>
+      <AuthModal handleClose={handleClose} open={openAuthModal} />
     </div>
   );
 }
