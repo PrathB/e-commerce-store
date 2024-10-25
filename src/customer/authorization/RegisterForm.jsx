@@ -1,8 +1,13 @@
 import { Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getUserProfile, register } from "../../State/Authorization/action";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -13,10 +18,9 @@ const RegisterForm = () => {
       password: data.get("password"),
     };
 
-    console.log(userData);
+    dispatch(register(userData));
   };
 
-  const navigate = useNavigate();
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -87,8 +91,12 @@ const RegisterForm = () => {
       <div className="flex justify-center flex-col items-center">
         <div className="py-3 flex items-center">
           <p>If you already have an account, </p>
-          <p className="cursor-pointer font-semibold text-blue-600 hover:opacity-60 ml-1"
-          onClick={() => navigate("/login")} >login</p>
+          <p
+            className="cursor-pointer font-semibold text-blue-600 hover:opacity-60 ml-1"
+            onClick={() => navigate("/login")}
+          >
+            login
+          </p>
         </div>
       </div>
     </div>

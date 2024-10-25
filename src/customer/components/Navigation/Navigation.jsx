@@ -23,8 +23,10 @@ import {
 
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../authorization/AuthModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfile, logout } from "../../../State/Authorization/action";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -101,7 +103,11 @@ export default function Navigation() {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
+  const location = useLocation();
+  const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
+  const jwtFromState = useSelector((store) => store.auth.jwt);
+  const userFromState = useSelector((store) => store.auth.user);
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -135,6 +141,25 @@ export default function Navigation() {
     navigate("/register");
   };
 
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUserProfile(jwt));
+    }
+  }, [jwt, jwtFromState]);
+
+  useEffect(() => {
+    if (userFromState) {
+      handleClose();
+    }
+    if (location.pathname === "/login" || location.pathname === "/register") {
+      navigate(-1);
+    }
+  }, [userFromState]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    handleCloseUserMenu();
+  };
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -476,7 +501,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {false ? (
+                  {userFromState?.firstName ? (
                     <div>
                       <Avatar
                         className="text-white"
@@ -491,7 +516,7 @@ export default function Navigation() {
                           cursor: "pointer",
                         }}
                       >
-                        P
+                        {userFromState.firstName[0].toUpperCase()}
                       </Avatar>
                       {/* <Button
                         id="basic-button"
@@ -522,7 +547,7 @@ export default function Navigation() {
                         >
                           My Orders
                         </MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>
                     </div>
                   ) : (
