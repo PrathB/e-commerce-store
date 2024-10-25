@@ -1,20 +1,25 @@
-import { Button, Grid, TextField } from '@mui/material';
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Alert, Button, Grid, TextField } from "@mui/material";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../State/Authorization/action";
+import { store } from "../../State/store";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const error = useSelector((store) => store.auth.error);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const userData = {
-      email:data.get("email"),
-      password:data.get("password")
-    }
-
-    console.log(userData);
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    dispatch(login(userData));
   };
-  
-  const navigate = useNavigate();
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -63,12 +68,19 @@ const LoginForm = () => {
       <div className="flex justify-center flex-col items-center">
         <div className="py-3 flex items-center">
           <p> you don't have an account, </p>
-          <p className="cursor-pointer font-semibold text-blue-600 hover:opacity-60 ml-1"
-          onClick={() => navigate("/register")} >register</p>
+          <p
+            className="cursor-pointer font-semibold text-blue-600 hover:opacity-60 ml-1"
+            onClick={() => navigate("/register")}
+          >
+            register
+          </p>
+        </div>
+        <div className="w-full">
+          {error && <Alert severity="error">Invalid email or password.</Alert>}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default LoginForm
+export default LoginForm;
