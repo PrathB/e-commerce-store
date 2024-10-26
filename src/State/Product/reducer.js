@@ -31,6 +31,6 @@ export const customerProductReducer = (state = initialState, action) => {
       return { ...state, loading: false, error: action.payload };
 
     default:
-      return { ...initialState };
+      return state;
   }
 };

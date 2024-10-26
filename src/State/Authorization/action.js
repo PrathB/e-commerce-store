@@ -13,22 +13,31 @@ import {
   LOGOUT,
 } from "./actionType";
 
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+});
+
 const registerRequest = () => ({ type: REGISTER_REQUEST });
 const registerSuccess = (jwt) => ({ type: REGISTER_SUCCESS, payload: jwt });
 const registerFailure = (error) => ({ type: REGISTER_FAILURE, payload: error });
 
+const saveJwtToLocalStorage = (jwt) => {
+  localStorage.setItem("jwt", jwt);
+};
+
 export const register = (userData) => async (dispatch) => {
-  dispatch(registerRequest);
+  dispatch(registerRequest());
   try {
-    const response = await axios.post(`${API_BASE_URL}/auth/signup`, userData);
+    const response = await axiosInstance.post(`/auth/signup`, userData);
     const user = response.data;
     if (user.jwt) {
-      localStorage.setItem("jwt", user.jwt);
+      saveJwtToLocalStorage(user.jwt);
       dispatch(registerSuccess(user.jwt));
     }
     console.log("user:", user);
   } catch (error) {
-    dispatch(registerFailure(error.message));
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(registerFailure(errorMsg));
   }
 };
 
@@ -37,27 +46,29 @@ const loginSuccess = (jwt) => ({ type: LOGIN_SUCCESS, payload: jwt });
 const loginFailure = (error) => ({ type: LOGIN_FAILURE, payload: error });
 
 export const login = (userData) => async (dispatch) => {
-  dispatch(loginRequest);
+  dispatch(loginRequest());
   try {
-    const response = await axios.post(`${API_BASE_URL}/auth/login`, userData);
+    const response = await axiosInstance.post(`/auth/login`, userData);
     const user = response.data;
     if (user.jwt) {
-      localStorage.setItem("jwt", user.jwt);
+      saveJwtToLocalStorage(user.jwt);
       dispatch(loginSuccess(user.jwt));
     }
     console.log("user:", user);
   } catch (error) {
-    dispatch(loginFailure(error.message));
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(loginFailure(errorMsg));
   }
 };
+
 const getUserRequest = () => ({ type: GET_USER_REQUEST });
-const getUserSuccess = (jwt) => ({ type: GET_USER_SUCCESS, payload: jwt });
+const getUserSuccess = (user) => ({ type: GET_USER_SUCCESS, payload: user });
 const getUserFailure = (error) => ({ type: GET_USER_FAILURE, payload: error });
 
 export const getUserProfile = (jwt) => async (dispatch) => {
-  dispatch(getUserRequest);
+  dispatch(getUserRequest());
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
+    const response = await axiosInstance.get(`/api/users/profile`, {
       headers: {
         Authorization: `Bearer ${jwt}`,
       },
@@ -66,11 +77,12 @@ export const getUserProfile = (jwt) => async (dispatch) => {
     console.log("user:", user);
     dispatch(getUserSuccess(user));
   } catch (error) {
-    dispatch(getUserFailure(error.message));
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(getUserFailure(errorMsg));
   }
 };
 
 export const logout = () => (dispatch) => {
-  dispatch({ type: LOGOUT, payload: null });
+  dispatch({ type: LOGOUT });
   localStorage.clear();
 };

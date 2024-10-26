@@ -17,14 +17,15 @@ const findProductByIdFailure = (error) => ({
   type: FIND_PRODUCT_BY_ID_FAILURE,
   payload: error,
 });
-export const findProductById = (reqData) => async (dispatch) => {
+
+export const findProductById = (productId) => async (dispatch) => {
   dispatch(findProductByIdRequest());
-  const productId = reqData;
   try {
-    const product = await api.get(`/api/products/product/${productId}`);
-    dispatch(findProductByIdSuccess(product));
+    const response = await api.get(`/api/products/product/${productId}`);
+    dispatch(findProductByIdSuccess(response.data));
   } catch (error) {
-    dispatch(findProductByIdFailure(error.message));
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(findProductByIdFailure(errorMsg));
   }
 };
 
@@ -37,27 +38,15 @@ const getProductsFailure = (error) => ({
   type: GET_PRODUCTS_FAILURE,
   payload: error,
 });
-export const getProducts = (reqData) => async (dispatch) => {
+
+export const getProducts = (query) => async (dispatch) => {
   dispatch(getProductsRequest());
-  const {
-    category,
-    carMake,
-    minPrice,
-    maxPrice,
-    minDiscount,
-    sort,
-    stock,
-    pageNumber,
-    pageSize,
-  } = reqData;
 
   try {
-    const pageData = await api.get(
-      `/api/products?category=${category}&carmake=${carMake}&minPrice=${minPrice}&maxPrice=${maxPrice}&
-      minDiscount=${minDiscount}&sort=${sort}&stock=${stock}&pageNumber=${pageNumber}&pageSize=${pageSize}`
-    );
-    dispatch(getProductsSuccess(pageData));
+    const response = await api.get(`/api/products`, { params: query });
+    dispatch(getProductsSuccess(response.data));
   } catch (error) {
-    dispatch(getProductsFailure(error.message));
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(getProductsFailure(errorMsg));
   }
 };
