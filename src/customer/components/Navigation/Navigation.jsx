@@ -22,7 +22,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { Avatar, Button, Menu, MenuItem } from "@mui/material";
-import { deepPurple } from "@mui/material/colors";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../authorization/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -59,36 +58,146 @@ const navigation = {
           name: "Car Make",
           items: [
             { id: "audi", name: "Audi", href: "#" },
-            { id: "honda", name: "Honda", href: "#" },
-            { id: "hyundai", name: "Hyundai", href: "#" },
-            { id: "kia", name: "Kia", href: "#" },
+            { id: "bmw", name: "BMW", href: "#" },
+            { id: "mercedes", name: "Mercedes", href: "#" },
+            { id: "ford", name: "Ford", href: "#" },
             { id: "mahindra", name: "Mahindra", href: "#" },
             { id: "maruti-suzuki", name: "Maruti Suzuki", href: "#" },
             { id: "tata", name: "Tata", href: "#" },
-            { id: "toyota", name: "Toyota", href: "#" },
+            { id: "honda", name: "Honda", href: "#" },
             { id: "volkswagen", name: "Volkswagen", href: "#" },
           ],
         },
         {
-          id: "categories",
-          name: "Categories",
+          id: "category",
+          name: "Category",
           items: [
-            { id: "service-kits", name: "Service Kits", href: "#" },
             {
-              id: "oils-and-lubricants",
-              name: "Oils and Lubricants",
+              id: "suspension-&-steering",
+              name: "Suspension & Steering",
               href: "#",
+              subItems: [
+                {
+                  id: "strut-&-shock-absorber",
+                  name: "Strut & Shock Absorber",
+                  href: "#",
+                },
+                { id: "control-arm", name: "Control Arm", href: "#" },
+                {
+                  id: "stabilizer-&-link",
+                  name: "Stabilizer & Link",
+                  href: "#",
+                },
+                {
+                  id: "bush,strut-mounting-&-kit",
+                  name: "Bush, Strut Mounting & Kit",
+                  href: "#",
+                },
+              ],
             },
-            { id: "filters", name: "Filters", href: "#" },
-            { id: "brake-system", name: "Brake System", href: "#" },
-            { id: "clutch-system", name: "Clutch System", href: "#" },
             {
-              id: "suspension-and-arms",
-              name: "Suspension and Arms",
+              id: "engine-parts",
+              name: "Engine Parts",
               href: "#",
+              subItems: [
+                { id: "filter", name: "Filter", href: "#" },
+                { id: "mounting", name: "Mounting", href: "#" },
+              ],
             },
-            { id: "lighting", name: "Lighting", href: "#" },
-            { id: "body-parts", name: "Body Parts", href: "#" },
+            {
+              id: "braking-system",
+              name: "Braking System",
+              href: "#",
+              subItems: [
+                { id: "brake-pad", name: "Brake Pad", href: "#" },
+                { id: "disc-rotor", name: "Disc Rotor", href: "#" },
+                { id: "brake-booster", name: "Brake Booster", href: "#" },
+              ],
+            },
+            {
+              id: "electrical",
+              name: "Electrical",
+              href: "#",
+              subItems: [
+                { id: "sesnsor", name: "Sensor", href: "#" },
+                { id: "ignition", name: "Ignition", href: "#" },
+                {
+                  id: "electronic-control-unit",
+                  name: "Electronic Control Unit",
+                  href: "#",
+                },
+                { id: "battery", name: "Battery", href: "#" },
+              ],
+            },
+            {
+              id: "cooling-&-hvac",
+              name: "Cooling & HVAC",
+              href: "#",
+              subItems: [
+                {
+                  id: "refrigerant-system",
+                  name: "Refrigerant System",
+                  href: "#",
+                },
+                { id: "radiator", name: "Radiator", href: "#" },
+                {
+                  id: "condensor",
+                  name: "Condensor",
+                  href: "#",
+                },
+                { id: "evaporator", name: "Evaporator", href: "#" },
+                { id: "compressor", name: "Compressor", href: "#" },
+              ],
+            },
+            {
+              id: "body-parts",
+              name: "Body Parts",
+              href: "#",
+              subItems: [
+                { id: "rear-view-mirror", name: "Rear View Mirror", href: "#" },
+                {
+                  id: "fender-&-fender-liner",
+                  name: "Fender & Fender Liner",
+                  href: "#",
+                },
+                {
+                  id: "wheel-rim",
+                  name: "Wheel Rim",
+                  href: "#",
+                },
+                { id: "wheel-cover", name: "Wheel Cover", href: "#" },
+                { id: "bumper", name: "Bumper", href: "#" },
+                { id: "headlight", name: "Headlight", href: "#" },
+                { id: "tailight", name: "Tailight", href: "#" },
+              ],
+            },
+            {
+              id: "safety-system",
+              name: "Safety System",
+              href: "#",
+              subItems: [
+                { id: "airbag-system", name: "Airbag System", href: "#" },
+                { id: "seatbelt-system", name: "Seatbelt System", href: "#" },
+              ],
+            },
+            {
+              id: "accessories",
+              name: "Accessories",
+              href: "#",
+              subItems: [
+                {
+                  id: "windshield-&-wiper",
+                  name: "Windshield & Wiper",
+                  href: "#",
+                },
+                { id: "seatcover-&-mat", name: "Seatcover & Mat", href: "#" },
+                {
+                  id: "entertainment-system",
+                  name: "Entertainment System",
+                  href: "#",
+                },
+              ],
+            },
           ],
         },
       ],
@@ -123,8 +232,15 @@ export default function Navigation() {
     setOpenAuthModal(false);
   };
 
-  const handleCategoryClick = (category, section, item, close) => {
-    navigate(`/${category.id}/${section.id}/${item.id}`);
+  const handleCategoryClick = (category, section, item, subItem, close) => {
+    {
+      if (subItem === null) {
+        navigate(`/${category.id}/?${section.id}=${item.name}`);
+      } else {
+        navigate(`/${category.id}/?${section.id}=${subItem.name}`);
+      }
+    }
+
     close();
   };
 
@@ -447,31 +563,63 @@ export default function Navigation() {
                                           >
                                             {section.name}
                                           </p>
-                                          {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
                                           <ul
                                             role="list"
                                             aria-labelledby={`${section.name}-heading`}
                                             className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
                                           >
                                             {section.items.map((item) => (
-                                              <li
+                                              <div
                                                 key={item.name}
-                                                className="flex"
+                                                className="relative flex group cursor-pointer hover:font-semibold"
                                               >
+                                                {" "}
+                                                {/* Outer div with `group` */}
                                                 <p
                                                   onClick={() =>
                                                     handleCategoryClick(
                                                       category,
                                                       section,
                                                       item,
+                                                      null,
                                                       close
                                                     )
                                                   }
-                                                  className="cursor-pointer hover:font-semibold text-gray-900"
+                                                  className="text-gray-900"
                                                 >
                                                   {item.name}
                                                 </p>
-                                              </li>
+                                                {section.id==="category" && <span className="absolute right-0 opacity-100 group-hover:opacity-0">
+                                                  &gt;
+                                                </span>}
+                                                {item.subItems && (
+                                                  <ul className="absolute left-full w-full top-0 hidden group-hover:block bg-white border border-gray-300 shadow-lg">
+                                                    {item.subItems.map(
+                                                      (subItem) => (
+                                                        <li
+                                                          key={subItem.name}
+                                                          className="px-4 py-2 hover:bg-gray-200 hover:text-gray-800"
+                                                        >
+                                                          <button
+                                                            onClick={() =>
+                                                              handleCategoryClick(
+                                                                category,
+                                                                section,
+                                                                item,
+                                                                subItem,
+                                                                close
+                                                              )
+                                                            }
+                                                            className="text-left w-full"
+                                                          >
+                                                            {subItem.name}
+                                                          </button>
+                                                        </li>
+                                                      )
+                                                    )}
+                                                  </ul>
+                                                )}
+                                              </div>
                                             ))}
                                           </ul>
                                         </div>

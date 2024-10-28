@@ -2,6 +2,10 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "./ProductCard";
+import { useLocation, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../../../State/Product/action";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -47,6 +51,47 @@ function classNames(...classes) {
 }
 
 export default function Product() {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+
+  const category = searchParams.get("category");
+  const carMake = searchParams.get("car-make");
+  const priceValue = searchParams.get("price");
+  const minDiscount = searchParams.get("discount");
+  const sortValue = searchParams.get("sort");
+  const stock = searchParams.get("stock");
+  const pageNumber = searchParams.get("page") || 1;
+
+  useEffect(() => {
+    const [minPrice, maxPrice] =
+      priceValue === null ? [0, 1000000] : priceValue.split("-").map(Number);
+
+    const data = {
+      category,
+      carMake,
+      minPrice,
+      maxPrice,
+      minDiscount: minDiscount || 0,
+      sort: sortValue || "low_to_high",
+      stock: stock || "in_stock",
+      pageNumber,
+      pageSize: 10,
+    };
+
+    dispatch(getProducts(data));
+  }, [
+    carMake,
+    category,
+    priceValue,
+    minDiscount,
+    sortValue,
+    stock,
+    pageNumber,
+  ]);
+
   return (
     <div className="bg-white">
       <div>

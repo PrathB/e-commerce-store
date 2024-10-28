@@ -39,11 +39,25 @@ const getProductsFailure = (error) => ({
   payload: error,
 });
 
-export const getProducts = (query) => async (dispatch) => {
+export const getProducts = (data) => async (dispatch) => {
   dispatch(getProductsRequest());
-
+  const {
+    category,
+    carMake,
+    minPrice,
+    maxPrice,
+    minDiscount,
+    sort,
+    stock,
+    pageNumber,
+    pageSize,
+  } = data;
   try {
-    const response = await api.get(`/api/products`, { params: query });
+    const response = await api.get(
+      `/api/products?category=${category}&carMake=${carMake}&minPrice=${minPrice}&maxPrice=${maxPrice}
+      &minDiscount=${minDiscount}&sort=${sort}&stock=${stock}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+    console.log(response.data);
     dispatch(getProductsSuccess(response.data));
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
