@@ -26,6 +26,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../authorization/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, logout } from "../../../State/Authorization/action";
+import { ArrowDropDown } from "@mui/icons-material";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -60,7 +61,7 @@ const navigation = {
             { id: "audi", name: "Audi", href: "#" },
             { id: "bmw", name: "BMW", href: "#" },
             { id: "mercedes", name: "Mercedes", href: "#" },
-            { id: "ford", name: "Ford", href: "#" },
+            { id: "kia", name: "Kia", href: "#" },
             { id: "mahindra", name: "Mahindra", href: "#" },
             { id: "maruti-suzuki", name: "Maruti Suzuki", href: "#" },
             { id: "tata", name: "Tata", href: "#" },
@@ -211,12 +212,20 @@ export default function Navigation() {
   const navigate = useNavigate();
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState({});
   const openUserMenu = Boolean(anchorEl);
   const location = useLocation();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
   const jwtFromState = useSelector((store) => store.auth.jwt);
   const userFromState = useSelector((store) => store.auth.user);
+
+  const toggleDropdown = (itemId) => {
+    setOpenDropdown((prev) => ({
+      prev: false,
+      [itemId]: !prev[itemId],
+    }));
+  };
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -379,28 +388,66 @@ export default function Navigation() {
                             >
                               {section.name}
                             </p>
-                            {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
                             <ul
                               role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
                               className="mt-6 flex flex-col space-y-6"
                             >
                               {section.items.map((item) => (
-                                <li key={item.name} className="flow-root">
-                                  <p
-                                    onClick={() =>
-                                      handleCategoryClick(
-                                        category,
-                                        section,
-                                        item,
-                                        () => setOpen(false)
-                                      )
-                                    }
-                                    className="-m-2 block p-2 text-gray-500"
-                                  >
-                                    {item.name}
-                                  </p>
-                                </li>
+                                <div key={item.name} className="flex flex-col">
+                                  <li className="flex relative">
+                                    <p
+                                      onClick={() =>
+                                        handleCategoryClick(
+                                          category,
+                                          section,
+                                          item,
+                                          null,
+                                          () => setOpen(false)
+                                        )
+                                      }
+                                      className="-m-2 block p-2 text-gray-500"
+                                    >
+                                      {item.name}
+                                    </p>
+                                    {section.id === "category" && (
+                                      <ArrowDropDown
+                                        onClick={() =>
+                                          toggleDropdown(item.name)
+                                        }
+                                        className="absolute mr-2 right-0"
+                                      />
+                                    )}
+                                  </li>
+                                  {/* Render subcategories directly under the item */}
+                                  {section.id === "category" &&
+                                    openDropdown[item.name] &&
+                                    item.subItems && (
+                                      <ul className="ml-2">
+                                        {item.subItems.map((subItem) => (
+                                          <li
+                                            key={subItem.name}
+                                            className="p-2 text-gray-500 "
+                                          >
+                                            <button
+                                              onClick={() =>
+                                                handleCategoryClick(
+                                                  category,
+                                                  section,
+                                                  item,
+                                                  subItem,
+                                                  () => setOpen(false)
+                                                )
+                                              }
+                                              className="text-left w-full"
+                                            >
+                                              {subItem.name}
+                                            </button>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                </div>
                               ))}
                             </ul>
                           </div>
@@ -589,9 +636,11 @@ export default function Navigation() {
                                                 >
                                                   {item.name}
                                                 </p>
-                                                {section.id==="category" && <span className="absolute right-0 opacity-100 group-hover:opacity-0">
-                                                  &gt;
-                                                </span>}
+                                                {section.id === "category" && (
+                                                  <span className="absolute right-0 opacity-100 group-hover:opacity-0">
+                                                    &gt;
+                                                  </span>
+                                                )}
                                                 {item.subItems && (
                                                   <ul className="absolute left-full w-full top-0 hidden group-hover:block bg-white border border-gray-300 shadow-lg">
                                                     {item.subItems.map(
