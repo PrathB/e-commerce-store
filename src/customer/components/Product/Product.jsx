@@ -19,13 +19,6 @@ import { useDispatch } from "react-redux";
 import { getProducts } from "../../../State/Product/action";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FunnelIcon } from "@heroicons/react/24/solid";
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 const sortOptions = [
@@ -51,15 +44,15 @@ const filter2 = [
     id: "car-make",
     name: "Car Make",
     options: [
-      { value: "audi", label: "Audi", checked: false },
-      { value: "bmw", label: "BMW", checked: false },
-      { value: "mercedes", label: "Mercedes", checked: true },
-      { value: "kia", label: "Kia", checked: false },
-      { value: "mahindra", label: "Mahindra", checked: false },
-      { value: "maruti-suzuki", label: "Maruti Suzuki", checked: false },
-      { value: "tata", label: "Tata", checked: false },
-      { value: "honda", label: "Honda", checked: false },
-      { value: "volkswagen", label: "Volkswagen", checked: false },
+      { value: "Audi", label: "Audi", checked: false },
+      { value: "BMW", label: "BMW", checked: false },
+      { value: "Mercedes", label: "Mercedes", checked: true },
+      { value: "Kia", label: "Kia", checked: false },
+      { value: "Mahindra", label: "Mahindra", checked: false },
+      { value: "Maruti-Suzuki", label: "Maruti Suzuki", checked: false },
+      { value: "Tata", label: "Tata", checked: false },
+      { value: "Honda", label: "Honda", checked: false },
+      { value: "Volkswagen", label: "Volkswagen", checked: false },
     ],
   },
 ];
@@ -301,56 +294,68 @@ export default function Product() {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
               {/* Filters*/}
-              <form className="hidden lg:block">
-                {filters.map((section) => (
-                  <Disclosure
-                    key={section.id}
-                    as="div"
-                    className="border-b border-gray-200 py-6"
-                  >
-                    <h3 className="-my-3 flow-root">
-                      <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">
-                          {section.name}
-                        </span>
-                        <span className="ml-6 flex items-center">
-                          <PlusIcon
-                            aria-hidden="true"
-                            className="h-5 w-5 group-data-[open]:hidden"
-                          />
-                          <MinusIcon
-                            aria-hidden="true"
-                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                          />
-                        </span>
-                      </DisclosureButton>
-                    </h3>
-                    <DisclosurePanel className="pt-6">
-                      <div className="space-y-4">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex items-center">
-                            <input
-                              id={`filter-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              onChange={() =>
-                                handleFilterChange(option.value, section.id)
-                              }
+              <div className="hidden lg:block">
+                <div className="py-6 flex justify-between items-center">
+                  <h1 className="text-lg opacity-50 font-bold text-left">
+                    Filters
+                  </h1>
+                  <FilterList />
+                </div>
+
+                <form className="hidden lg:block">
+                  {filters.map((section) => (
+                    <Disclosure
+                      key={section.id}
+                      as="div"
+                      className="border-b border-gray-200 py-6"
+                    >
+                      <h3 className="-my-3 flow-root">
+                        <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                          <span className="font-medium text-gray-900">
+                            {section.name}
+                          </span>
+                          <span className="ml-6 flex items-center">
+                            <PlusIcon
+                              aria-hidden="true"
+                              className="h-5 w-5 group-data-[open]:hidden"
                             />
-                            <label
-                              htmlFor={`filter-${section.id}-${optionIdx}`}
-                              className="ml-3 text-sm text-gray-600"
+                            <MinusIcon
+                              aria-hidden="true"
+                              className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                            />
+                          </span>
+                        </DisclosureButton>
+                      </h3>
+                      <DisclosurePanel className="pt-6">
+                        <div className="space-y-4">
+                          {section.options.map((option, optionIdx) => (
+                            <div
+                              key={option.value}
+                              className="flex items-center"
                             >
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </DisclosurePanel>
-                  </Disclosure>
-                ))}
-              </form>
+                              <input
+                                id={`filter-${section.id}-${optionIdx}`}
+                                name={`${section.id}[]`}
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                onChange={() =>
+                                  handleFilterChange(option.value, section.id)
+                                }
+                              />
+                              <label
+                                htmlFor={`filter-${section.id}-${optionIdx}`}
+                                className="ml-3 text-sm text-gray-600"
+                              >
+                                {option.label}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </DisclosurePanel>
+                    </Disclosure>
+                  ))}
+                </form>
+              </div>
 
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">

@@ -58,15 +58,15 @@ const navigation = {
           id: "car-make",
           name: "Car Make",
           items: [
-            { id: "audi", name: "Audi", href: "#" },
-            { id: "bmw", name: "BMW", href: "#" },
-            { id: "mercedes", name: "Mercedes", href: "#" },
-            { id: "kia", name: "Kia", href: "#" },
-            { id: "mahindra", name: "Mahindra", href: "#" },
-            { id: "maruti-suzuki", name: "Maruti Suzuki", href: "#" },
-            { id: "tata", name: "Tata", href: "#" },
-            { id: "honda", name: "Honda", href: "#" },
-            { id: "volkswagen", name: "Volkswagen", href: "#" },
+            { id: "Audi", name: "Audi", href: "#" },
+            { id: "BMW", name: "BMW", href: "#" },
+            { id: "Mercedes", name: "Mercedes", href: "#" },
+            { id: "Kia", name: "Kia", href: "#" },
+            { id: "Mahindra", name: "Mahindra", href: "#" },
+            { id: "Maruti-Suzuki", name: "Maruti Suzuki", href: "#" },
+            { id: "Tata", name: "Tata", href: "#" },
+            { id: "Honda", name: "Honda", href: "#" },
+            { id: "Volkswagen", name: "Volkswagen", href: "#" },
           ],
         },
         {
@@ -74,126 +74,130 @@ const navigation = {
           name: "Category",
           items: [
             {
-              id: "suspension-&-steering",
+              id: "Suspension-And-Steering",
               name: "Suspension & Steering",
               href: "#",
               subItems: [
                 {
-                  id: "strut-&-shock-absorber",
+                  id: "Strut-And-Shock-Absorber",
                   name: "Strut & Shock Absorber",
                   href: "#",
                 },
-                { id: "control-arm", name: "Control Arm", href: "#" },
+                { id: "Control-Arm", name: "Control Arm", href: "#" },
                 {
-                  id: "stabilizer-&-link",
+                  id: "Stabilizer-And-Link",
                   name: "Stabilizer & Link",
                   href: "#",
                 },
                 {
-                  id: "bush,strut-mounting-&-kit",
+                  id: "Bush,-Strut-Mounting-And-Kit",
                   name: "Bush, Strut Mounting & Kit",
                   href: "#",
                 },
               ],
             },
             {
-              id: "engine-parts",
+              id: "Engine-Parts",
               name: "Engine Parts",
               href: "#",
               subItems: [
-                { id: "filter", name: "Filter", href: "#" },
-                { id: "mounting", name: "Mounting", href: "#" },
+                { id: "Filter", name: "Filter", href: "#" },
+                { id: "Mounting", name: "Mounting", href: "#" },
               ],
             },
             {
-              id: "braking-system",
+              id: "Braking-System",
               name: "Braking System",
               href: "#",
               subItems: [
-                { id: "brake-pad", name: "Brake Pad", href: "#" },
-                { id: "disc-rotor", name: "Disc Rotor", href: "#" },
-                { id: "brake-booster", name: "Brake Booster", href: "#" },
+                { id: "Brake-Pad", name: "Brake Pad", href: "#" },
+                { id: "Disc-Rotor", name: "Disc Rotor", href: "#" },
+                { id: "Brake-Booster", name: "Brake Booster", href: "#" },
               ],
             },
             {
-              id: "electrical",
+              id: "Electrical",
               name: "Electrical",
               href: "#",
               subItems: [
-                { id: "sesnsor", name: "Sensor", href: "#" },
-                { id: "ignition", name: "Ignition", href: "#" },
+                { id: "Sesnsor", name: "Sensor", href: "#" },
+                { id: "Ignition", name: "Ignition", href: "#" },
                 {
-                  id: "electronic-control-unit",
+                  id: "Electronic-Control-Unit",
                   name: "Electronic Control Unit",
                   href: "#",
                 },
-                { id: "battery", name: "Battery", href: "#" },
+                { id: "Battery", name: "Battery", href: "#" },
               ],
             },
             {
-              id: "cooling-&-hvac",
+              id: "Cooling-And-HVAC",
               name: "Cooling & HVAC",
               href: "#",
               subItems: [
                 {
-                  id: "refrigerant-system",
+                  id: "Refrigerant-System",
                   name: "Refrigerant System",
                   href: "#",
                 },
-                { id: "radiator", name: "Radiator", href: "#" },
+                { id: "Radiator", name: "Radiator", href: "#" },
                 {
-                  id: "condensor",
+                  id: "Condensor",
                   name: "Condensor",
                   href: "#",
                 },
-                { id: "evaporator", name: "Evaporator", href: "#" },
-                { id: "compressor", name: "Compressor", href: "#" },
+                { id: "Evaporator", name: "Evaporator", href: "#" },
+                { id: "Compressor", name: "Compressor", href: "#" },
               ],
             },
             {
-              id: "body-parts",
+              id: "Body-Parts",
               name: "Body Parts",
               href: "#",
               subItems: [
-                { id: "rear-view-mirror", name: "Rear View Mirror", href: "#" },
+                { id: "Rear-View-Mirror", name: "Rear View Mirror", href: "#" },
                 {
-                  id: "fender-&-fender-liner",
+                  id: "Fender-And-Fender-Liner",
                   name: "Fender & Fender Liner",
                   href: "#",
                 },
                 {
-                  id: "wheel-rim",
+                  id: "Wheel-Rim",
                   name: "Wheel Rim",
                   href: "#",
                 },
-                { id: "wheel-cover", name: "Wheel Cover", href: "#" },
-                { id: "bumper", name: "Bumper", href: "#" },
-                { id: "headlight", name: "Headlight", href: "#" },
-                { id: "tailight", name: "Tailight", href: "#" },
+                { id: "Wheel-Cover", name: "Wheel Cover", href: "#" },
+                { id: "Bumper", name: "Bumper", href: "#" },
+                { id: "Headlight", name: "Headlight", href: "#" },
+                { id: "Tailight", name: "Tailight", href: "#" },
               ],
             },
             {
-              id: "safety-system",
+              id: "Safety-System",
               name: "Safety System",
               href: "#",
               subItems: [
-                { id: "airbag-system", name: "Airbag System", href: "#" },
-                { id: "seatbelt-system", name: "Seatbelt System", href: "#" },
+                { id: "Airbag-System", name: "Airbag System", href: "#" },
+                { id: "Seatbelt-System", name: "Seatbelt System", href: "#" },
               ],
             },
             {
-              id: "accessories",
+              id: "Accessories",
               name: "Accessories",
               href: "#",
               subItems: [
                 {
-                  id: "windshield-&-wiper",
+                  id: "Windshield-And-Wiper",
                   name: "Windshield & Wiper",
                   href: "#",
                 },
-                { id: "seatcover-&-mat", name: "Seatcover & Mat", href: "#" },
                 {
-                  id: "entertainment-system",
+                  id: "Seatcover-And-Mat",
+                  name: "Seatcover & Mat",
+                  href: "#",
+                },
+                {
+                  id: "Entertainment-System",
                   name: "Entertainment System",
                   href: "#",
                 },
@@ -244,9 +248,9 @@ export default function Navigation() {
   const handleCategoryClick = (category, section, item, subItem, close) => {
     {
       if (subItem === null) {
-        navigate(`/${category.id}/?${section.id}=${item.name}`);
+        navigate(`/${category.id}/?${section.id}=${item.id}`);
       } else {
-        navigate(`/${category.id}/?${section.id}=${subItem.name}`);
+        navigate(`/${category.id}/?${section.id}=${subItem.id}`);
       }
     }
 
