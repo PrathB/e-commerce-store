@@ -1,50 +1,68 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "./ProductCard";
-import { useLocation, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../../../State/Product/action";
+import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon } from "@heroicons/react/24/solid";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import { FilterList } from "@mui/icons-material";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
 
-const productNavigation = {
-  sections: [
-    {
-      id: "brands",
-      name: "Brands",
-      items: [
-        { name: "Audi", href: "#" },
-        { name: "Honda", href: "#" },
-        { name: "Hyundai", href: "#" },
-        { name: "Kia", href: "#" },
-        { name: "Mahindra", href: "#" },
-        { name: "Maruti Suzuki", href: "#" },
-        { name: "Tata", href: "#" },
-        { name: "Toyota", href: "#" },
-        { name: "Volkswagen", href: "#" },
-      ],
-    },
-    {
-      id: "categories",
-      name: "Categories",
-      items: [
-        { name: "Service Kits", href: "#" },
-        { name: "Oils and Lubricants", href: "#" },
-        { name: "Filters", href: "#" },
-        { name: "Brake System", href: "#" },
-        { name: "Clutch System", href: "#" },
-        { name: "Suspension and Arms", href: "#" },
-        { name: "Lighting", href: "#" },
-        { name: "Body Parts", href: "#" },
-      ],
-    },
-  ],
-};
+const filter1 = [
+  {
+    id: "category",
+    name: "Category",
+    options: [
+      { value: "new-arrivals", label: "New Arrivals", checked: false },
+      { value: "sale", label: "Sale", checked: false },
+      { value: "travel", label: "Travel", checked: true },
+      { value: "organization", label: "Organization", checked: false },
+      { value: "accessories", label: "Accessories", checked: false },
+    ],
+  },
+];
+const filter2 = [
+  {
+    id: "car-make",
+    name: "Car Make",
+    options: [
+      { value: "audi", label: "Audi", checked: false },
+      { value: "bmw", label: "BMW", checked: false },
+      { value: "mercedes", label: "Mercedes", checked: true },
+      { value: "kia", label: "Kia", checked: false },
+      { value: "mahindra", label: "Mahindra", checked: false },
+      { value: "maruti-suzuki", label: "Maruti Suzuki", checked: false },
+      { value: "tata", label: "Tata", checked: false },
+      { value: "honda", label: "Honda", checked: false },
+      { value: "volkswagen", label: "Volkswagen", checked: false },
+    ],
+  },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -52,7 +70,10 @@ function classNames(...classes) {
 
 export default function Product() {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParams = new URLSearchParams(decodedQueryString);
@@ -92,14 +113,139 @@ export default function Product() {
     pageNumber,
   ]);
 
+  const selectFilters = () => {
+    const searchParams = location.search;
+
+    const carMakeIndex = searchParams.indexOf("car-make");
+    const categoryIndex = searchParams.indexOf("category");
+
+    let filters = null;
+    if (
+      carMakeIndex !== -1 &&
+      (categoryIndex === -1 || carMakeIndex < categoryIndex)
+    ) {
+      filters = filter1; // car-make comes first
+    } else if (
+      categoryIndex !== -1 &&
+      (carMakeIndex === -1 || categoryIndex < carMakeIndex)
+    ) {
+      filters = filter2; // category comes first
+    }
+    return filters;
+  };
+
+  const filters = selectFilters();
+
+  const handleFilterChange = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+
+    let filterValue = searchParams.getAll(sectionId);
+    if (filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+      filterValue = filterValue[0].split(",").filter((item) => item !== value);
+      if (filterValue.length === 0) {
+        searchParams.delete(sectionId);
+      }
+    } else {
+      filterValue.push(value);
+    }
+
+    if (filterValue.length > 0) {
+      searchParams.set(sectionId, filterValue.join(","));
+    }
+
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
+
   return (
     <div className="bg-white">
       <div>
+        {/* Mobile filter dialog */}
+        <Dialog
+          open={mobileFiltersOpen}
+          onClose={setMobileFiltersOpen}
+          className="relative z-40 lg:hidden"
+        >
+          <DialogBackdrop
+            transition
+            className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+          />
+
+          <div className="fixed inset-0 z-40 flex">
+            <DialogPanel
+              transition
+              className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
+            >
+              <div className="flex items-center justify-between px-4">
+                <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+                <button
+                  type="button"
+                  onClick={() => setMobileFiltersOpen(false)}
+                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                >
+                  <span className="sr-only">Close menu</span>
+                  <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                </button>
+              </div>
+
+              {/* Filters */}
+              <form className="mt-4 border-t border-gray-200">
+                {filters.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className="border-t border-gray-200 px-4 py-6"
+                  >
+                    <h3 className="-mx-2 -my-3 flow-root">
+                      <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                        <span className="font-medium text-gray-900">
+                          {section.name}
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                          />
+                        </span>
+                      </DisclosureButton>
+                    </h3>
+                    <DisclosurePanel className="pt-6">
+                      <div className="space-y-6">
+                        {section.options.map((option, optionIdx) => (
+                          <div key={option.value} className="flex items-center">
+                            <input
+                              defaultValue={option.value}
+                              id={`filter-mobile-${section.id}-${optionIdx}`}
+                              name={`${section.id}[]`}
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              onChange={() =>
+                                handleFilterChange(option.value, section.id)
+                              }
+                            />
+                            <label
+                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                              className="ml-3 min-w-0 flex-1 text-gray-500"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </DisclosurePanel>
+                  </Disclosure>
+                ))}
+              </form>
+            </DialogPanel>
+          </div>
+        </Dialog>
         <main className="mx-auto px-4 sm:px-6 lg:px-20">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-gray-900">
-              New Arrivals
-            </h1>
+            <h1 className="text-l sm:text-xl lg:text-2xl font-bold tracking-tight text-gray-900"></h1>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
@@ -136,6 +282,15 @@ export default function Product() {
                   </div>
                 </MenuItems>
               </Menu>
+
+              <button
+                type="button"
+                onClick={() => setMobileFiltersOpen(true)}
+                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+              >
+                <span className="sr-only">Filters</span>
+                <FunnelIcon aria-hidden="true" className="h-5 w-5" />
+              </button>
             </div>
           </div>
 
@@ -145,31 +300,57 @@ export default function Product() {
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
-              {/* Product Browse*/}
-              <div className="hidden lg:block pb-4">
-                {productNavigation.sections.map((section) => (
-                  <div
+              {/* Filters*/}
+              <form className="hidden lg:block">
+                {filters.map((section) => (
+                  <Disclosure
                     key={section.id}
-                    className="mb-6 pb-4 border-b border-gray-200"
+                    as="div"
+                    className="border-b border-gray-200 py-6"
                   >
-                    <h3 className="text-lg font-medium text-gray-900">
-                      {section.name}
+                    <h3 className="-my-3 flow-root">
+                      <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                        <span className="font-medium text-gray-900">
+                          {section.name}
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                          />
+                        </span>
+                      </DisclosureButton>
                     </h3>
-                    <ul role="list" className="mt-2 space-y-3">
-                      {section.items.map((item) => (
-                        <li key={item.name}>
-                          <a
-                            href={item.href}
-                            className="text-gray-600 hover:text-gray-900 hover:font-semibold"
-                          >
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                    <DisclosurePanel className="pt-6">
+                      <div className="space-y-4">
+                        {section.options.map((option, optionIdx) => (
+                          <div key={option.value} className="flex items-center">
+                            <input
+                              id={`filter-${section.id}-${optionIdx}`}
+                              name={`${section.id}[]`}
+                              type="checkbox"
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                              onChange={() =>
+                                handleFilterChange(option.value, section.id)
+                              }
+                            />
+                            <label
+                              htmlFor={`filter-${section.id}-${optionIdx}`}
+                              className="ml-3 text-sm text-gray-600"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </DisclosurePanel>
+                  </Disclosure>
                 ))}
-              </div>
+              </form>
 
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
