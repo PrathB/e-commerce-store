@@ -90,7 +90,7 @@ const navigation = {
                   href: "#",
                 },
                 {
-                  id: "Bush,-Strut-Mounting-And-Kit",
+                  id: "Bush-Strut-Mounting-And-Kit",
                   name: "Bush, Strut Mounting & Kit",
                   href: "#",
                 },

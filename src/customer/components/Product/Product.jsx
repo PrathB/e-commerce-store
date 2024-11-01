@@ -31,14 +31,109 @@ const filter1 = [
     id: "category",
     name: "Category",
     options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
+      {
+        value: "Suspension-And-Steering",
+        label: "Suspension & Steering",
+        checked: false,
+        subcategories: [
+          {
+            value: "Strut-And-Shock-Absorber",
+            label: "Strut & Shock Absorber",
+          },
+          { value: "Control-Arm", label: "Control Arm" },
+          {
+            value: "Stabilizer-And-Link",
+            label: "Stabilizer & Link",
+          },
+          {
+            value: "Bush-Strut-Mounting-And-Kit",
+            label: "Bush, Strut Mounting & Kit",
+          },
+        ],
+      },
+
+      {
+        value: "Engine-Parts",
+        label: "Engine Parts",
+        checked: false,
+        subcategories: [
+          { value: "Filter", label: "Filter" },
+          { value: "Mounting", label: "Mounting" },
+        ],
+      },
+      {
+        value: "Braking-System",
+        label: "Braking System",
+        checked: false,
+        subcategories: [
+          { value: "Brake-Pad", label: "Brake Pad" },
+          { value: "Disc-Rotor", label: "Disc Rotor" },
+          { value: "Brake-Booster", label: "Brake Booster" },
+        ],
+      },
+      {
+        value: "Electrical",
+        label: "Electrical",
+        checked: false,
+        subcategories: [
+          { value: "Sesnsor", label: "Sesnsor" },
+          { value: "Ignition", label: "Ignition" },
+          {
+            value: "Electronic-Control-Unit",
+            label: "Electronic Control Unit",
+          },
+          { value: "Battery", label: "Battery" },
+        ],
+      },
+      {
+        value: "Cooling-And-HVAC",
+        label: "Cooling & HVAC",
+        checked: false,
+        subcategories: [
+          { value: "Refrigerant-System", label: "Refrigerant System" },
+          { value: "Radiator", label: "Radiator" },
+          { value: "Condensor", label: "Condensor" },
+          { value: "Evaporator", label: "Evaporator" },
+          { value: "Compressor", label: "Compressor" },
+        ],
+      },
+      {
+        value: "Body-Parts",
+        label: "Body Parts",
+        checked: false,
+        subcategories: [
+          { value: "Rear-View-Mirror", label: "Rear View Mirror" },
+          { value: "Fender-And-Fender-Liner", label: "Fender & Fender Liner" },
+          { value: "Wheel-Rim", label: "Wheel Rim" },
+          { value: "Wheel-Cover", label: "Wheel Cover" },
+          { value: "Bumper", label: "Bumper" },
+          { value: "Headlight", label: "Headlight" },
+          { value: "Tailight", label: "Tailight" },
+        ],
+      },
+      {
+        value: "Safety-System",
+        label: "Safety System",
+        checked: false,
+        subcategories: [
+          { value: "Airbag-System", label: "Airbag System" },
+          { value: "Seatbelt-System", label: "Seatbelt System" },
+        ],
+      },
+      {
+        value: "Accessories",
+        label: "Accessories",
+        checked: false,
+        subcategories: [
+          { value: "Windshield-And-Wiper", label: "Windshield & Wiper" },
+          { value: "Seatcover-And-Mat", label: "Seatcover & Mat" },
+          { value: "Entertainment-System", label: "Entertainment System" },
+        ],
+      },
     ],
   },
 ];
+
 const filter2 = [
   {
     id: "car-make",
@@ -46,7 +141,7 @@ const filter2 = [
     options: [
       { value: "Audi", label: "Audi", checked: false },
       { value: "BMW", label: "BMW", checked: false },
-      { value: "Mercedes", label: "Mercedes", checked: true },
+      { value: "Mercedes", label: "Mercedes", checked: false },
       { value: "Kia", label: "Kia", checked: false },
       { value: "Mahindra", label: "Mahindra", checked: false },
       { value: "Maruti-Suzuki", label: "Maruti Suzuki", checked: false },
@@ -78,6 +173,24 @@ export default function Product() {
   const sortValue = searchParams.get("sort");
   const stock = searchParams.get("stock");
   const pageNumber = searchParams.get("page") || 1;
+
+  const [subCategoryOpen, setSubCategoryOpen] = useState({});
+
+  const toggleSubCategory = (categoryId) => {
+    setSubCategoryOpen((prev) => ({
+      ...prev,
+      [categoryId]: !prev[categoryId],
+    }));
+  };
+
+  const [mobileSubCategoryOpen, setMobileSubCategoryOpen] = useState({});
+
+  const toggleMobileSubCategory = (categoryId) => {
+    setMobileSubCategoryOpen((prev) => ({
+      ...prev,
+      [categoryId]: !prev[categoryId],
+    }));
+  };
 
   useEffect(() => {
     const [minPrice, maxPrice] =
@@ -159,16 +272,9 @@ export default function Product() {
           onClose={setMobileFiltersOpen}
           className="relative z-40 lg:hidden"
         >
-          <DialogBackdrop
-            transition
-            className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
-          />
-
+          <DialogBackdrop className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0" />
           <div className="fixed inset-0 z-40 flex">
-            <DialogPanel
-              transition
-              className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
-            >
+            <DialogPanel className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full">
               <div className="flex items-center justify-between px-4">
                 <h2 className="text-lg font-medium text-gray-900">Filters</h2>
                 <button
@@ -209,23 +315,71 @@ export default function Product() {
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-6">
                         {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex items-center">
-                            <input
-                              defaultValue={option.value}
-                              id={`filter-mobile-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                              onChange={() =>
-                                handleFilterChange(option.value, section.id)
-                              }
-                            />
-                            <label
-                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              {option.label}
-                            </label>
+                          <div key={option.value} className="flex flex-col">
+                            <div className="flex items-center">
+                              <input
+                                id={`filter-mobile-${section.id}-${optionIdx}`}
+                                name={`${section.id}[]`}
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                onChange={() =>
+                                  handleFilterChange(option.value, section.id)
+                                }
+                              />
+                              <label
+                                htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                className="ml-3 min-w-0 flex-1 text-gray-500"
+                              >
+                                {option.label}
+                              </label>
+                              {option.subcategories && (
+                                <button
+                                  type="button"
+                                  className="ml-2 text-gray-500"
+                                  onClick={() =>
+                                    toggleMobileSubCategory(option.value)
+                                  }
+                                >
+                                  {mobileSubCategoryOpen[option.value] ? (
+                                    <MinusIcon className="h-4 w-4" />
+                                  ) : (
+                                    <PlusIcon className="h-4 w-4" />
+                                  )}
+                                </button>
+                              )}
+                            </div>
+
+                            {/* Subcategories */}
+                            {mobileSubCategoryOpen[option.value] &&
+                              option.subcategories && (
+                                <div className="pl-6 mt-2 space-y-2">
+                                  {option.subcategories.map((subOption) => (
+                                    <div
+                                      key={subOption.value}
+                                      className="flex items-center"
+                                    >
+                                      <input
+                                        id={`sub-filter-mobile-${section.id}-${option.value}-${subOption.value}`}
+                                        name={`${section.id}[]`}
+                                        type="checkbox"
+                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        onChange={() =>
+                                          handleFilterChange(
+                                            subOption.value,
+                                            section.id,
+                                          )
+                                        }
+                                      />
+                                      <label
+                                        htmlFor={`sub-filter-mobile-${section.id}-${option.value}-${subOption.value}`}
+                                        className="ml-3 text-sm text-gray-600"
+                                      >
+                                        {subOption.label}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                           </div>
                         ))}
                       </div>
@@ -329,25 +483,71 @@ export default function Product() {
                       <DisclosurePanel className="pt-6">
                         <div className="space-y-4">
                           {section.options.map((option, optionIdx) => (
-                            <div
-                              key={option.value}
-                              className="flex items-center"
-                            >
-                              <input
-                                id={`filter-${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                onChange={() =>
-                                  handleFilterChange(option.value, section.id)
-                                }
-                              />
-                              <label
-                                htmlFor={`filter-${section.id}-${optionIdx}`}
-                                className="ml-3 text-sm text-gray-600"
-                              >
-                                {option.label}
-                              </label>
+                            <div key={option.value} className="flex flex-col">
+                              <div className="flex items-center">
+                                <input
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  type="checkbox"
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                  onChange={() =>
+                                    handleFilterChange(option.value, section.id)
+                                  }
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
+                                >
+                                  {option.label}
+                                </label>
+                                {option.subcategories && (
+                                  <button
+                                    type="button"
+                                    className="ml-2 text-gray-500"
+                                    onClick={() =>
+                                      toggleSubCategory(option.value)
+                                    }
+                                  >
+                                    {subCategoryOpen[option.value] ? (
+                                      <MinusIcon className="h-4 w-4" />
+                                    ) : (
+                                      <PlusIcon className="h-4 w-4" />
+                                    )}
+                                  </button>
+                                )}
+                              </div>
+
+                              {/* Subcategories */}
+                              {subCategoryOpen[option.value] &&
+                                option.subcategories && (
+                                  <div className="pl-6 mt-2 space-y-2">
+                                    {option.subcategories.map((subOption) => (
+                                      <div
+                                        key={subOption.value}
+                                        className="flex items-center"
+                                      >
+                                        <input
+                                          id={`sub-filter-${section.id}-${option.value}-${subOption.value}`}
+                                          name={`${section.id}[]`}
+                                          type="checkbox"
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                          onChange={() =>
+                                            handleFilterChange(
+                                              subOption.value,
+                                              section.id
+                                            )
+                                          }
+                                        />
+                                        <label
+                                          htmlFor={`sub-filter-${section.id}-${option.value}-${subOption.value}`}
+                                          className="ml-3 text-sm text-gray-600"
+                                        >
+                                          {subOption.label}
+                                        </label>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
                             </div>
                           ))}
                         </div>
