@@ -11,15 +11,15 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "./ProductCard";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../State/Product/action";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FunnelIcon } from "@heroicons/react/24/solid";
 import { FilterList } from "@mui/icons-material";
+import { Pagination } from "@mui/material";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -163,17 +163,6 @@ export default function Product() {
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const decodedQueryString = decodeURIComponent(location.search);
-  const searchParams = new URLSearchParams(decodedQueryString);
-
-  const category = searchParams.get("category");
-  const carMake = searchParams.get("car-make");
-  const priceValue = searchParams.get("price");
-  const minDiscount = searchParams.get("discount");
-  const sortValue = searchParams.get("sort");
-  const stock = searchParams.get("stock");
-  const pageNumber = searchParams.get("page") || 1;
-
   const [subCategoryOpen, setSubCategoryOpen] = useState({});
 
   const toggleSubCategory = (categoryId) => {
@@ -192,6 +181,24 @@ export default function Product() {
     }));
   };
 
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+
+  const category = searchParams.get("category");
+  const carMake = searchParams.get("car-make");
+  const priceValue = searchParams.get("price");
+  const minDiscount = searchParams.get("discount");
+  const sortValue = searchParams.get("sort");
+  const stock = searchParams.get("stock");
+  const pageNumber = searchParams.get("page") || 1;
+
+  const handlePaginationChange = (event, value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("page", value);
+    const query = searchParams.toString();
+    navigate({ search: query });
+  };
+
   useEffect(() => {
     const [minPrice, maxPrice] =
       priceValue === null ? [0, 1000000] : priceValue.split("-").map(Number);
@@ -205,7 +212,7 @@ export default function Product() {
       sort: sortValue || "low_to_high",
       stock: stock || "in_stock",
       pageNumber,
-      pageSize: 10,
+      pageSize: 1,
     };
 
     dispatch(getProducts(data));
@@ -218,6 +225,8 @@ export default function Product() {
     stock,
     pageNumber,
   ]);
+
+  const pageData = useSelector((store) => store.product.pageData);
 
   const selectFilters = () => {
     const searchParams = location.search;
@@ -366,7 +375,7 @@ export default function Product() {
                                         onChange={() =>
                                           handleFilterChange(
                                             subOption.value,
-                                            section.id,
+                                            section.id
                                           )
                                         }
                                       />
@@ -560,11 +569,43 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center sm:justify-start bg-white py-5">
-                  {volkswagen_parts.map((item) => (
-                    <ProductCard product={item} key={item.title} />
-                  ))}
+                  {pageData?.content.length === 0 && (
+                    <h1 className="text-center w-full text-2xl font-semibold opacity-70">
+                      Sorry, no products found!
+                    </h1>
+                  )}
+                  {pageData?.content.length > 0 &&
+                    pageData.content.map((item) => (
+                      <ProductCard product={item} key={item.title} />
+                    ))}
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Pagination */}
+          <section className="w-full px=[3.6rem]">
+            <div className="px-4 py-5 flex justify-center">
+              <Pagination
+                count={pageData?.totalPages}
+                color="primary"
+                sx={{
+                  "& .MuiPaginationItem-root": {
+                    color: "#000000", // Default text color for items
+                    "&.Mui-selected": {
+                      backgroundColor: "#7f0000", // Background color when selected
+                      color: "#ffffff", // Text color when selected
+                      "&:hover": {
+                        backgroundColor: "#500000", // Hover background for selected item
+                      },
+                    },
+                    "&:hover": {
+                      backgroundColor: "#dddddd", // Background on hover
+                    },
+                  },
+                }}
+                onChange={handlePaginationChange}
+              />
             </div>
           </section>
         </main>

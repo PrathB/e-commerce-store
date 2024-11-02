@@ -8,7 +8,7 @@ import {
 } from "./actionType";
 
 const initialState = {
-  pageData: null,
+  pageData: { content: [], currentPage: 0, totalPages: 0 },
   product: null,
   loading: false,
   error: null,
