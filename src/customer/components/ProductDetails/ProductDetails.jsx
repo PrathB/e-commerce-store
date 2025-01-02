@@ -1,55 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Box, Grid, LinearProgress, Rating, Typography } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
+import { useDispatch, useSelector } from "react-redux";
+import { findProductById } from "../../../State/Product/action";
+import { store } from "../../../State/store";
 
-const product = {
-  name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
-  price: "₹5,029.00",
-  href: "#",
-  breadcrumbs: [
-    { id: 1, name: "Home", href: "#" },
-    { id: 2, name: "Clutch Set", href: "#" },
-  ],
-  images: [
-    {
-      src: "https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg",
-      alt: "Clutch set image 1",
-    },
-    {
-      src: "https://cartrends.in/cdn/shop/products/twice_clutch_540x.jpg?v=1643914049",
-      alt: "Clutch set image 2",
-    },
-  ],
-  description:
-    "Clutch Set OE Part No. 8V2Z7B546V is a genuine Ford spare part for Ford Figo and Fiesta, Ecosport, Figo Aspire (Diesel). This Product comes in Genuine Ford Packing and sold by Ford India Private Limited. This item is sold as set of 2 Pieces containing Clutch Plate and Pressure Plate in a box",
-  highlights: [
-    "Ford Ecosport, Figo, Fiesta, Figo Aspire Clutch Set",
-    "Brand Name: Ford Genuine Part",
-    "Part Number: 8V2Z7B546V",
-  ],
-  specs: [
-    { label: "Weight", value: "6 kg" },
-    { label: "Dimensions (L*B*H)", value: "46 × 46 × 16 cm" },
-    { label: "Car Make", value: "Ford" },
-    { label: "Car Model", value: "Ecosport, Fiesta, Figo, Figo Aspire" },
-    { label: "Car Sub Model", value: "All Diesel Models., Type 2." },
-    { label: "Parts Brand", value: "Ford Genuine Part" },
-    { label: "Parts Origin", value: "Genuine" },
-    { label: "Net Quantity", value: "Set Of 2 Pcs." },
-    { label: "Country Of Origin", value: "India" },
-    { label: "Part Number", value: "8V2Z7B546V" },
-    { label: "Parts Category", value: "Ford Genuine Clutch Sets" },
-  ],
-  compatibility: [
-    "Ford Ecosport 1st & Facelift Model | 1.5L Diesel | 06.2013 – 09.2021",
-    "Ford Fiesta 2nd Gen & Facelift Model | 1.5L Diesel | 09.2011 – 09.2015",
-    "Ford Figo 2nd Gen | 1.5L Diesel | 08.2015 – 03.2019",
-    "Ford Figo Aspire 1st Gen | 1.5L Diesel | 08.2015 – 03.2018",
-  ],
-};
+// const product = {
+//   name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
+//   price: "₹5,029.00",
+//   href: "#",
+//   breadcrumbs: [
+//     { id: 1, name: "Home", href: "#" },
+//     { id: 2, name: "Clutch Set", href: "#" },
+//   ],
+//   images: [
+//     {
+//       src: "https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg",
+//       alt: "Clutch set image 1",
+//     },
+//     {
+//       src: "https://cartrends.in/cdn/shop/products/twice_clutch_540x.jpg?v=1643914049",
+//       alt: "Clutch set image 2",
+//     },
+//   ],
+//   description:
+//     "Clutch Set OE Part No. 8V2Z7B546V is a genuine Ford spare part for Ford Figo and Fiesta, Ecosport, Figo Aspire (Diesel). This Product comes in Genuine Ford Packing and sold by Ford India Private Limited. This item is sold as set of 2 Pieces containing Clutch Plate and Pressure Plate in a box",
+//   highlights: [
+//     "Ford Ecosport, Figo, Fiesta, Figo Aspire Clutch Set",
+//     "Brand Name: Ford Genuine Part",
+//     "Part Number: 8V2Z7B546V",
+//   ],
+//   specs: [
+//     { label: "Weight", value: "6 kg" },
+//     { label: "Dimensions (L*B*H)", value: "46 × 46 × 16 cm" },
+//     { label: "Car Make", value: "Ford" },
+//     { label: "Car Model", value: "Ecosport, Fiesta, Figo, Figo Aspire" },
+//     { label: "Car Sub Model", value: "All Diesel Models., Type 2." },
+//     { label: "Parts Brand", value: "Ford Genuine Part" },
+//     { label: "Parts Origin", value: "Genuine" },
+//     { label: "Net Quantity", value: "Set Of 2 Pcs." },
+//     { label: "Country Of Origin", value: "India" },
+//     { label: "Part Number", value: "8V2Z7B546V" },
+//     { label: "Parts Category", value: "Ford Genuine Clutch Sets" },
+//   ],
+//   compatibility: [
+//     "Ford Ecosport 1st & Facelift Model | 1.5L Diesel | 06.2013 – 09.2021",
+//     "Ford Fiesta 2nd Gen & Facelift Model | 1.5L Diesel | 09.2011 – 09.2015",
+//     "Ford Figo 2nd Gen | 1.5L Diesel | 08.2015 – 03.2019",
+//     "Ford Figo Aspire 1st Gen | 1.5L Diesel | 08.2015 – 03.2018",
+//   ],
+// };
+
+const specs = [
+  { id: "weight", label: "Weight", value: "-" },
+  { id: "dimensions", label: "Dimensions (L*B*H)", value: "-" },
+  { id: "carMake", label: "Car Make", value: "-" },
+  { id: "carModel", label: "Car Model", value: "-" },
+  { id: "carSubModel", label: "Car Sub Model", value: "-" },
+  { id: "partBrand", label: "Part Brand", value: "-" },
+  { id: "partOrigin", label: "Part Origin", value: "-" },
+  { id: "netQuantity", label: "Net Quantity", value: "-" },
+  { id: "countryOfOrigin", label: "Country Of Origin", value: "-" },
+  { id: "partNumber", label: "Part Number", value: "-" },
+  { id: "partCategory", label: "Part Category", value: "-" },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -82,11 +99,20 @@ export default function ProductDetails() {
     navigate("/cart");
   };
 
+  const params = useParams();
+  const dispatch = useDispatch();
+  const product = useSelector((store) => store.product.product);
+  const inStock = product?.quantity === 0 ? "Out Of stock" : "In Stock";
+
+  useEffect(() => {
+    dispatch(findProductById(params.productId));
+  }, [params.productId]);
+
   return (
     <div className="bg-white">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
-          <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          {/* <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
                 <div className="flex items-center">
@@ -118,7 +144,7 @@ export default function ProductDetails() {
                 {product.name}
               </a>
             </li>
-          </ol>
+          </ol> */}
         </nav>
 
         {/* Product overview */}
@@ -127,13 +153,13 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                alt={product.images[0].alt}
-                src={product.images[0].src}
+                // alt={product.images[0].alt}
+                src={product?.imageUrl}
                 className="h-full w-full object-cover object-center"
               />
             </div>
             <div className="flex flex-wrap space-x-5 justify-center">
-              {product.images.map((item) => (
+              {/* {product.images.map((item) => (
                 <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
                   <img
                     alt={item.alt}
@@ -141,7 +167,7 @@ export default function ProductDetails() {
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
 
@@ -149,15 +175,14 @@ export default function ProductDetails() {
           <div className="lg:col-span-1 max-h-auto max-w-2xl px-4 pb-2 sm:px-6 lg:max-w-7xl lg:px-8 text-left">
             <div className="lg:col-span-2 border-b pb-2 mb-5">
               <h1 className="text-base lg:text-lg font-semibold text-gray-900 opacity-60 cursor-pointer hover:opacity-80">
-                Clutch Set
+                {product?.category.name}
               </h1>
               <h1 className="text-xl lg:text-2xl font-semibold text-gray-900 pt-1">
-                Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford
-                Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)
+                {product?.title}
               </h1>
               <div className="mt-3">
                 <span className=" text-gray-600">Availability: </span>
-                <span className="text-green-600 font-semibold">In Stock</span>
+                <span className="text-green-600 font-semibold">{inStock}</span>
               </div>
             </div>
 
@@ -166,12 +191,14 @@ export default function ProductDetails() {
               <h2 className="sr-only">Product information</h2>
               <div className="flex space-x-5 items-center">
                 <p className="text-3xl tracking-tight text-gray-900">
-                  ₹5,029.00
+                  ₹{product?.discountedPrice}
                 </p>
                 <p className="text-xl tracking-tight text-gray-900 opacity-60 line-through">
-                  ₹5,529.00
+                  ₹{product?.price}
                 </p>
-                <p className="text-xl text-green-600 font-semibold">9% off</p>
+                <p className="text-xl text-green-600 font-semibold">
+                  {product?.discountPercent}% off
+                </p>
               </div>
 
               {/* Rating and reviews preview*/}
@@ -235,7 +262,7 @@ export default function ProductDetails() {
 
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
-                    {product.description}
+                    {product?.description}
                   </p>
                 </div>
               </div>
@@ -247,7 +274,7 @@ export default function ProductDetails() {
 
                 <div className="mt-4">
                   <ul className="list-disc space-y-2 pl-4 text-sm">
-                    {product.highlights.map((highlight) => (
+                    {product?.highlights.map((highlight) => (
                       <li key={highlight} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
                       </li>
@@ -264,17 +291,15 @@ export default function ProductDetails() {
           {/* Specifications */}
           <h2 className="text-lg font-semibold mb-4">Specifications</h2>
           <div className="border border-gray-300 rounded-lg p-4 w-full mb-10">
-            {product.specs.map((detail, index) => (
+            {specs.map((detail, index) => (
               <div
                 key={index}
                 className={`grid grid-cols-2 py-2 ${
-                  index !== product.specs.length - 1
-                    ? "border-b border-gray-300"
-                    : ""
+                  index !== specs.length - 1 ? "border-b border-gray-300" : ""
                 }`}
               >
                 <span className="font-semibold">{detail.label}</span>
-                <span>{detail.value}</span>
+                <span>{product?.specifications?.[detail.id]}</span>
               </div>
             ))}
           </div>
@@ -282,7 +307,7 @@ export default function ProductDetails() {
           <h2 className="text-lg font-semibold mb-2">Compatibility</h2>
           <div className="mt-4">
             <ul className="list-disc space-y-2 pl-4 text-base">
-              {product.compatibility.map((compatibleVehicle) => (
+              {product?.compatibility.map((compatibleVehicle) => (
                 <li key={compatibleVehicle} className="text-gray-400">
                   <span className="text-gray-900">{compatibleVehicle}</span>
                 </li>

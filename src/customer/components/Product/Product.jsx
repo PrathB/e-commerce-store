@@ -212,7 +212,7 @@ export default function Product() {
       sort: sortValue || "low_to_high",
       stock: stock || "in_stock",
       pageNumber,
-      pageSize: 1,
+      pageSize: 10,
     };
 
     dispatch(getProducts(data));
