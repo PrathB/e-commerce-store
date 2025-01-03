@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findUserCart } from "../../../State/Cart/action";
+
 
 const Cart = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleCheckout = () => {
     navigate("/checkout?step=2");
   };
+  const cart = useSelector((store)=> store.cart.cart);
+
+  useEffect(()=>{
+    dispatch(findUserCart());
+  },[])
   return (
     <div>
       <div className="lg:grid grid-cols-3 pt-6 px-4 lg:px-16 relative">
         <div className="col-span-2 space-y-4">
-          {[1, 1, 1, 1].map((item) => (
-            <CartItem />
+          {cart?.cartItems.map((item) => (
+            <CartItem item={item} />
           ))}
         </div>
         <div className="px-5 h-auto mt-5 lg:mt-0">
@@ -24,16 +33,16 @@ const Cart = () => {
             <div className="space-y-3 font-semibold mb-6">
               <div className="flex justify-between pt-3 text-black">
                 <span>Subtotal</span>
-                <span>₹5,029.00</span>
+                <span>₹{cart?.subTotalPrice}</span>
               </div>
               <div className="flex justify-between text-black">
                 <span>Shipping</span>
-                <span>₹316.00</span>
+                <span>₹{cart?.shippingCost}</span>
               </div>
               <hr />
               <div className="flex justify-between text-black text-lg font-bold">
                 <span>Total</span>
-                <span>₹5,345.00</span>
+                <span>₹{cart?.totalPrice}</span>
               </div>
             </div>
             <button

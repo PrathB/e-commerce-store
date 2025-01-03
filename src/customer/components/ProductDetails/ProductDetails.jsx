@@ -6,53 +6,7 @@ import { Box, Grid, LinearProgress, Rating, Typography } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import { useDispatch, useSelector } from "react-redux";
 import { findProductById } from "../../../State/Product/action";
-import { store } from "../../../State/store";
-
-// const product = {
-//   name: "Clutch Set (Clutch & Pressure Plate) 8V2Z7B546V – Fits Ford Ecosport / Figo / Fiesta (T2) / Figo Aspire (Dsl)",
-//   price: "₹5,029.00",
-//   href: "#",
-//   breadcrumbs: [
-//     { id: 1, name: "Home", href: "#" },
-//     { id: 2, name: "Clutch Set", href: "#" },
-//   ],
-//   images: [
-//     {
-//       src: "https://www.motrparts.com/wp-content/uploads/2019/12/Ford-Ecosport-Figo-Type-2-Diesel-Clutch-Set-8V2Z7B546V.jpg",
-//       alt: "Clutch set image 1",
-//     },
-//     {
-//       src: "https://cartrends.in/cdn/shop/products/twice_clutch_540x.jpg?v=1643914049",
-//       alt: "Clutch set image 2",
-//     },
-//   ],
-//   description:
-//     "Clutch Set OE Part No. 8V2Z7B546V is a genuine Ford spare part for Ford Figo and Fiesta, Ecosport, Figo Aspire (Diesel). This Product comes in Genuine Ford Packing and sold by Ford India Private Limited. This item is sold as set of 2 Pieces containing Clutch Plate and Pressure Plate in a box",
-//   highlights: [
-//     "Ford Ecosport, Figo, Fiesta, Figo Aspire Clutch Set",
-//     "Brand Name: Ford Genuine Part",
-//     "Part Number: 8V2Z7B546V",
-//   ],
-//   specs: [
-//     { label: "Weight", value: "6 kg" },
-//     { label: "Dimensions (L*B*H)", value: "46 × 46 × 16 cm" },
-//     { label: "Car Make", value: "Ford" },
-//     { label: "Car Model", value: "Ecosport, Fiesta, Figo, Figo Aspire" },
-//     { label: "Car Sub Model", value: "All Diesel Models., Type 2." },
-//     { label: "Parts Brand", value: "Ford Genuine Part" },
-//     { label: "Parts Origin", value: "Genuine" },
-//     { label: "Net Quantity", value: "Set Of 2 Pcs." },
-//     { label: "Country Of Origin", value: "India" },
-//     { label: "Part Number", value: "8V2Z7B546V" },
-//     { label: "Parts Category", value: "Ford Genuine Clutch Sets" },
-//   ],
-//   compatibility: [
-//     "Ford Ecosport 1st & Facelift Model | 1.5L Diesel | 06.2013 – 09.2021",
-//     "Ford Fiesta 2nd Gen & Facelift Model | 1.5L Diesel | 09.2011 – 09.2015",
-//     "Ford Figo 2nd Gen | 1.5L Diesel | 08.2015 – 03.2019",
-//     "Ford Figo Aspire 1st Gen | 1.5L Diesel | 08.2015 – 03.2018",
-//   ],
-// };
+import { addItemToCart } from "../../../State/Cart/action";
 
 const specs = [
   { id: "weight", label: "Weight", value: "-" },
@@ -96,6 +50,8 @@ export default function ProductDetails() {
   const navigate = useNavigate();
 
   const handleAddToCart = () => {
+    const data = { productId: params.productId, quantity: quantity };
+    dispatch(addItemToCart(data));
     navigate("/cart");
   };
 
@@ -112,6 +68,7 @@ export default function ProductDetails() {
     <div className="bg-white">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
+          {/* TO DO: implement breadcrumbs */}
           {/* <ol className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {product.breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
@@ -202,6 +159,7 @@ export default function ProductDetails() {
               </div>
 
               {/* Rating and reviews preview*/}
+              {/* TO DO: implement ratings and reviews preview */}
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
                   <Rating name="read-only" value={4.5} readOnly />
@@ -317,6 +275,7 @@ export default function ProductDetails() {
         </section>
 
         {/* Rating and reviews*/}
+        {/* TO DO: implement ratings and reviews */}
         <section className="px-8 lg:px-24 pb-8">
           <Typography
             variant="h5"
@@ -395,6 +354,7 @@ export default function ProductDetails() {
         </section>
 
         {/* Related Products */}
+        {/* TO DO: implement recommended products */}
         <section className="px-8 lg:px-24 pb-8 text-left">
           <h1 className="py-5 text-xl font-semibold">Related Products</h1>
           <div className="flex flex-wrap">

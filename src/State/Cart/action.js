@@ -24,11 +24,12 @@ const findUserCartFailure = (error) => ({
   payload: error,
 });
 
-export const findUserCart = (data) => async (dispatch) => {
+export const findUserCart = () => async (dispatch) => {
   dispatch(findUserCartRequest());
   try {
-    const response = await api.put(`/api/cart`, data);
+    const response = await api.put(`/api/cart`);
     dispatch(findUserCartSuccess(response.data));
+    console.log("Cart:",response.data);
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(findUserCartFailure(errorMsg));
