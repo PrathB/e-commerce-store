@@ -29,7 +29,7 @@ export const findUserCart = () => async (dispatch) => {
   try {
     const response = await api.put(`/api/cart`);
     dispatch(findUserCartSuccess(response.data));
-    console.log("Cart:",response.data);
+    console.log("Cart:", response.data);
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(findUserCartFailure(errorMsg));
@@ -88,15 +88,13 @@ const updateCartItemFailure = (error) => ({
   payload: error,
 });
 
-export const updateCartItem =
-  ({ cartItemId, data }) =>
-  async (dispatch) => {
-    dispatch(updateCartItemRequest());
-    try {
-      const response = await api.put(`/api/cart_items/${cartItemId}`, data);
-      dispatch(updateCartItemSuccess(response.data));
-    } catch (error) {
-      const errorMsg = error.response?.data?.message || error.message;
-      dispatch(updateCartItemFailure(errorMsg));
-    }
-  };
+export const updateCartItem = (cartItemId, data) => async (dispatch) => {
+  dispatch(updateCartItemRequest());
+  try {
+    const response = await api.put(`/api/cart_items/${cartItemId}`, data);
+    dispatch(updateCartItemSuccess(response.data));
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(updateCartItemFailure(errorMsg));
+  }
+};

@@ -4,18 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findUserCart } from "../../../State/Cart/action";
 
-
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleCheckout = () => {
     navigate("/checkout?step=2");
   };
-  const cart = useSelector((store)=> store.cart.cart);
+  const cart = useSelector((store) => store.cart.cart);
+  const addedCartItem = useSelector((store) => store.cart.addedCartItem);
+  const updatedCartItem = useSelector((store) => store.cart.updatedCartItem);
+  const removedCartItem = useSelector((store) => store.cart.removedCartItem);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(findUserCart());
-  },[])
+  }, [addedCartItem, updatedCartItem, removedCartItem]);
   return (
     <div>
       <div className="lg:grid grid-cols-3 pt-6 px-4 lg:px-16 relative">

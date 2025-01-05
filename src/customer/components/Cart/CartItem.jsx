@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { removeCartItem, updateCartItem } from "../../../State/Cart/action";
 
-const CartItem = ({item}) => {
+const CartItem = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const handleUpdateCartItem = (n) => {
+    const data = { quantity: item.quantity + n };
+    console.log(item._id, data);
+    dispatch(updateCartItem(item._id, data));
+  };
+
+  const handleRemoveCartItem = () => {
+    dispatch(removeCartItem(item._id));
+  };
+
   return (
     <div className="p-5 shadow-lg border rounded-md mb-5">
       <div className="flex flex-col lg:flex-row items-center lg:items-start">
@@ -29,7 +43,7 @@ const CartItem = ({item}) => {
               ₹{item.product.discountedPrice}
             </p>
             <p className="tracking-tight text-gray-900 opacity-60 line-through text-sm lg:text-base">
-            ₹{item.product.price}
+              ₹{item.product.price}
             </p>
             <p className="text-green-600 font-semibold text-xs lg:text-sm">
               {item.product.discountPercent}% off
@@ -44,10 +58,13 @@ const CartItem = ({item}) => {
           <div className="flex flex-row items-center space-x-3">
             <p className="font-semibold"> Qty:</p>
             <div className="flex items-center">
-              {/* To DO : Update cart item count in DB */}
               <button
                 type="button"
                 className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-l-md text-white"
+                onClick={() => {
+                  handleUpdateCartItem(-1);
+                }}
+                disabled={item.quantity <= 1}
               >
                 -
               </button>
@@ -59,6 +76,9 @@ const CartItem = ({item}) => {
               <button
                 type="button"
                 className="px-2 py-1 bg-[#2c2c2c] hover:bg-[#4c4c4c] rounded-r-md text-white"
+                onClick={() => {
+                  handleUpdateCartItem(1);
+                }}
               >
                 +
               </button>
@@ -67,9 +87,11 @@ const CartItem = ({item}) => {
         </div>
 
         {/* Remove Button */}
-        {/* To DO : Remove cartitem from user cart in DB */}
         <div>
-          <Button sx={{ color: "RGB(127 0 0)", fontWeight: "bold" }}>
+          <Button
+            onClick={handleRemoveCartItem}
+            sx={{ color: "RGB(127 0 0)", fontWeight: "bold" }}
+          >
             REMOVE
           </Button>
         </div>
