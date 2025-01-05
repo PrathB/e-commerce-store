@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import CartItem from "../Cart/CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { findOrderById } from "../../../State/Order/action";
+import { useLocation, useParams } from "react-router-dom";
 
 const OrderSummary = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const order = useSelector((store) => store.order.order);
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+
+  const orderId = searchParams.get("orderId");
+
+  useEffect(() => {
+    dispatch(findOrderById(orderId));
+  }, [orderId]);
+
   return (
     <div className="p-4">
       {/* Address card section */}
@@ -14,11 +30,13 @@ const OrderSummary = () => {
       <div>
         <div className="lg:grid grid-cols-3 gap-6 relative">
           {/* Cart items */}
-          <div className="col-span-2 space-y-4">
-            {[1, 1, 1, 1].map((item, index) => (
-              <CartItem key={index} />
-            ))}
-          </div>
+          {order?.orderItems?.length > 0 && (
+            <div className="col-span-2 space-y-4">
+              {order.orderItems.map((item) => (
+                <CartItem item={item} key={item.id} />
+              ))}
+            </div>
+          )}
 
           {/* Cart total section */}
           <div className="px-5 h-auto mt-5 lg:mt-0">
@@ -30,16 +48,16 @@ const OrderSummary = () => {
               <div className="space-y-3 font-semibold mb-6">
                 <div className="flex justify-between pt-3 text-black">
                   <span>Subtotal</span>
-                  <span>₹5,029.00</span>
+                  <span>₹{order?.subTotalPrice}</span>
                 </div>
                 <div className="flex justify-between text-black">
                   <span>Shipping</span>
-                  <span>₹316.00</span>
+                  <span>₹{order?.shippingCost}</span>
                 </div>
                 <hr />
                 <div className="flex justify-between text-black text-lg font-bold">
                   <span>Total</span>
-                  <span>₹5,345.00</span>
+                  <span>₹{order?.totalPrice}</span>
                 </div>
               </div>
 

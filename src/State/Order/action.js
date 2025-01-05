@@ -22,8 +22,8 @@ export const createOrder = (shippingAddress, navigate) => async (dispatch) => {
   dispatch(createOrderRequest());
   try {
     const response = await api.post("/api/orders", shippingAddress);
-    if (response.data.id) {
-      navigate({ search: `step=3&orderId=${response.data.id}` });
+    if (response.data._id) {
+      navigate({ search: `step=3&orderId=${response.data._id}` });
     }
     dispatch(createOrderSuccess(response.data));
   } catch (error) {
