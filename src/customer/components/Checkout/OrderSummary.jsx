@@ -4,6 +4,7 @@ import CartItem from "../Cart/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { findOrderById } from "../../../State/Order/action";
 import { useLocation, useParams } from "react-router-dom";
+import OrderSummaryItem from "./OrderSummaryItem";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const OrderSummary = () => {
           {order?.orderItems?.length > 0 && (
             <div className="col-span-2 space-y-4">
               {order.orderItems.map((item) => (
-                <CartItem item={item} key={item.id} />
+                <OrderSummaryItem item={item} key={item.id} />
               ))}
             </div>
           )}
