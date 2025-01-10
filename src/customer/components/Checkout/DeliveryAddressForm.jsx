@@ -1,13 +1,14 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../../State/Order/action";
 import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const addressArray = useSelector((store) => store.auth.user.address);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +24,10 @@ const DeliveryAddressForm = () => {
     };
 
     dispatch(createOrder(address, navigate));
+  };
 
+  const handleSelectAddress = (address) => {
+    dispatch(createOrder(address, navigate));
   };
   return (
     <div>
@@ -33,16 +37,20 @@ const DeliveryAddressForm = () => {
           lg={4}
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
-          <div className="p-5 py-7 border-b">
-            <AddressCard />
-            <Button
-              sx={{ mt: 2, bgcolor: "#7f0000" }}
-              size="large"
-              variant="contained"
-            >
-              Deliver Here
-            </Button>
-          </div>
+          {addressArray.length > 0 &&
+            addressArray.map((a) => (
+              <div className="p-5 py-7 border-b">
+                <AddressCard address={a} />
+                <Button
+                  sx={{ mt: 2, bgcolor: "#7f0000" }}
+                  size="large"
+                  variant="contained"
+                  onClick={() => handleSelectAddress(a)}
+                >
+                  Deliver Here
+                </Button>
+              </div>
+            ))}
         </Grid>
         <Grid item xs={12} lg={7}>
           <Box className="border rounded-s-md shadow-md p-5">

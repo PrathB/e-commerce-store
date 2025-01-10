@@ -23,7 +23,7 @@ const OrderSummary = () => {
     <div className="p-4">
       {/* Address card section */}
       <div className="p-5 shadow-lg rounded-md border mb-6">
-        <AddressCard />
+        <AddressCard address={order?.shippingAddress} />
       </div>
 
       {/* Main order summary */}
