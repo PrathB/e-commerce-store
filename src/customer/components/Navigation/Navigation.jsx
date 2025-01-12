@@ -787,9 +787,9 @@ export default function Navigation() {
                       className="h-6 w-6 flex-shrink-0 text-white group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-white group-hover:text-gray-500">
+                    {/* <span className="ml-2 text-sm font-medium text-white group-hover:text-gray-500">
                       2
-                    </span>
+                    </span> */}
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
                 </div>
