@@ -1,4 +1,8 @@
 import {
+  ADD_PRODUCT_REQUEST,
+  DELETE_PRODUCT_BY_ID_FAILURE,
+  DELETE_PRODUCT_BY_ID_REQUEST,
+  DELETE_PRODUCT_BY_ID_SUCCESS,
   FIND_PRODUCT_BY_ID_FAILURE,
   FIND_PRODUCT_BY_ID_REQUEST,
   FIND_PRODUCT_BY_ID_SUCCESS,
@@ -10,6 +14,7 @@ import {
 const initialState = {
   pageData: { content: [], currentPage: 0, totalPages: 0 },
   product: null,
+  deletedProduct: null,
   loading: false,
   error: null,
 };
@@ -18,13 +23,28 @@ export const customerProductReducer = (state = initialState, action) => {
   switch (action.type) {
     case FIND_PRODUCT_BY_ID_REQUEST:
     case GET_PRODUCTS_REQUEST:
+    case DELETE_PRODUCT_BY_ID_REQUEST:
+    case ADD_PRODUCT_REQUEST:
       return { ...state, loading: true, error: null };
 
     case FIND_PRODUCT_BY_ID_SUCCESS:
       return { ...state, loading: false, error: null, product: action.payload };
 
     case GET_PRODUCTS_SUCCESS:
-      return { ...state, loading: false, error: null, pageData: action.payload };
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        pageData: action.payload,
+      };
+
+    case DELETE_PRODUCT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        deletedProduct: action.payload,
+      };
 
     case FIND_PRODUCT_BY_ID_FAILURE:
     case GET_PRODUCTS_FAILURE:
