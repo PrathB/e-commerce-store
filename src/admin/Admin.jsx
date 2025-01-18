@@ -23,17 +23,17 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Dashboard from "./components/Dashboard";
-import AddProductForm from "./components/AddProductForm";
 import ProductList from "./components/ProductList";
 import OrderList from "./components/OrderList";
 import CustomerList from "./components/CustomerList";
+import CreateProductForm from "./components/CreateProductForm";
 
 const menu = [
   { name: "Dashboard", path: "/admin", icon: <DashboardIcon /> },
   { name: "Products", path: "/admin/products", icon: <ViewListIcon /> },
   { name: "Customers", path: "/admin/customers", icon: <PeopleIcon /> },
   { name: "Orders", path: "/admin/orders", icon: <AssignmentIcon /> },
-  { name: "Add Product", path: "/admin/product/add", icon: <AddIcon /> },
+  { name: "Create Product", path: "/admin/product/create", icon: <AddIcon /> },
 ];
 
 const drawerWidth = 240;
@@ -135,7 +135,7 @@ const Admin = () => {
         {!isLargeScreen && <Toolbar />}
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/product/add" element={<AddProductForm />} />
+          <Route path="/product/create" element={<CreateProductForm />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/orders" element={<OrderList />} />
           <Route path="/customers" element={<CustomerList />} />
