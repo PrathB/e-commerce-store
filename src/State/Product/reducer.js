@@ -1,5 +1,5 @@
 import {
-  ADD_PRODUCT_REQUEST,
+  CREATE_PRODUCT_REQUEST,
   DELETE_PRODUCT_BY_ID_FAILURE,
   DELETE_PRODUCT_BY_ID_REQUEST,
   DELETE_PRODUCT_BY_ID_SUCCESS,
@@ -24,7 +24,7 @@ export const customerProductReducer = (state = initialState, action) => {
     case FIND_PRODUCT_BY_ID_REQUEST:
     case GET_PRODUCTS_REQUEST:
     case DELETE_PRODUCT_BY_ID_REQUEST:
-    case ADD_PRODUCT_REQUEST:
+    case CREATE_PRODUCT_REQUEST:
       return { ...state, loading: true, error: null };
 
     case FIND_PRODUCT_BY_ID_SUCCESS:

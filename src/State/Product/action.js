@@ -1,8 +1,8 @@
 import { api } from "../../config/apiConfig";
 import {
-  ADD_PRODUCT_FAILURE,
-  ADD_PRODUCT_REQUEST,
-  ADD_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAILURE,
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_BY_ID_FAILURE,
   DELETE_PRODUCT_BY_ID_REQUEST,
   DELETE_PRODUCT_BY_ID_SUCCESS,
@@ -72,24 +72,25 @@ export const getProducts = (data) => async (dispatch) => {
   }
 };
 
-const addProductRequest = () => ({ type: ADD_PRODUCT_REQUEST });
-const addProductSuccess = (product) => ({
-  type: ADD_PRODUCT_SUCCESS,
+const createProductRequest = () => ({ type: CREATE_PRODUCT_REQUEST });
+const createProductSuccess = (product) => ({
+  type: CREATE_PRODUCT_SUCCESS,
   payload: product,
 });
-const addProductsFailure = (error) => ({
-  type: ADD_PRODUCT_FAILURE,
+const createProductsFailure = (error) => ({
+  type: CREATE_PRODUCT_FAILURE,
   payload: error,
 });
 
-export const addProduct = (productData) => async (dispatch) => {
-  dispatch(addProductRequest());
+export const createProduct = (productData) => async (dispatch) => {
+  dispatch(createProductRequest());
   try {
     const response = await api.post(`api/admin/products`, productData);
-    dispatch(addProductSuccess(response.data));
+    dispatch(createProductSuccess(response.data));
+    console.log("Created Product:", response.data);
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
-    dispatch(addProductsFailure(errorMsg));
+    dispatch(createProductsFailure(errorMsg));
   }
 };
 
