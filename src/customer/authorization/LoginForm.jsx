@@ -3,7 +3,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../State/Authorization/action";
-import { store } from "../../State/store";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -19,6 +18,7 @@ const LoginForm = () => {
     };
     dispatch(login(userData));
   };
+  console.log(error);
 
   return (
     <div>

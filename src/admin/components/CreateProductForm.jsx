@@ -185,13 +185,13 @@ const CreateProductForm = () => {
               fullWidth
               multiline
               rows={3}
-              label="Higlights (; Separated)"
+              label="Highlights (Newline Separated)"
               name="highlights"
-              value={productData.highlights.join(";")}
+              value={productData.highlights.join("\n")}
               onChange={(e) =>
                 setProductData((prevState) => ({
                   ...prevState,
-                  highlights: e.target.value.split(";"),
+                  highlights: e.target.value.split("\n"),
                 }))
               }
             />
@@ -202,13 +202,13 @@ const CreateProductForm = () => {
               fullWidth
               multiline
               rows={3}
-              label="Compatibility (; Separated)"
+              label="Compatibility (Newline Separated)"
               name="compatibility"
-              value={productData.compatibility.join(";")}
+              value={productData.compatibility.join("\n")}
               onChange={(e) =>
                 setProductData((prevState) => ({
                   ...prevState,
-                  compatibility: e.target.value.split(";"),
+                  compatibility: e.target.value.split("\n"),
                 }))
               }
             />
