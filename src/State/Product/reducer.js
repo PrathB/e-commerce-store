@@ -11,6 +11,7 @@ import {
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
+  RESET_UPDATED_PRODUCT,
   UPDATE_PRODUCT_FAILURE,
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
@@ -34,6 +35,12 @@ export const customerProductReducer = (state = initialState, action) => {
     case CREATE_PRODUCT_REQUEST:
     case UPDATE_PRODUCT_REQUEST:
       return { ...state, loading: true, error: null };
+
+    case RESET_UPDATED_PRODUCT:
+      return {
+        ...state,
+        updatedProduct: null,
+      };
 
     case CREATE_PRODUCT_SUCCESS:
       return {

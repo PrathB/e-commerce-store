@@ -1,22 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateProduct, findProductById } from "../../State/Product/action";
 import {
-  createProduct,
-  findProductById,
-  updateProduct,
-} from "../../State/Product/action";
-import { Grid, TextField, Typography, Button, Box } from "@mui/material";
-import { useParams } from "react-router-dom";
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Box,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateProductForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { productId } = useParams();
   const product = useSelector((store) => store.product.product);
+  const updatedProduct = useSelector((store) => store.product.updatedProduct);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {
     dispatch(findProductById(productId));
-    console.log(product);
-  }, []);
+  }, [dispatch, productId]);
+
+  useEffect(() => {
+    if (updatedProduct) {
+      setOpenSnackbar(true);
+      setTimeout(() => {
+        dispatch({ type: "RESET_UPDATED_PRODUCT" });
+        navigate(-1);
+      }, 2000);
+    }
+  }, [updatedProduct, navigate, dispatch]);
 
   const [productData, setProductData] = useState({
     title: product?.title || "",
@@ -32,27 +49,49 @@ const UpdateProductForm = () => {
     discountPercent: product?.discountPercent || 0,
     brand: product?.brand || "",
     description: product?.description || "",
-    highlights: product?.highlights || [], // Provide default array
-    specifications: {
-      weight: product?.specifications?.weight || "",
-      dimensions: product?.specifications?.dimensions || "",
-      carMake: product?.specifications?.carMake || "",
-      carModel: product?.specifications?.carModel || "",
-      carSubModel: product?.specifications?.carSubModel || "",
-      partBrand: product?.specifications?.partBrand || "",
-      partOrigin: product?.specifications?.partOrigin || "",
-      netQuantity: product?.specifications?.netQuantity || "",
-      countryOfOrigin: product?.specifications?.countryOfOrigin || "",
-      partNumber: product?.specifications?.partNumber || "",
-      partCategory: product?.specifications?.partCategory || "",
-    },
-    compatibility: product?.compatibility || [], // Provide default array
+    highlights: product?.highlights || [],
+    compatibility: product?.compatibility || [],
+    specifications: product?.specifications || {},
   });
+
+  useEffect(() => {
+    if (product) {
+      setProductData({
+        title: product.title || "",
+        imageUrl: product.imageUrl || "",
+        category: {
+          level1: product.category?.level1 || "",
+          level2: product.category?.level2 || "",
+          level3: product.category?.level3 || "",
+        },
+        quantity: product.quantity || 0,
+        price: product.price || 0,
+        discountedPrice: product.discountedPrice || 0,
+        discountPercent: product.discountPercent || 0,
+        brand: product.brand || "",
+        description: product.description || "",
+        highlights: product.highlights || [],
+        specifications: {
+          weight: product.specifications?.weight || "",
+          dimensions: product.specifications?.dimensions || "",
+          carMake: product.specifications?.carMake || "",
+          carModel: product.specifications?.carModel || "",
+          carSubModel: product.specifications?.carSubModel || "",
+          partBrand: product.specifications?.partBrand || "",
+          partOrigin: product.specifications?.partOrigin || "",
+          netQuantity: product.specifications?.netQuantity || "",
+          countryOfOrigin: product.specifications?.countryOfOrigin || "",
+          partNumber: product.specifications?.partNumber || "",
+          partCategory: product.specifications?.partCategory || "",
+        },
+        compatibility: product.compatibility || [],
+      });
+    }
+  }, [product]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Check if the field needs to be parsed as a number
     const numberFields = [
       "quantity",
       "price",
@@ -63,7 +102,7 @@ const UpdateProductForm = () => {
     if (numberFields.includes(name)) {
       setProductData((prevState) => ({
         ...prevState,
-        [name]: value === "" ? "" : parseInt(value, 10), // Parse as an integer or empty string
+        [name]: value === "" ? "" : parseInt(value, 10),
       }));
     } else {
       const keys = name.split(".");
@@ -87,7 +126,6 @@ const UpdateProductForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProduct(productId, productData));
-    console.log(productData);
   };
 
   return (
@@ -97,7 +135,6 @@ const UpdateProductForm = () => {
       </Typography>
       <form onSubmit={handleFormSubmit}>
         <Grid container spacing={2}>
-          {/* General Details */}
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
@@ -117,7 +154,6 @@ const UpdateProductForm = () => {
             />
           </Grid>
 
-          {/* Category Details */}
           {["level1", "level2", "level3"].map((level, index) => (
             <Grid item xs={12} sm={4} key={index}>
               <TextField
@@ -130,7 +166,6 @@ const UpdateProductForm = () => {
             </Grid>
           ))}
 
-          {/* Pricing and Quantity */}
           <Grid item xs={12} sm={3}>
             <TextField
               fullWidth
@@ -227,36 +262,24 @@ const UpdateProductForm = () => {
             />
           </Grid>
 
-          {/* Specifications */}
-          <Grid item xs={12} sx={{ marginTop: "2rem" }}>
-            <Typography textAlign={"left"} variant="h5" gutterBottom>
-              Specifications
-            </Typography>
-          </Grid>
-          {Object.entries(productData.specifications).map(
-            ([key, value], index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <TextField
-                  fullWidth
-                  label={key
-                    .replace(/([A-Z])/g, " $1")
-                    .replace(/^./, (str) => str.toUpperCase())}
-                  name={`specifications.${key}`}
-                  value={value}
-                  onChange={handleChange}
-                />
-              </Grid>
-            )
-          )}
+          <Box mt={4} textAlign="center">
+            <Button type="submit" variant="contained" color="primary">
+              Submit
+            </Button>
+          </Box>
         </Grid>
-
-        {/* Submit Button */}
-        <Box mt={4} textAlign="center">
-          <Button type="submit" variant="contained" color="primary">
-            Submit
-          </Button>
-        </Box>
       </form>
+
+      {/* Snackbar for Success Message */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert severity="success" onClose={() => setOpenSnackbar(false)}>
+          Product Updated Successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
