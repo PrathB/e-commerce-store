@@ -27,6 +27,7 @@ import ProductList from "./components/ProductList";
 import OrderList from "./components/OrderList";
 import CustomerList from "./components/CustomerList";
 import CreateProductForm from "./components/CreateProductForm";
+import UpdateProductForm from "./components/UpdateProductForm";
 
 const menu = [
   { name: "Dashboard", path: "/admin", icon: <DashboardIcon /> },
@@ -139,6 +140,7 @@ const Admin = () => {
           <Route path="/products" element={<ProductList />} />
           <Route path="/orders" element={<OrderList />} />
           <Route path="/customers" element={<CustomerList />} />
+          <Route path="/products/update-product/:productId" element={<UpdateProductForm/>}/>
         </Routes>
       </Box>
     </Box>

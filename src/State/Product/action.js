@@ -12,6 +12,9 @@ import {
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
+  UPDATE_PRODUCT_FAILURE,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_SUCCESS,
 } from "./actionType";
 
 const findProductByIdRequest = () => ({ type: FIND_PRODUCT_BY_ID_REQUEST });
@@ -73,9 +76,9 @@ export const getProducts = (data) => async (dispatch) => {
 };
 
 const createProductRequest = () => ({ type: CREATE_PRODUCT_REQUEST });
-const createProductSuccess = (product) => ({
+const createProductSuccess = (productId) => ({
   type: CREATE_PRODUCT_SUCCESS,
-  payload: product,
+  payload: productId,
 });
 const createProductsFailure = (error) => ({
   type: CREATE_PRODUCT_FAILURE,
@@ -86,11 +89,33 @@ export const createProduct = (productData) => async (dispatch) => {
   dispatch(createProductRequest());
   try {
     const response = await api.post(`api/admin/products`, productData);
-    dispatch(createProductSuccess(response.data));
+    dispatch(createProductSuccess(response.data._id));
     console.log("Created Product:", response.data);
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(createProductsFailure(errorMsg));
+  }
+};
+
+const updateProductRequest = () => ({ type: UPDATE_PRODUCT_REQUEST });
+const updateProductSuccess = (productId) => ({
+  type: UPDATE_PRODUCT_SUCCESS,
+  payload: productId,
+});
+const updateProductsFailure = (error) => ({
+  type: UPDATE_PRODUCT_FAILURE,
+  payload: error,
+});
+
+export const updateProduct = (productId,productData) => async (dispatch) => {
+  dispatch(updateProductRequest());
+  try {
+    const response = await api.put(`api/admin/products/${productId}`, productData);
+    dispatch(updateProductSuccess(response.data));
+    console.log("Updated Product:", response.data._id);
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(updateProductsFailure(errorMsg));
   }
 };
 

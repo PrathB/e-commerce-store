@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   confirmOrder,
+  deleteOrder,
   deliverOrder,
   getOrders,
   shipOrder,
@@ -11,6 +12,11 @@ import {
   Button,
   Card,
   CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Menu,
   MenuItem,
   Paper,
@@ -21,6 +27,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 
 const OrderList = () => {
   const dispatch = useDispatch();
@@ -28,15 +35,16 @@ const OrderList = () => {
   const confirmedOrder = useSelector((store) => store.adminOrder.confirmed);
   const shippedOrder = useSelector((store) => store.adminOrder.shipped);
   const deliveredOrder = useSelector((store) => store.adminOrder.delivered);
-  const cancelledOrder = useSelector((store) => store.adminOrder.cancelled);
   const deletedOrder = useSelector((store) => store.adminOrder.deleted);
 
   useEffect(() => {
     dispatch(getOrders());
-  }, [confirmedOrder, shippedOrder, deliveredOrder]);
+  }, [confirmedOrder, shippedOrder, deliveredOrder, deletedOrder]);
 
   // Individual menu state for each row
   const [anchorElMap, setAnchorElMap] = useState({});
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
   const handleClick = (event, orderId) => {
     setAnchorElMap((prev) => ({ ...prev, [orderId]: event.currentTarget }));
@@ -61,10 +69,22 @@ const OrderList = () => {
     handleClose(orderId);
   };
 
+  const handleDeleteClick = (orderId) => {
+    setSelectedOrderId(orderId);
+    setOpenConfirmDialog(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedOrderId) {
+      dispatch(deleteOrder(selectedOrderId));
+    }
+    setOpenConfirmDialog(false);
+  };
+
   return (
     <div className="p-5">
       <Card className="mt-2">
-        <CardHeader title="All Products" />
+        <CardHeader title="All Orders" />
 
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -76,6 +96,7 @@ const OrderList = () => {
                 <TableCell align="left">User Name</TableCell>
                 <TableCell align="left">Order Status</TableCell>
                 <TableCell align="left">Update Status</TableCell>
+                <TableCell align="left">Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -86,10 +107,10 @@ const OrderList = () => {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell align="left" scope="row">
-                      {item.orderItems.map((orderItem) => (
+                      {item.orderItems.map((orderItem, index) => (
                         <div
                           className="flex py-1 items-center"
-                          key={orderItem.product.id}
+                          key={`${item._id}-${orderItem.product.id}-${index}`}
                         >
                           <Avatar
                             className="mr-1"
@@ -166,12 +187,43 @@ const OrderList = () => {
                         </Menu>
                       </div>
                     </TableCell>
+                    <TableCell align="left">
+                      <Button
+                        variant="text"
+                        color="error"
+                        onClick={() => handleDeleteClick(item._id)}
+                      >
+                        <Delete />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Card>
+
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={openConfirmDialog}
+        onClose={() => setOpenConfirmDialog(false)}
+      >
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this order? This action cannot be
+            undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenConfirmDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

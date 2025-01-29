@@ -2,17 +2,32 @@ import { Grid } from "@mui/material";
 import React from "react";
 import Achievement from "./Achievement";
 import MonthlyOverview from "./MonthlyOverview";
-import ProductList from "./ProductList";
+import OrderListView from "../view/OrderListView";
+import ProductListView from "../view/ProductListView";
 
 const Dashboard = () => {
   return (
     <div className="p-10">
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Achievement />
+        {/* <Grid item xs={12} md={4}>
+          <div>
+            <Achievement />
+          </div>
         </Grid>
         <Grid item xs={12} md={8}>
-          <MonthlyOverview />
+          <div>
+            <MonthlyOverview />
+          </div>
+        </Grid> */}
+        <Grid classNameitem xs={12} md={8}>
+          <div>
+            <OrderListView />
+          </div>
+        </Grid>
+        <Grid classNameitem xs={12} md={8}>
+          <div>
+            <ProductListView />
+          </div>
         </Grid>
       </Grid>
     </div>
