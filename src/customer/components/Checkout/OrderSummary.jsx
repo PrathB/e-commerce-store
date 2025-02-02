@@ -1,30 +1,48 @@
 import React, { useEffect } from "react";
 import AddressCard from "../AddressCard/AddressCard";
-import CartItem from "../Cart/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { findOrderById } from "../../../State/Order/action";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import OrderSummaryItem from "./OrderSummaryItem";
+import { Box, CircularProgress } from "@mui/material";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const order = useSelector((store) => store.order.order);
+  const { order, loading } = useSelector((store) => store.order);
 
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParams = new URLSearchParams(decodedQueryString);
-
   const orderId = searchParams.get("orderId");
 
   useEffect(() => {
-    dispatch(findOrderById(orderId));
+    if (orderId) {
+      dispatch(findOrderById(orderId));
+    }
   }, [orderId]);
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="50vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <div className="p-4">
       {/* Address card section */}
       <div className="p-5 shadow-lg rounded-md border mb-6">
-        <AddressCard address={order?.shippingAddress} />
+        {order?.shippingAddress ? (
+          <AddressCard address={order.shippingAddress} />
+        ) : (
+          <p>Loading address...</p>
+        )}
       </div>
 
       {/* Main order summary */}
@@ -34,7 +52,7 @@ const OrderSummary = () => {
           {order?.orderItems?.length > 0 && (
             <div className="col-span-2 space-y-4">
               {order.orderItems.map((item) => (
-                <OrderSummaryItem item={item} key={item.id} />
+                <OrderSummaryItem item={item} key={item._id} />
               ))}
             </div>
           )}

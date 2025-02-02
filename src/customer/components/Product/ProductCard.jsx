@@ -22,12 +22,12 @@ const ProductCard = ({ product }) => {
           <p className="text-sm sm:text-base">{product.title}</p>
         </div>
         <div className="flex items-center space-x-2">
-          <p className="font-semibold text-sm sm:text-base">₹{product.price}</p>
+          <p className="font-semibold text-sm sm:text-base">₹{product.discountedPrice}</p>
           <p className="line-through opacity-50 text-sm sm:text-base">
-            ₹11,999
+            ₹{product.price}
           </p>
           <p className="text-green-600 font-semibold text-sm sm:text-base">
-            40% off
+            {product.discountPercent}% off
           </p>
         </div>
       </div>

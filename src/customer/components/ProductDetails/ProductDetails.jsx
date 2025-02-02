@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Grid, LinearProgress, Rating, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  LinearProgress,
+  Rating,
+  Typography,
+} from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import { useDispatch, useSelector } from "react-redux";
-import { findProductById } from "../../../State/Product/action";
+import { findProductById, getProducts } from "../../../State/Product/action";
 import { addItemToCart } from "../../../State/Cart/action";
 
 const specs = [
@@ -28,7 +35,7 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   // Functions to handle quantity selector
-
+  const [loadingRelated, setLoadingRelated] = useState(true);
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
@@ -58,11 +65,59 @@ export default function ProductDetails() {
   const params = useParams();
   const dispatch = useDispatch();
   const product = useSelector((store) => store.product.product);
+  const loading = useSelector((store) => store.product.loading);
   const inStock = product?.quantity === 0 ? "Out Of stock" : "In Stock";
 
+  const relatedProducts = useSelector(
+    (store) => store.product.pageData.content
+  )?.filter((p) => p._id !== product?._id);
+
   useEffect(() => {
+    // Dispatch to fetch product by ID first
     dispatch(findProductById(params.productId));
-  }, [params.productId]);
+  }, [params.productId, dispatch]);
+
+  useEffect(() => {
+    // Ensure the product is loaded and category is available
+    if (product && product.category) {
+      const category = product?.category?.level2; // Extract category from product
+      if (category) {
+        const data = {
+          category: category,
+          carMake: null,
+          minPrice: 0,
+          maxPrice: 100000,
+          minDiscount: 0,
+          sort: null,
+          stock: "in_stock",
+          pageNumber: 1,
+          pageSize: 10,
+        };
+
+        setLoadingRelated(true);
+        dispatch(getProducts(data)).finally(() => {
+          setLoadingRelated(false);
+        });
+      }
+    }
+  }, [product, dispatch]);
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="50vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!product) {
+    return <div>No product found</div>;
+  }
 
   return (
     <div className="bg-white">
@@ -160,7 +215,7 @@ export default function ProductDetails() {
 
               {/* Rating and reviews preview*/}
               {/* TO DO: implement ratings and reviews preview */}
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <div className="flex items-center space-x-3">
                   <Rating name="read-only" value={4.5} readOnly />
                   <p className="opacity-60 text-sm">100 Ratings</p>
@@ -168,7 +223,7 @@ export default function ProductDetails() {
                     80 Reviews
                   </p>
                 </div>
-              </div>
+              </div> */}
 
               <form className="mt-10">
                 <div className="flex items-center">
@@ -232,8 +287,8 @@ export default function ProductDetails() {
 
                 <div className="mt-4">
                   <ul className="list-disc space-y-2 pl-4 text-sm">
-                    {product?.highlights.map((highlight) => (
-                      <li key={highlight} className="text-gray-400">
+                    {product?.highlights.map((highlight, index) => (
+                      <li key={index} className="text-gray-400">
                         <span className="text-gray-600">{highlight}</span>
                       </li>
                     ))}
@@ -265,8 +320,8 @@ export default function ProductDetails() {
           <h2 className="text-lg font-semibold mb-2">Compatibility</h2>
           <div className="mt-4">
             <ul className="list-disc space-y-2 pl-4 text-base">
-              {product?.compatibility.map((compatibleVehicle) => (
-                <li key={compatibleVehicle} className="text-gray-400">
+              {product?.compatibility.map((compatibleVehicle, index) => (
+                <li key={index} className="text-gray-400">
                   <span className="text-gray-900">{compatibleVehicle}</span>
                 </li>
               ))}
@@ -276,7 +331,7 @@ export default function ProductDetails() {
 
         {/* Rating and reviews*/}
         {/* TO DO: implement ratings and reviews */}
-        <section className="px-8 lg:px-24 pb-8">
+        {/* <section className="px-8 lg:px-24 pb-8">
           <Typography
             variant="h5"
             sx={{ fontSize: { xs: "1.25rem", sm: "1.5rem" } }}
@@ -351,16 +406,27 @@ export default function ProductDetails() {
               </Grid>
             </Grid>
           </div>
-        </section>
+        </section> */}
 
         {/* Related Products */}
         {/* TO DO: implement recommended products */}
         <section className="px-8 lg:px-24 pb-8 text-left">
           <h1 className="py-5 text-xl font-semibold">Related Products</h1>
           <div className="flex flex-wrap">
-            {volkswagen_parts.slice(0, 5).map((item) => (
-              <ProductCard product={item} />
-            ))}
+            {loadingRelated ? (
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="50vh"
+              >
+                <CircularProgress />
+              </Box>
+            ) : (
+              relatedProducts
+                .slice(0, 5)
+                .map((item) => <ProductCard key={item._id} product={item} />)
+            )}
           </div>
         </section>
       </div>

@@ -71,6 +71,7 @@ const CartItem = ({ item }) => {
               <input
                 type="text"
                 value={item.quantity}
+                readOnly
                 className="w-12 text-center border-t border-b border-[#2c2c2c]"
               />
               <button

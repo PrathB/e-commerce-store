@@ -62,6 +62,7 @@ export const getProducts = (data) => async (dispatch) => {
     pageSize,
   } = data;
   try {
+    console.log(data);
     const response = await api.get(
       `/api/products?category=${category}&carMake=${carMake}&minPrice=${minPrice}&maxPrice=${maxPrice}
       &minDiscount=${minDiscount}&sort=${sort}&stock=${stock}&pageNumber=${pageNumber}&pageSize=${pageSize}`

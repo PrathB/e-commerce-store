@@ -29,19 +29,19 @@ const initialState = {
 
 export const customerProductReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FIND_PRODUCT_BY_ID_REQUEST:
     case GET_PRODUCTS_REQUEST:
     case DELETE_PRODUCT_BY_ID_REQUEST:
     case CREATE_PRODUCT_REQUEST:
     case UPDATE_PRODUCT_REQUEST:
       return { ...state, loading: true, error: null };
+    case FIND_PRODUCT_BY_ID_REQUEST:
+      return { ...state, loading: true, error: null, product: null };
 
     case RESET_UPDATED_PRODUCT:
       return {
         ...state,
         updatedProduct: null,
       };
-
     case CREATE_PRODUCT_SUCCESS:
       return {
         ...state,

@@ -19,7 +19,7 @@ import { getProducts } from "../../../State/Product/action";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FunnelIcon } from "@heroicons/react/24/solid";
 import { FilterList } from "@mui/icons-material";
-import { Pagination } from "@mui/material";
+import { Box, CircularProgress, Pagination } from "@mui/material";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -227,6 +227,7 @@ export default function Product() {
   ]);
 
   const pageData = useSelector((store) => store.product.pageData);
+  const loading = useSelector((store) => store.product.loading);
 
   const selectFilters = () => {
     const searchParams = location.search;
@@ -331,6 +332,10 @@ export default function Product() {
                                 name={`${section.id}[]`}
                                 type="checkbox"
                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                checked={(searchParams.getAll(section.id) || [])
+                                  .join(",")
+                                  .split(",")
+                                  .includes(option.value)} // ✅ This ensures checkboxes remain checked
                                 onChange={() =>
                                   handleFilterChange(option.value, section.id)
                                 }
@@ -568,17 +573,28 @@ export default function Product() {
 
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
-                <div className="flex flex-wrap justify-center sm:justify-start bg-white py-5">
-                  {pageData?.content.length === 0 && (
-                    <h1 className="text-center w-full text-2xl font-semibold opacity-70">
-                      Sorry, no products found!
-                    </h1>
-                  )}
-                  {pageData?.content.length > 0 &&
-                    pageData.content.map((item) => (
-                      <ProductCard product={item} key={item.title} />
-                    ))}
-                </div>
+                {loading ? (
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    minHeight="50vh"
+                  >
+                    <CircularProgress />
+                  </Box>
+                ) : (
+                  <div className="flex flex-wrap justify-center sm:justify-start bg-white py-5">
+                    {pageData?.content.length === 0 && (
+                      <h1 className="text-center w-full text-2xl font-semibold opacity-70">
+                        Sorry, no products found!
+                      </h1>
+                    )}
+                    {pageData?.content.length > 0 &&
+                      pageData.content.map((item) => (
+                        <ProductCard product={item} key={item.title} />
+                      ))}
+                  </div>
+                )}
               </div>
             </div>
           </section>

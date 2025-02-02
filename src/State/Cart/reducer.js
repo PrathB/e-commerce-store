@@ -15,7 +15,6 @@ import {
 
 const initialState = {
   cart: null,
-  cartItems: [],
   loading: false,
   error: null,
   addedCartItem: null,
@@ -36,14 +35,12 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
-        cartItems: action.payload.cartItems,
         loading: false,
         error: null,
       };
     case ADD_ITEM_TO_CART_SUCCESS:
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload],
         loading: false,
         error: null,
         addedCartItem: action.payload,
@@ -51,7 +48,6 @@ export const cartReducer = (state = initialState, action) => {
     case REMOVE_CART_ITEM_SUCCESS:
       return {
         ...state,
-        cartItems: state.cartItems.filter((item) => item.id !== action.payload),
         loading: false,
         error: null,
         removedCartItem: action.payload,
@@ -59,9 +55,6 @@ export const cartReducer = (state = initialState, action) => {
     case UPDATE_CART_ITEM_SUCCESS:
       return {
         ...state,
-        cartItems: state.cartItems.map((item) =>
-          item.id === action.payload.id ? action.payload : item
-        ),
         loading: false,
         error: null,
         updatedCartItem: action.payload,

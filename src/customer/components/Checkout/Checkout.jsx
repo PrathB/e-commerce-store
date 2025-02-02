@@ -16,7 +16,7 @@ export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const location = useLocation();
   const querrySearch = new URLSearchParams(location.search);
-  const step = querrySearch.get("step");
+  const step = parseInt(querrySearch.get("step")) || 0;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -32,7 +32,7 @@ export default function Checkout() {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ width: "100%" }}>
           <Stepper
-            activeStep={step}
+            activeStep={step-1}
             orientation={isSmallScreen ? "vertical" : "horizontal"}
           >
             {steps.map((label, index) => {

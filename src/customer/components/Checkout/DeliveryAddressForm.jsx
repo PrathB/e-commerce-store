@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField, CircularProgress } from "@mui/material";
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 const DeliveryAddressForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const addressArray = useSelector((store) => store.auth.user.address);
+
+  const { user, loading } = useSelector((store) => store.auth);
+  const addressArray = user?.address || [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,17 +31,32 @@ const DeliveryAddressForm = () => {
   const handleSelectAddress = (address) => {
     dispatch(createOrder(address, navigate));
   };
+
+  if (loading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="50vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <div>
       <Grid container gap={4}>
         <Grid
+          item
           xs={12}
           lg={4}
           className="border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
-          {addressArray.length > 0 &&
+          {Array.isArray(addressArray) && addressArray.length > 0 ? (
             addressArray.map((a) => (
-              <div className="p-5 py-7 border-b">
+              <div key={a._id} className="p-5 py-7 border-b">
                 <AddressCard address={a} />
                 <Button
                   sx={{ mt: 2, bgcolor: "#7f0000" }}
@@ -50,8 +67,12 @@ const DeliveryAddressForm = () => {
                   Deliver Here
                 </Button>
               </div>
-            ))}
+            ))
+          ) : (
+            <p>No saved addresses found.</p>
+          )}
         </Grid>
+
         <Grid item xs={12} lg={7}>
           <Box className="border rounded-s-md shadow-md p-5">
             <form onSubmit={handleSubmit}>
@@ -63,7 +84,7 @@ const DeliveryAddressForm = () => {
                     name="firstName"
                     label="First Name"
                     fullWidth
-                    autocomplete="given-name"
+                    autoComplete="given-name"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -73,7 +94,7 @@ const DeliveryAddressForm = () => {
                     name="lastName"
                     label="Last Name"
                     fullWidth
-                    autocomplete="given-name"
+                    autoComplete="given-name"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -83,7 +104,7 @@ const DeliveryAddressForm = () => {
                     name="address"
                     label="Address"
                     fullWidth
-                    autocomplete="given-name"
+                    autoComplete="given-name"
                     multiline
                     rows={4}
                   />
@@ -95,7 +116,7 @@ const DeliveryAddressForm = () => {
                     name="city"
                     label="City"
                     fullWidth
-                    autocomplete="given-name"
+                    autoComplete="given-name"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -105,7 +126,7 @@ const DeliveryAddressForm = () => {
                     name="state"
                     label="State/Province/Region"
                     fullWidth
-                    autocomplete="given-name"
+                    autoComplete="given-name"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -115,7 +136,7 @@ const DeliveryAddressForm = () => {
                     name="pinCode"
                     label="PIN Code"
                     fullWidth
-                    autocomplete="shipping postal-code"
+                    autoComplete="shipping postal-code"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -125,7 +146,7 @@ const DeliveryAddressForm = () => {
                     name="phoneNumber"
                     label="Phone Number"
                     fullWidth
-                    autocomplete="given-name"
+                    autoComplete="given-name"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} sx={{ textAlign: "left" }}>

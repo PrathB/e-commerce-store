@@ -1,10 +1,27 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { createProduct } from "../../State/Product/action";
-import { Grid, TextField, Typography, Button, Box } from "@mui/material";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Box,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 const CreateProductForm = () => {
   const dispatch = useDispatch();
+  const createdProduct = useSelector((store) => store.product.createdProduct);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  useEffect(() => {
+    if (createdProduct) {
+      setOpenSnackbar(true);
+    }
+  }, [createdProduct]);
+
   const [productData, setProductData] = useState({
     title: "",
     imageUrl: "",
@@ -87,6 +104,7 @@ const CreateProductForm = () => {
           {/* General Details */}
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               label="Title"
               name="title"
@@ -108,6 +126,7 @@ const CreateProductForm = () => {
           {["level1", "level2", "level3"].map((level, index) => (
             <Grid item xs={12} sm={4} key={index}>
               <TextField
+                required
                 fullWidth
                 label={`Category Level ${index + 1}`}
                 name={`category.${level}`}
@@ -120,6 +139,7 @@ const CreateProductForm = () => {
           {/* Pricing and Quantity */}
           <Grid item xs={12} sm={3}>
             <TextField
+              required
               fullWidth
               label="Quantity"
               name="quantity"
@@ -130,6 +150,7 @@ const CreateProductForm = () => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
+              required
               fullWidth
               label="Price"
               name="price"
@@ -140,6 +161,7 @@ const CreateProductForm = () => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
+              required
               fullWidth
               label="Discounted Price"
               name="discountedPrice"
@@ -150,6 +172,7 @@ const CreateProductForm = () => {
           </Grid>
           <Grid item xs={12} sm={3}>
             <TextField
+              required
               fullWidth
               label="Discount Percent"
               name="discountPercent"
@@ -161,6 +184,7 @@ const CreateProductForm = () => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               fullWidth
               label="Brand"
               name="brand"
@@ -182,6 +206,7 @@ const CreateProductForm = () => {
 
           <Grid item xs={12}>
             <TextField
+              required
               fullWidth
               multiline
               rows={3}
@@ -199,6 +224,7 @@ const CreateProductForm = () => {
 
           <Grid item xs={12}>
             <TextField
+              required
               fullWidth
               multiline
               rows={3}
@@ -224,6 +250,7 @@ const CreateProductForm = () => {
             ([key, value], index) => (
               <Grid item xs={12} sm={6} key={index}>
                 <TextField
+                  required={key === "partNumber"}
                   fullWidth
                   label={key
                     .replace(/([A-Z])/g, " $1")
@@ -244,6 +271,17 @@ const CreateProductForm = () => {
           </Button>
         </Box>
       </form>
+
+      {/* Snackbar for Success Message */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert severity="success" onClose={() => setOpenSnackbar(false)}>
+          Product Created Successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
