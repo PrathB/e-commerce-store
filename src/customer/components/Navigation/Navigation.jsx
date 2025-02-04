@@ -21,7 +21,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
-import { Avatar, Button, Menu, MenuItem } from "@mui/material";
+import { Alert, Avatar, Button, Menu, MenuItem, Snackbar } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../authorization/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -217,6 +217,7 @@ export default function Navigation() {
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDropdown, setOpenDropdown] = useState({});
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const openUserMenu = Boolean(anchorEl);
   const location = useLocation();
   const dispatch = useDispatch();
@@ -263,7 +264,11 @@ export default function Navigation() {
   };
 
   const handleAddToCart = () => {
-    navigate("/cart");
+    if (userFromState) {
+      navigate("/cart");
+    } else {
+      setOpenSnackbar(true);
+    }
   };
 
   const navigateRegister = () => {
@@ -792,6 +797,21 @@ export default function Navigation() {
                     </span> */}
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
+                  {/* Snackbar Notification */}
+                  <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={3000} // Auto-hide after 3 seconds
+                    onClose={() => setOpenSnackbar(false)}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert
+                      onClose={() => setOpenSnackbar(false)}
+                      severity="warning"
+                      sx={{ width: "100%" }}
+                    >
+                      You must be signed in to view your cart!
+                    </Alert>
+                  </Snackbar>
                 </div>
               </div>
             </div>

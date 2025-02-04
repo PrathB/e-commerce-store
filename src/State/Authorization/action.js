@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../../config/apiConfig";
+import { api, API_BASE_URL } from "../../config/apiConfig";
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -85,4 +85,7 @@ export const getUserProfile = (jwt) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.clear();
+
+  // Remove Authorization header
+  delete api.defaults.headers.common["Authorization"];
 };

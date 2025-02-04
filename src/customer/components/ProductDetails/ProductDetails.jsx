@@ -3,11 +3,13 @@ import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  Alert,
   Box,
   CircularProgress,
   Grid,
   LinearProgress,
   Rating,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
@@ -37,6 +39,9 @@ export default function ProductDetails() {
   // Functions to handle quantity selector
   const [loadingRelated, setLoadingRelated] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const userFromState = useSelector((store) => store.auth.user);
 
   const incrementQuantity = () => {
     setQuantity((prevQuantity) => (prevQuantity === "" ? 1 : prevQuantity + 1));
@@ -57,9 +62,13 @@ export default function ProductDetails() {
   const navigate = useNavigate();
 
   const handleAddToCart = () => {
-    const data = { productId: params.productId, quantity: quantity };
-    dispatch(addItemToCart(data));
-    navigate("/cart");
+    if (userFromState) {
+      const data = { productId: params.productId, quantity: quantity };
+      dispatch(addItemToCart(data));
+      navigate("/cart");
+    } else {
+      setOpenSnackbar(true);
+    }
   };
 
   const params = useParams();
@@ -259,11 +268,27 @@ export default function ProductDetails() {
 
                   {/* Add to Cart Button */}
                   <button
+                    type="button"
                     onClick={handleAddToCart}
                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-2 sm:px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
                   >
                     Add to cart
                   </button>
+                  {/* Snackbar Notification */}
+                  <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={3000} // Auto-hide after 3 seconds
+                    onClose={() => setOpenSnackbar(false)}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert
+                      onClose={() => setOpenSnackbar(false)}
+                      severity="warning"
+                      sx={{ width: "100%" }}
+                    >
+                      You must be signed in to add product to cart!
+                    </Alert>
+                  </Snackbar>
                 </div>
               </form>
             </div>

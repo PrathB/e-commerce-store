@@ -7,12 +7,14 @@ export const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Interceptor to attach the latest JWT before each request
+// Interceptor to attach latest JWT
 api.interceptors.request.use(
   (config) => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       config.headers.Authorization = `Bearer ${jwt}`;
+    } else {
+      delete config.headers.Authorization; // Remove auth header if no token
     }
     return config;
   },
