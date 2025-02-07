@@ -306,9 +306,11 @@ export default function ProductDetails() {
               </div>
 
               <div className="mt-10">
-                <h3 className="text-sm font-semibold text-gray-900">
-                  Highlights
-                </h3>
+                {product?.highlights?.length > 0 && (
+                  <h3 className="text-sm font-semibold text-gray-900">
+                    Highlights
+                  </h3>
+                )}
 
                 <div className="mt-4">
                   <ul className="list-disc space-y-2 pl-4 text-sm">
@@ -337,12 +339,17 @@ export default function ProductDetails() {
                 }`}
               >
                 <span className="font-semibold">{detail.label}</span>
-                <span>{product?.specifications?.[detail.id]}</span>
+                {product?.specifications?.[detail.id] && (
+                  <span>{product?.specifications?.[detail.id]}</span>
+                )}
+                <span>-</span>
               </div>
             ))}
           </div>
           {/* Compatibility */}
-          <h2 className="text-lg font-semibold mb-2">Compatibility</h2>
+          {product?.compatibility?.length > 0 && (
+            <h2 className="text-lg font-semibold mb-2">Compatibility</h2>
+          )}
           <div className="mt-4">
             <ul className="list-disc space-y-2 pl-4 text-base">
               {product?.compatibility.map((compatibleVehicle, index) => (
