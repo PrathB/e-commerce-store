@@ -89,7 +89,10 @@ const createProductsFailure = (error) => ({
 export const createProduct = (productData) => async (dispatch) => {
   dispatch(createProductRequest());
   try {
-    const response = await api.post(`api/admin/products`, productData);
+    const response = await api.post(`api/admin/products`, productData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
     dispatch(createProductSuccess(response.data._id));
     console.log("Created Product:", response.data);
   } catch (error) {

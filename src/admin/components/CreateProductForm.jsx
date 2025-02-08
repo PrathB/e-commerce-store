@@ -24,7 +24,6 @@ const CreateProductForm = () => {
 
   const [productData, setProductData] = useState({
     title: "",
-    imageUrl: "",
     category: {
       level1: "",
       level2: "",
@@ -53,45 +52,64 @@ const CreateProductForm = () => {
     compatibility: [],
   });
 
+  const [image, setImage] = useState(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Check if the field needs to be parsed as a number
-    const numberFields = [
-      "quantity",
-      "price",
-      "discountedPrice",
-      "discountPercent",
-    ];
-
-    if (numberFields.includes(name)) {
+    if (
+      ["quantity", "price", "discountedPrice", "discountPercent"].includes(name)
+    ) {
       setProductData((prevState) => ({
         ...prevState,
-        [name]: value === "" ? "" : parseInt(value, 10), // Parse as an integer or empty string
+        [name]: value === "" ? "" : parseInt(value, 10),
+      }));
+    } else if (
+      name.startsWith("category.") ||
+      name.startsWith("specifications.")
+    ) {
+      const [parent, child] = name.split(".");
+      setProductData((prevState) => ({
+        ...prevState,
+        [parent]: { ...prevState[parent], [child]: value },
       }));
     } else {
-      const keys = name.split(".");
-      if (keys.length === 2) {
-        setProductData((prevState) => ({
-          ...prevState,
-          [keys[0]]: {
-            ...prevState[keys[0]],
-            [keys[1]]: value,
-          },
-        }));
-      } else {
-        setProductData((prevState) => ({
-          ...prevState,
-          [name]: value,
-        }));
-      }
+      setProductData((prevState) => ({ ...prevState, [name]: value }));
     }
+  };
+
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]); // Store selected file
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProduct(productData));
-    console.log(productData);
+    const formData = new FormData();
+
+    const formattedProductData = {
+      ...productData,
+      quantity: Number(productData.quantity),
+      price: Number(productData.price),
+      discountedPrice: Number(productData.discountedPrice),
+      discountPercent: Number(productData.discountPercent),
+      category: JSON.stringify(productData.category),
+      specifications: JSON.stringify(productData.specifications),
+      highlights: JSON.stringify(productData.highlights),
+      compatibility: JSON.stringify(productData.compatibility),
+    };
+
+    Object.keys(formattedProductData).forEach((key) => {
+      formData.append(key, formattedProductData[key]);
+    });
+
+    if (image) {
+      formData.append("image", image);
+    }
+
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
+
+    dispatch(createProduct(formData));
   };
 
   return (
@@ -102,7 +120,28 @@ const CreateProductForm = () => {
       <form onSubmit={handleFormSubmit}>
         <Grid container spacing={2}>
           {/* General Details */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={3}>
+            <Button
+              variant="contained"
+              component="label"
+              fullWidth
+              sx={{ textTransform: "none", py: 1 , backgroundColor:"#7f0000","&:hover": { backgroundColor: "#500000" }}}
+            >
+              Upload Product Image
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleFileChange}
+              />
+            </Button>
+            {image && (
+              <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+                Selected: {image.name}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               required
               fullWidth
@@ -112,15 +151,7 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Image URL"
-              name="imageUrl"
-              value={productData.imageUrl}
-              onChange={handleChange}
-            />
-          </Grid>
+          
 
           {/* Category Details */}
           {["level1", "level2", "level3"].map((level, index) => (
