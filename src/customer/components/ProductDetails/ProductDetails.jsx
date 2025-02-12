@@ -214,12 +214,16 @@ export default function ProductDetails() {
                 <p className="text-3xl tracking-tight text-gray-900">
                   ₹{product?.discountedPrice}
                 </p>
-                <p className="text-xl tracking-tight text-gray-900 opacity-60 line-through">
-                  ₹{product?.price}
-                </p>
-                <p className="text-xl text-green-600 font-semibold">
-                  {product?.discountPercent}% off
-                </p>
+                {product?.discountPercent > 0 && (
+                  <>
+                    <p className="text-xl tracking-tight text-gray-900 opacity-60 line-through">
+                      ₹{product?.price}
+                    </p>
+                    <p className="text-xl text-green-600 font-semibold">
+                      {product?.discountPercent}% off
+                    </p>
+                  </>
+                )}
               </div>
 
               {/* Rating and reviews preview*/}
@@ -339,13 +343,13 @@ export default function ProductDetails() {
                 }`}
               >
                 <span className="font-semibold">{detail.label}</span>
-                {product?.specifications?.[detail.id] && (
-                  <span>{product?.specifications?.[detail.id]}</span>
-                )}
-                <span>-</span>
+                {product?.specifications?.[detail.id]?.trim()
+                  ? product.specifications[detail.id]
+                  : "-"}
               </div>
             ))}
           </div>
+
           {/* Compatibility */}
           {product?.compatibility?.length > 0 && (
             <h2 className="text-lg font-semibold mb-2">Compatibility</h2>
@@ -441,7 +445,6 @@ export default function ProductDetails() {
         </section> */}
 
         {/* Related Products */}
-        {/* TO DO: implement recommended products */}
         <section className="px-8 lg:px-24 pb-8 text-left">
           <h1 className="py-5 text-xl font-semibold">Related Products</h1>
           <div className="flex flex-wrap">
