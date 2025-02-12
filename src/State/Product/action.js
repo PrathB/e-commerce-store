@@ -136,7 +136,7 @@ const deleteProductByIdFailure = (error) => ({
 export const deleteProductByID = (productId) => async (dispatch) => {
   dispatch(deleteProductByIdRequest());
   try {
-    const response = await api.delete(`api/admin/products/${productId}`);
+    await api.delete(`api/admin/products/${productId}`);
     dispatch(deleteProductByIdSuccess(productId));
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.messag;

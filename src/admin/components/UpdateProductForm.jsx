@@ -135,21 +135,12 @@ const UpdateProductForm = () => {
       </Typography>
       <form onSubmit={handleFormSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Title"
               name="title"
               value={productData.title}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Image URL"
-              name="imageUrl"
-              value={productData.imageUrl}
               onChange={handleChange}
             />
           </Grid>
@@ -262,12 +253,42 @@ const UpdateProductForm = () => {
             />
           </Grid>
 
-          <Box mt={4} textAlign="center">
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </Box>
+          <Grid item xs={12} sx={{ marginTop: "2rem" }}>
+            <Typography textAlign={"left"} variant="h5" gutterBottom>
+              Specifications
+            </Typography>
+          </Grid>
+          {Object.entries(productData.specifications).map(
+            ([key, value], index) => (
+              <Grid item xs={12} sm={6} key={index}>
+                <TextField
+                  required={key === "partNumber"}
+                  fullWidth
+                  label={key
+                    .replace(/([A-Z])/g, " $1")
+                    .replace(/^./, (str) => str.toUpperCase())}
+                  name={`specifications.${key}`}
+                  value={value}
+                  onChange={handleChange}
+                />
+              </Grid>
+            )
+          )}
         </Grid>
+        <Box mt={4} textAlign="center">
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              py: 1,
+              backgroundColor: "#7f0000",
+              "&:hover": { backgroundColor: "#500000" },
+            }}
+          >
+            Submit
+          </Button>
+        </Box>
       </form>
 
       {/* Snackbar for Success Message */}

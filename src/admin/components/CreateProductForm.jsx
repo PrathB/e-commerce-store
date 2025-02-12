@@ -78,7 +78,7 @@ const CreateProductForm = () => {
   };
 
   const handleFileChange = (e) => {
-    setImage(e.target.files[0]); // Store selected file
+    setImage(e.target.files[0]);
   };
 
   const handleFormSubmit = (e) => {
@@ -125,7 +125,12 @@ const CreateProductForm = () => {
               variant="contained"
               component="label"
               fullWidth
-              sx={{ textTransform: "none", py: 1 , backgroundColor:"#7f0000","&:hover": { backgroundColor: "#500000" }}}
+              sx={{
+                textTransform: "none",
+                py: 1,
+                backgroundColor: "#7f0000",
+                "&:hover": { backgroundColor: "#500000" },
+              }}
             >
               Upload Product Image
               <input
@@ -151,7 +156,6 @@ const CreateProductForm = () => {
               onChange={handleChange}
             />
           </Grid>
-          
 
           {/* Category Details */}
           {["level1", "level2", "level3"].map((level, index) => (
@@ -297,7 +301,16 @@ const CreateProductForm = () => {
 
         {/* Submit Button */}
         <Box mt={4} textAlign="center">
-          <Button type="submit" variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              py: 1,
+              backgroundColor: "#7f0000",
+              "&:hover": { backgroundColor: "#500000" },
+            }}
+          >
             Submit
           </Button>
         </Box>
