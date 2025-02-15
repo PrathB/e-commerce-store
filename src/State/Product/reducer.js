@@ -8,6 +8,9 @@ import {
   FIND_PRODUCT_BY_ID_FAILURE,
   FIND_PRODUCT_BY_ID_REQUEST,
   FIND_PRODUCT_BY_ID_SUCCESS,
+  GET_ALL_PRODUCTS_FAILURE,
+  GET_ALL_PRODUCTS_REQUEST,
+  GET_ALL_PRODUCTS_SUCCESS,
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
@@ -19,6 +22,7 @@ import {
 
 const initialState = {
   pageData: { content: [], currentPage: 0, totalPages: 0 },
+  allProducts: null,
   product: null,
   createdProduct: null,
   deletedProduct: null,
@@ -33,6 +37,7 @@ export const customerProductReducer = (state = initialState, action) => {
     case DELETE_PRODUCT_BY_ID_REQUEST:
     case CREATE_PRODUCT_REQUEST:
     case UPDATE_PRODUCT_REQUEST:
+    case GET_ALL_PRODUCTS_REQUEST:
       return { ...state, loading: true, error: null };
     case FIND_PRODUCT_BY_ID_REQUEST:
       return { ...state, loading: true, error: null, product: null };
@@ -77,11 +82,20 @@ export const customerProductReducer = (state = initialState, action) => {
         deletedProduct: action.payload,
       };
 
+    case GET_ALL_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        allProducts: action.payload,
+        loading: false,
+        error: null,
+      };
+
     case FIND_PRODUCT_BY_ID_FAILURE:
     case GET_PRODUCTS_FAILURE:
     case DELETE_PRODUCT_BY_ID_FAILURE:
     case CREATE_PRODUCT_FAILURE:
     case UPDATE_PRODUCT_FAILURE:
+    case GET_ALL_PRODUCTS_FAILURE:
       return { ...state, loading: false, error: action.payload };
 
     default:

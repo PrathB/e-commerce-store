@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
         <div>
           <p className="text-sm sm:text-base">{product.title}</p>
         </div>
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center mt-2 space-x-2">
           <p className="font-semibold text-sm sm:text-base">
             ₹{product.discountedPrice}
           </p>
