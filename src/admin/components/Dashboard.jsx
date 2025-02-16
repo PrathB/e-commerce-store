@@ -19,12 +19,12 @@ const Dashboard = () => {
             <MonthlyOverview />
           </div>
         </Grid> */}
-        <Grid classNameitem xs={12} md={8}>
+        <Grid item xs={12}>
           <div>
             <OrderListView />
           </div>
         </Grid>
-        <Grid classNameitem xs={12} md={8}>
+        <Grid item xs={12}>
           <div>
             <ProductListView />
           </div>

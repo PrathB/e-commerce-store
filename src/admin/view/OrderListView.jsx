@@ -74,7 +74,7 @@ const OrderListView = () => {
                         {item.orderItems.map((orderItem) => (
                           <div
                             className="flex py-1 items-center"
-                            key={orderItem.product.id}
+                            key={orderItem.product._id}
                           >
                             <Avatar
                               className="mr-1"
@@ -87,7 +87,7 @@ const OrderListView = () => {
                         ))}
                       </TableCell>
                       <TableCell align="left">{item._id}</TableCell>
-                      <TableCell align="left">{item.totalPrice}</TableCell>
+                      <TableCell align="left">₹{item.totalPrice}</TableCell>
                       <TableCell align="left">
                         {item.user.firstName} {item.user.lastName}
                       </TableCell>

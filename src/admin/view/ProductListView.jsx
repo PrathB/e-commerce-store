@@ -69,7 +69,7 @@ const ProductListView = () => {
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
                         {item.category?.level3}
                       </TableCell>
-                      <TableCell align="left">{item.discountedPrice}</TableCell>
+                      <TableCell align="left">₹{item.discountedPrice}</TableCell>
                       <TableCell align="left">{item.quantity}</TableCell>
                     </TableRow>
                   ))}

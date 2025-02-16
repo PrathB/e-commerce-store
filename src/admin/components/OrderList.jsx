@@ -38,7 +38,6 @@ const OrderList = () => {
   const shippedOrder = useSelector((store) => store.adminOrder.shipped);
   const deliveredOrder = useSelector((store) => store.adminOrder.delivered);
   const deletedOrder = useSelector((store) => store.adminOrder.deleted);
-
   const loading = useSelector((store) => store.adminOrder.loading);
 
   const formatDate = (isoString) => {
@@ -56,7 +55,6 @@ const OrderList = () => {
     dispatch(getOrders());
   }, [confirmedOrder, shippedOrder, deliveredOrder, deletedOrder, dispatch]);
 
-  // Individual menu state for each row
   const [anchorElMap, setAnchorElMap] = useState({});
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
@@ -121,8 +119,7 @@ const OrderList = () => {
                   <TableCell align="left">User Name</TableCell>
                   <TableCell align="left">Created At</TableCell>
                   <TableCell align="left">Order Status</TableCell>
-                  <TableCell align="left">Update Status</TableCell>
-                  <TableCell align="left">Delete</TableCell>
+                  <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -146,7 +143,7 @@ const OrderList = () => {
                         ))}
                       </TableCell>
                       <TableCell align="left">{item._id}</TableCell>
-                      <TableCell align="left">{item.totalPrice}</TableCell>
+                      <TableCell align="left">₹{item.totalPrice}</TableCell>
                       <TableCell align="left">
                         {item.user.firstName} {item.user.lastName}
                       </TableCell>
@@ -174,7 +171,7 @@ const OrderList = () => {
                         </span>
                       </TableCell>
                       <TableCell align="left">
-                        <div>
+                        <div className="my-2">
                           <Button
                             onClick={(event) => handleClick(event, item._id)}
                           >
@@ -200,12 +197,9 @@ const OrderList = () => {
                             </MenuItem>
                           </Menu>
                         </div>
-                      </TableCell>
-                      <TableCell align="left">
                         <Button
-                          variant="text"
-                          color="error"
                           onClick={() => handleDeleteClick(item._id)}
+                          color="error"
                         >
                           <Delete />
                         </Button>

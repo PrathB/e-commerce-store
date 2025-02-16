@@ -9,6 +9,7 @@ import {
   Box,
   Snackbar,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -18,6 +19,7 @@ const UpdateProductForm = () => {
   const { productId } = useParams();
   const product = useSelector((store) => store.product.product);
   const updatedProduct = useSelector((store) => store.product.updatedProduct);
+  const loading = useSelector((store) => store.product.loading);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -133,163 +135,174 @@ const UpdateProductForm = () => {
       <Typography variant="h3" textAlign="center" mb={4}>
         Update Product
       </Typography>
-      <form onSubmit={handleFormSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Title"
-              name="title"
-              value={productData.title}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          {["level1", "level2", "level3"].map((level, index) => (
-            <Grid item xs={12} sm={4} key={index}>
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="50vh"
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <form onSubmit={handleFormSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <TextField
                 fullWidth
-                label={`Category Level ${index + 1}`}
-                name={`category.${level}`}
-                value={productData.category[level]}
+                label="Title"
+                name="title"
+                value={productData.title}
                 onChange={handleChange}
               />
             </Grid>
-          ))}
 
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth
-              label="Quantity"
-              name="quantity"
-              type="number"
-              value={productData.quantity}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth
-              label="Price"
-              name="price"
-              type="number"
-              value={productData.price}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth
-              label="Discounted Price"
-              name="discountedPrice"
-              type="number"
-              value={productData.discountedPrice}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <TextField
-              fullWidth
-              label="Discount Percent"
-              name="discountPercent"
-              type="number"
-              value={productData.discountPercent}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Brand"
-              name="brand"
-              value={productData.brand}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              multiline
-              rows={3}
-              label="Description"
-              name="description"
-              value={productData.description}
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              multiline
-              rows={3}
-              label="Highlights (Newline Separated)"
-              name="highlights"
-              value={productData.highlights?.join("\n") || ""}
-              onChange={(e) =>
-                setProductData((prevState) => ({
-                  ...prevState,
-                  highlights: e.target.value.split("\n"),
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              multiline
-              rows={3}
-              label="Compatibility (Newline Separated)"
-              name="compatibility"
-              value={productData.compatibility?.join("\n") || ""}
-              onChange={(e) =>
-                setProductData((prevState) => ({
-                  ...prevState,
-                  compatibility: e.target.value.split("\n"),
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} sx={{ marginTop: "2rem" }}>
-            <Typography textAlign={"left"} variant="h5" gutterBottom>
-              Specifications
-            </Typography>
-          </Grid>
-          {Object.entries(productData.specifications).map(
-            ([key, value], index) => (
-              <Grid item xs={12} sm={6} key={index}>
+            {["level1", "level2", "level3"].map((level, index) => (
+              <Grid item xs={12} sm={4} key={index}>
                 <TextField
-                  required={key === "partNumber"}
                   fullWidth
-                  label={key
-                    .replace(/([A-Z])/g, " $1")
-                    .replace(/^./, (str) => str.toUpperCase())}
-                  name={`specifications.${key}`}
-                  value={value}
+                  label={`Category Level ${index + 1}`}
+                  name={`category.${level}`}
+                  value={productData.category[level]}
                   onChange={handleChange}
                 />
               </Grid>
-            )
-          )}
-        </Grid>
-        <Box mt={4} textAlign="center">
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              textTransform: "none",
-              py: 1,
-              backgroundColor: "#7f0000",
-              "&:hover": { backgroundColor: "#500000" },
-            }}
-          >
-            Submit
-          </Button>
-        </Box>
-      </form>
+            ))}
+
+            <Grid item xs={12} sm={3}>
+              <TextField
+                fullWidth
+                label="Quantity"
+                name="quantity"
+                type="number"
+                value={productData.quantity}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                fullWidth
+                label="Price"
+                name="price"
+                type="number"
+                value={productData.price}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                fullWidth
+                label="Discounted Price"
+                name="discountedPrice"
+                type="number"
+                value={productData.discountedPrice}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TextField
+                fullWidth
+                label="Discount Percent"
+                name="discountPercent"
+                type="number"
+                value={productData.discountPercent}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Brand"
+                name="brand"
+                value={productData.brand}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={3}
+                label="Description"
+                name="description"
+                value={productData.description}
+                onChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={3}
+                label="Highlights (Newline Separated)"
+                name="highlights"
+                value={productData.highlights?.join("\n") || ""}
+                onChange={(e) =>
+                  setProductData((prevState) => ({
+                    ...prevState,
+                    highlights: e.target.value.split("\n"),
+                  }))
+                }
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={3}
+                label="Compatibility (Newline Separated)"
+                name="compatibility"
+                value={productData.compatibility?.join("\n") || ""}
+                onChange={(e) =>
+                  setProductData((prevState) => ({
+                    ...prevState,
+                    compatibility: e.target.value.split("\n"),
+                  }))
+                }
+              />
+            </Grid>
+
+            <Grid item xs={12} sx={{ marginTop: "2rem" }}>
+              <Typography textAlign={"left"} variant="h5" gutterBottom>
+                Specifications
+              </Typography>
+            </Grid>
+            {Object.entries(productData.specifications).map(
+              ([key, value], index) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <TextField
+                    required={key === "partNumber"}
+                    fullWidth
+                    label={key
+                      .replace(/([A-Z])/g, " $1")
+                      .replace(/^./, (str) => str.toUpperCase())}
+                    name={`specifications.${key}`}
+                    value={value}
+                    onChange={handleChange}
+                  />
+                </Grid>
+              )
+            )}
+          </Grid>
+          <Box mt={4} textAlign="center">
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                py: 1,
+                backgroundColor: "#7f0000",
+                "&:hover": { backgroundColor: "#500000" },
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </form>
+      )}
 
       {/* Snackbar for Success Message */}
       <Snackbar

@@ -20,7 +20,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProductByID, getAllProducts } from "../../State/Product/action";
-import { Delete } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
@@ -85,8 +85,7 @@ const ProductList = () => {
                   <TableCell align="left">Discounted Price</TableCell>
                   <TableCell align="left">Discount Percent</TableCell>
                   <TableCell align="left">QTY</TableCell>
-                  <TableCell align="left">Update</TableCell>
-                  <TableCell align="left">Delete</TableCell>
+                  <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -105,20 +104,19 @@ const ProductList = () => {
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
                         {item.category?.level3}
                       </TableCell>
-                      <TableCell align="left">{item.price}</TableCell>
-                      <TableCell align="left">{item.discountedPrice}</TableCell>
+                      <TableCell align="left">₹{item.price}</TableCell>
+                      <TableCell align="left">₹{item.discountedPrice}</TableCell>
                       <TableCell align="left">{item.discountPercent}</TableCell>
                       <TableCell align="left">{item.quantity}</TableCell>
-                      <TableCell align="left">
+                      <TableCell align="center">
                         <Button
                           variant="text"
                           color="primary"
+                          sx={{marginY:2}}
                           onClick={() => handleUpdateClick(item._id)}
                         >
-                          Update
+                          <Edit />
                         </Button>
-                      </TableCell>
-                      <TableCell align="left">
                         <Button
                           variant="text"
                           color="error"
