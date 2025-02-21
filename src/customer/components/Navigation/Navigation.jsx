@@ -247,12 +247,10 @@ export default function Navigation() {
   };
 
   const handleCategoryClick = (category, section, item, subItem, close) => {
-    {
-      if (subItem === null) {
-        navigate(`/${category.id}/?${section.id}=${item.id}`);
-      } else {
-        navigate(`/${category.id}/?${section.id}=${subItem.id}`);
-      }
+    if (subItem === null) {
+      navigate(`/${category.id}/?${section.id}=${item.id}`);
+    } else {
+      navigate(`/${category.id}/?${section.id}=${subItem.id}`);
     }
 
     close();
@@ -279,16 +277,16 @@ export default function Navigation() {
     if (jwt) {
       dispatch(getUserProfile(jwt));
     }
-  }, [jwt, jwtFromState]);
+  }, [jwt, jwtFromState, dispatch]);
 
   useEffect(() => {
     if (userFromState) {
       handleClose();
     }
     if (location.pathname === "/login" || location.pathname === "/register") {
-      navigate("/");
+      navigate((prev) => (prev !== "/" ? "/" : prev), { replace: true });
     }
-  }, [userFromState]);
+  }, [userFromState, location.pathname, navigate]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -398,7 +396,6 @@ export default function Navigation() {
                               {section.name}
                             </p>
                             <ul
-                              role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
                               className="mt-6 flex flex-col space-y-6"
                             >
@@ -620,7 +617,6 @@ export default function Navigation() {
                                             {section.name}
                                           </p>
                                           <ul
-                                            role="list"
                                             aria-labelledby={`${section.name}-heading`}
                                             className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
                                           >
@@ -765,7 +761,7 @@ export default function Navigation() {
                       className="text-sm font-medium hover:text-gray-500"
                       sx={{ color: "white" }}
                     >
-                      Signin
+                      Signup
                     </Button>
                   )}
                 </div>
