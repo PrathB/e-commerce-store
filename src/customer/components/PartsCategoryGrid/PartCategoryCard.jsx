@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 const PartsCategoryCard = ({ id, name, img }) => {
   const navigate = useNavigate();
   const handleCardClick = (categoryId) => {
-    navigate(`browse/categories/${categoryId}`);
+    navigate(`browse/?category=${categoryId}`);
+    window.scrollTo(0, 0);
   };
   return (
     <div

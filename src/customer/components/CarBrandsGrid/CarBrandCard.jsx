@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 const CarBrandCard = ({ id, name, logo }) => {
   const navigate = useNavigate();
   const handleCardClick = (brandId) => {
-    navigate(`browse/car-make/${brandId}`);
+    navigate(`browse/?car-make=${brandId}`);
+    window.scrollTo(0, 0);
   };
   return (
     <div
