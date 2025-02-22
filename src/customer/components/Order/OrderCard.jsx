@@ -7,13 +7,16 @@ const OrderCard = ({ order }) => {
   const navigate = useNavigate();
   return (
     <div
-      onClick={() => navigate(`/account/order-history/${5}`)}
+      onClick={() => navigate(`/account/order-history/${order?._id}`)}
       className="lg:p-5 p-2 shadow-md hover:shadow-xl border cursor-pointer"
     >
       <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
         <Grid item xs={12} sm={6}>
           {order?.orderItems?.map((orderItem) => (
-            <div className="flex">
+            <div
+              key={orderItem?._id || orderItem?.product?._id}
+              className="flex"
+            >
               <img
                 className="w-[6rem] h-[6rem] object-cover"
                 src={orderItem?.product?.imageUrl}

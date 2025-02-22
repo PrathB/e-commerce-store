@@ -2,13 +2,14 @@ import { Step, StepLabel, Stepper, useMediaQuery } from "@mui/material";
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 
-const steps = [
-  "Placed",
-  "Order Confirmed",
-  "Shipped",
-  "Out For Delivery",
-  "Delivered",
-];
+const steps = ["Placed", "Confirmed", "Shipped", "Delivered"];
+
+const activeStepLabels = {
+  0: "Pending",
+  1: "Waiting for confirmation",
+  2: "Waiting to be picked up",
+  3: "Out for Delivery",
+};
 
 const OrderTracker = ({ activeStep }) => {
   const theme = useTheme();
@@ -21,7 +22,7 @@ const OrderTracker = ({ activeStep }) => {
         alternativeLabel={!isMobile}
         orientation={isMobile ? "vertical" : "horizontal"}
       >
-        {steps.map((label) => (
+        {steps.map((label, index) => (
           <Step key={label}>
             <StepLabel
               sx={{
@@ -29,7 +30,9 @@ const OrderTracker = ({ activeStep }) => {
                 fontSize: isMobile ? "12px" : "16px",
               }}
             >
-              {label}
+              {index === activeStep && activeStepLabels[index]
+                ? activeStepLabels[index]
+                : label}
             </StepLabel>
           </Step>
         ))}
