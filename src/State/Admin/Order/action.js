@@ -1,5 +1,8 @@
 import { api } from "../../../config/apiConfig";
 import {
+  CANCEL_ORDER_FAILURE,
+  CANCEL_ORDER_REQUEST,
+  CANCEL_ORDER_SUCCESS,
   CONFIRM_ORDER_FAILURE,
   CONFIRM_ORDER_REQUEST,
   CONFIRM_ORDER_SUCCESS,
@@ -101,6 +104,28 @@ export const deliverOrder = (orderId) => async (dispatch) => {
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(deliverOrderFailure(errorMsg));
+  }
+};
+
+const cancelOrderRequest = () => ({ type: CANCEL_ORDER_REQUEST });
+const cancelOrderSuccess = (order) => ({
+  type: CANCEL_ORDER_SUCCESS,
+  payload: order,
+});
+const cancelOrderFailure = (error) => ({
+  type: CANCEL_ORDER_FAILURE,
+  payload: error,
+});
+
+export const cancelOrder = (orderId) => async (dispatch) => {
+  dispatch(cancelOrderRequest);
+  try {
+    const response = await api.put(`/api/admin/orders/${orderId}/cancelled`);
+    console.log("cancelled order:", response.data);
+    dispatch(cancelOrderSuccess(response.data));
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(cancelOrderFailure(errorMsg));
   }
 };
 

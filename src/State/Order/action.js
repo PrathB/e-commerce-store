@@ -6,6 +6,9 @@ import {
   FIND_ORDER_BY_ID_FAILURE,
   FIND_ORDER_BY_ID_REQUEST,
   FIND_ORDER_BY_ID_SUCCESS,
+  GET_USER_ORDER_HISTORY_FAILURE,
+  GET_USER_ORDER_HISTORY_REQUEST,
+  GET_USER_ORDER_HISTORY_SUCCESS,
 } from "./actionType";
 
 const createOrderRequest = () => ({ type: CREATE_ORDER_REQUEST });
@@ -50,5 +53,29 @@ export const findOrderById = (orderId) => async (dispatch) => {
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(findOrderByIdFailure(errorMsg));
+  }
+};
+
+const getUserOrderHistoryRequest = () => ({
+  type: GET_USER_ORDER_HISTORY_REQUEST,
+});
+const getUserOrderHistorySuccess = (orderArr) => ({
+  type: GET_USER_ORDER_HISTORY_SUCCESS,
+  payload: orderArr,
+});
+const getUserOrderHistoryFailure = (error) => ({
+  type: GET_USER_ORDER_HISTORY_FAILURE,
+  payload: error,
+});
+
+export const getUserOrderHistory = () => async (dispatch) => {
+  dispatch(getUserOrderHistoryRequest());
+  try {
+    const response = await api.get(`/api/orders/user`);
+    dispatch(getUserOrderHistorySuccess(response.data));
+    console.log(response.data);
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(getUserOrderHistoryFailure(errorMsg));
   }
 };

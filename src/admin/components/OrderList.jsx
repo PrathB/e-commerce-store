@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  cancelOrder,
   confirmOrder,
   deleteOrder,
   deliverOrder,
@@ -37,6 +38,7 @@ const OrderList = () => {
   const confirmedOrder = useSelector((store) => store.adminOrder.confirmed);
   const shippedOrder = useSelector((store) => store.adminOrder.shipped);
   const deliveredOrder = useSelector((store) => store.adminOrder.delivered);
+  const cancelledOrder = useSelector((store) => store.adminOrder.cancelled);
   const deletedOrder = useSelector((store) => store.adminOrder.deleted);
   const loading = useSelector((store) => store.adminOrder.loading);
 
@@ -53,7 +55,14 @@ const OrderList = () => {
 
   useEffect(() => {
     dispatch(getOrders());
-  }, [confirmedOrder, shippedOrder, deliveredOrder, deletedOrder, dispatch]);
+  }, [
+    confirmedOrder,
+    shippedOrder,
+    deliveredOrder,
+    deletedOrder,
+    cancelledOrder,
+    dispatch,
+  ]);
 
   const [anchorElMap, setAnchorElMap] = useState({});
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -79,6 +88,11 @@ const OrderList = () => {
 
   const handleDeliverOrder = (orderId) => {
     dispatch(deliverOrder(orderId));
+    handleClose(orderId);
+  };
+
+  const handleCancelOrder = (orderId) => {
+    dispatch(cancelOrder(orderId));
     handleClose(orderId);
   };
 
@@ -164,7 +178,9 @@ const OrderList = () => {
                                 ? "bg-green-400"
                                 : item.orderStatus === "DELIVERED"
                                 ? "bg-green-500"
-                                : "bg-red-800"
+                                : item.orderStatus === "CANCELLED"
+                                ? "bg-red-800"
+                                : ""
                             }`}
                         >
                           {item.orderStatus}
@@ -194,6 +210,11 @@ const OrderList = () => {
                               onClick={() => handleDeliverOrder(item._id)}
                             >
                               DELIVERED
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => handleCancelOrder(item._id)}
+                            >
+                              CANCELLED
                             </MenuItem>
                           </Menu>
                         </div>

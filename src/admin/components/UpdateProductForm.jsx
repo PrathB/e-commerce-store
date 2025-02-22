@@ -292,13 +292,36 @@ const UpdateProductForm = () => {
               type="submit"
               variant="contained"
               sx={{
+                mx: 4,
+                my: 2,
                 textTransform: "none",
                 py: 1,
+                px: 4,
                 backgroundColor: "#7f0000",
                 "&:hover": { backgroundColor: "#500000" },
               }}
             >
               Submit
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                mx: 4,
+                my: 2,
+                textTransform: "none",
+                py: 1,
+                px: 4,
+                borderColor: "#7f0000",
+                color: "#7f0000",
+                "&:hover": {
+                  borderColor: "ffffff",
+                  color: "#ffffff",
+                  backgroundColor: "#500000",
+                },
+              }}
+              onClick={() => navigate(-1)}
+            >
+              Cancel
             </Button>
           </Box>
         </form>
