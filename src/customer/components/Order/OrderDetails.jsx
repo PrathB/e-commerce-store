@@ -17,10 +17,10 @@ const OrderDetails = () => {
     dispatch(findOrderById(params.orderId));
   }, [params.orderId, dispatch]);
 
-  const handleProductClick = (productId) =>{
+  const handleProductClick = (productId) => {
     navigate(`/product/${[productId]}`);
-    window.scrollTo(0,0);
-  }
+    window.scrollTo(0, 0);
+  };
 
   if (loading) {
     return (
@@ -120,6 +120,30 @@ const OrderDetails = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="h-auto mt-5">
+        <div className="border-2 rounded-md shadow-lg p-4">
+          <p className="uppercase font-bold opacity-60 pb-4 text-left">
+            Order Total
+          </p>
+          <hr />
+          <div className="space-y-3 font-semibold mb-6">
+            <div className="flex justify-between pt-3 text-black">
+              <span>Subtotal</span>
+              <span>₹{order?.subTotalPrice}</span>
+            </div>
+            <div className="flex justify-between text-black">
+              <span>Shipping</span>
+              <span>₹{order?.shippingCost}</span>
+            </div>
+            <hr />
+            <div className="flex justify-between text-black text-lg font-bold">
+              <span>Total</span>
+              <span>₹{order?.totalPrice}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
