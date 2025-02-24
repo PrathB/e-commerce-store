@@ -12,6 +12,9 @@ import {
   GET_ALL_PRODUCTS_FAILURE,
   GET_ALL_PRODUCTS_REQUEST,
   GET_ALL_PRODUCTS_SUCCESS,
+  GET_FEATURED_PRODUCTS_FAILURE,
+  GET_FEATURED_PRODUCTS_REQUEST,
+  GET_FEATURED_PRODUCTS_SUCCESS,
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
@@ -97,6 +100,30 @@ export const getAllProducts = () => async (dispatch) => {
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(getAllProductsFailure(errorMsg));
+  }
+};
+
+const getFeaturedProductsRequest = () => ({
+  type: GET_FEATURED_PRODUCTS_REQUEST,
+});
+const getFeaturedProductsSuccess = (productArr) => ({
+  type: GET_FEATURED_PRODUCTS_SUCCESS,
+  payload: productArr,
+});
+const getFeaturedProductsFailure = (error) => ({
+  type: GET_FEATURED_PRODUCTS_FAILURE,
+  payload: error,
+});
+
+export const getFeaturedProducts = () => async (dispatch) => {
+  dispatch(getFeaturedProductsRequest);
+  try {
+    const response = await api.get("api/products/featured");
+    dispatch(getFeaturedProductsSuccess(response.data));
+    console.log(response.data);
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(getFeaturedProductsFailure(errorMsg));
   }
 };
 

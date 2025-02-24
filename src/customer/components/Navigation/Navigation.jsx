@@ -39,17 +39,17 @@ const navigation = {
       name: "Browse",
       featured: [
         {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://cartrends.in/cdn/shop/files/2_06a68d48-eef5-47fa-9abc-52d1afa12b0b_1920x.png?v=1723270930",
+          name: "Braking System",
+          id: "Braking-System",
+          href: "/browse/?category=Braking-System",
+          imageSrc: "/images/braking-system.png",
           imageAlt: "Different car parts on display.",
         },
         {
-          name: "Service Kits",
-          href: "#",
-          imageSrc:
-            "https://cartrends.in/cdn/shop/files/Oil-Filter-2-banner_720x.jpg?v=1723029431",
+          name: "Filters",
+          id: "Filters",
+          href: "/browse/?category=Filter",
+          imageSrc: "/images/filters.png",
           imageAlt: "Service kit.",
         },
       ],

@@ -4,6 +4,8 @@ import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { getFeaturedProducts } from "../../../State/Product/action";
 
 const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -31,6 +33,12 @@ const useWindowSize = () => {
 const HomeSectionCarousel = ({ data, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const windowSize = useWindowSize();
+  const featuredProducts = useSelector((store) => store.product.featured);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFeaturedProducts());
+  }, [dispatch]);
 
   const responsive = {
     0: { items: 1 }, // For mobile devices
@@ -47,8 +55,8 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
     setActiveIndex(item);
   };
 
-  const items = data.map((item) => (
-    <HomeSectionCard key={item.id} product={item} />
+  const items = featuredProducts.map((item) => (
+    <HomeSectionCard key={item._id} product={item.product} />
   ));
 
   // If the window width is less than 720px, use a grid layout
@@ -59,8 +67,8 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
           {sectionName}
         </h2>
         <div className="grid grid-cols-2 gap-1 p-2">
-          {data.map((item) => (
-            <HomeSectionCard key={item.id} product={item} />
+          {featuredProducts.map((item) => (
+            <HomeSectionCard key={item._id} product={item.product} />
           ))}
         </div>
       </div>

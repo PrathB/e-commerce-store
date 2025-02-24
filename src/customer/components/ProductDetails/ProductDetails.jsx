@@ -457,6 +457,8 @@ export default function ProductDetails() {
               >
                 <CircularProgress />
               </Box>
+            ) : relatedProducts.length === 0 ? (
+              <p>No products found!</p>
             ) : (
               relatedProducts
                 .slice(0, 5)
