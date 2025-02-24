@@ -5,53 +5,53 @@ const partCategories = [
   {
     id: "Control-Arm",
     name: "Control Arm",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/control-arm.png",
   },
   {
     id: "Strut-&-Shock-Absorber",
     name: "Strut & Shock Absorber",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/shock-absorber.png",
   },
   {
     id: "Stabilizer-&-Link",
     name: "Stabilizer & Link",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/stabilizer-link.png",
   },
 
   {
     id: "Filter",
     name: "Filters",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/oil-filter.png",
   },
   {
     id: "Mounting",
     name: "Engine Mounting",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/engine-mount.png",
   },
   {
     id: "Disc-Rotor",
     name: "Disc Rotor",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/disc-rotor.png",
   },
   {
     id: "Brake-pad",
     name: "Brake Pad",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/brake-pads.png",
   },
   {
-    id: "Sensor",
-    name: "Sensors",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    id: "Electrical",
+    name: "Electrical",
+    imgSrc: "/images/partCategories/ecu.png",
   },
   {
     id: "Body-Parts",
     name: "Body Parts",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/wheel-rim.png",
   },
   {
     id: "Safety-System",
     name: "Safety System",
-    imgUrl: "https://www.motrparts.com/wp-content/uploads/2023/12/filters.png",
+    imgSrc: "/images/partCategories/seatbelt.png",
   },
 ];
 
@@ -67,7 +67,7 @@ const PartsCategoryGrid = () => {
             key={index}
             id={category.id}
             name={category.name}
-            img={category.imgUrl}
+            img={category.imgSrc}
           />
         ))}
       </div>
