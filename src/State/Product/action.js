@@ -120,7 +120,6 @@ export const getFeaturedProducts = () => async (dispatch) => {
   try {
     const response = await api.get("api/products/featured");
     dispatch(getFeaturedProductsSuccess(response.data));
-    console.log(response.data);
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(getFeaturedProductsFailure(errorMsg));

@@ -30,7 +30,7 @@ const useWindowSize = () => {
   return windowSize;
 };
 
-const HomeSectionCarousel = ({ data, sectionName }) => {
+const HomeSectionCarousel = ({ sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const windowSize = useWindowSize();
   const featuredProducts = useSelector((store) => store.product.featured);
@@ -48,6 +48,16 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
     1440: { items: 5 }, // For larger screens
   };
 
+  const getItemsPerPage = () => {
+    if (windowSize.width >= 1440) return 5;
+    if (windowSize.width >= 1200) return 4;
+    if (windowSize.width >= 900) return 3;
+    if (windowSize.width >= 600) return 3;
+    return 1;
+  };
+
+  const itemsPerPage = getItemsPerPage();
+
   const slidePrev = () => setActiveIndex(activeIndex - 1);
   const slideNext = () => setActiveIndex(activeIndex + 1);
 
@@ -58,6 +68,8 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
   const items = featuredProducts.map((item) => (
     <HomeSectionCard key={item._id} product={item.product} />
   ));
+
+  const totalItems = items.length;
 
   // If the window width is less than 720px, use a grid layout
   if (windowSize.width && windowSize.width < 720) {
@@ -92,7 +104,7 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
           activeIndex={activeIndex}
         />
 
-        {activeIndex !== items.length - 5 && (
+        {activeIndex + itemsPerPage < totalItems && (
           <Button
             variant="contained"
             className="z-50"
