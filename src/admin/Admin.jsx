@@ -22,19 +22,46 @@ import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
 import Dashboard from "./components/Dashboard";
 import ProductList from "./components/ProductList";
 import OrderList from "./components/OrderList";
 import CustomerList from "./components/CustomerList";
 import CreateProductForm from "./components/CreateProductForm";
 import UpdateProductForm from "./components/UpdateProductForm";
+import FeaturedProducts from "./components/FeaturedProducts";
 
 const menu = [
-  { name: "Dashboard", path: "/admin", icon: <DashboardIcon /> },
-  { name: "Products", path: "/admin/products", icon: <ViewListIcon /> },
-  { name: "Customers", path: "/admin/customers", icon: <PeopleIcon /> },
-  { name: "Orders", path: "/admin/orders", icon: <AssignmentIcon /> },
-  { name: "Create Product", path: "/admin/product/create", icon: <AddIcon /> },
+  {
+    name: "Dashboard",
+    path: "/admin",
+    icon: <DashboardIcon color="primary" />,
+  },
+  {
+    name: "Products",
+    path: "/admin/products",
+    icon: <ViewListIcon color="success" />,
+  },
+  {
+    name: "Featured Products",
+    path: "/admin/featured-products",
+    icon: <WhatshotIcon color="warning" />,
+  },
+  {
+    name: "Customers",
+    path: "/admin/customers",
+    icon: <PeopleIcon color="primary" />,
+  },
+  {
+    name: "Orders",
+    path: "/admin/orders",
+    icon: <AssignmentIcon color="error" />,
+  },
+  {
+    name: "Create Product",
+    path: "/admin/product/create",
+    icon: <AddIcon color="secondary" />,
+  },
 ];
 
 const drawerWidth = 240;
@@ -138,9 +165,13 @@ const Admin = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/product/create" element={<CreateProductForm />} />
           <Route path="/products" element={<ProductList />} />
+          <Route path="/featured-products" element={<FeaturedProducts />} />
           <Route path="/orders" element={<OrderList />} />
           <Route path="/customers" element={<CustomerList />} />
-          <Route path="/products/update-product/:productId" element={<UpdateProductForm/>}/>
+          <Route
+            path="/products/update-product/:productId"
+            element={<UpdateProductForm />}
+          />
         </Routes>
       </Box>
     </Box>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProduct, findProductById } from "../../State/Product/action";
+import { updateProduct } from "../../State/Admin/Product/action";
+import { findProductById } from "../../State/Product/action";
 import {
   Grid,
   TextField,
@@ -18,7 +19,9 @@ const UpdateProductForm = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const product = useSelector((store) => store.product.product);
-  const updatedProduct = useSelector((store) => store.product.updatedProduct);
+  const updatedProduct = useSelector(
+    (store) => store.adminProduct.updatedProduct
+  );
   const loading = useSelector((store) => store.product.loading);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);

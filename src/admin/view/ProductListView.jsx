@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../State/Product/action";
+import { getAllProducts } from "../../State/Admin/Product/action";
 
 const ProductListView = () => {
   const dispatch = useDispatch();
-  const productArray = useSelector((store) => store.product.allProducts);
-  const loading = useSelector((store) => store.product.loading);
-  const error = useSelector((store) => store.product.error);
+  const productArray = useSelector((store) => store.adminProduct.allProducts);
+  const loading = useSelector((store) => store.adminProduct.loading);
+  const error = useSelector((store) => store.adminProduct.error);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -69,7 +69,9 @@ const ProductListView = () => {
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
                         {item.category?.level3}
                       </TableCell>
-                      <TableCell align="left">₹{item.discountedPrice}</TableCell>
+                      <TableCell align="left">
+                        ₹{item.discountedPrice}
+                      </TableCell>
                       <TableCell align="left">{item.quantity}</TableCell>
                     </TableRow>
                   ))}

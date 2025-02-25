@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct } from "../../State/Product/action";
+import { createProduct } from "../../State/Admin/Product/action";
 import {
   Grid,
   TextField,
@@ -13,7 +13,9 @@ import {
 
 const CreateProductForm = () => {
   const dispatch = useDispatch();
-  const createdProduct = useSelector((store) => store.product.createdProduct);
+  const createdProduct = useSelector(
+    (store) => store.adminProduct.createdProduct
+  );
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {

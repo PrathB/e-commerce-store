@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { volkswagen_parts } from "../../../Data/volkswagen_parts";
 import ProductCard from "../Product/ProductCard";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -174,7 +173,7 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                // alt={product.images[0].alt}
+                alt="Product"
                 src={product?.imageUrl}
                 className="h-full w-full object-cover object-center"
               />

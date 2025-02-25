@@ -19,39 +19,32 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteProductByID,
-  getAllProducts,
-} from "../../State/Admin/Product/action";
+import { getFeaturedProducts } from "../../State/Product/action";
 import { Delete, Edit } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-const ProductList = () => {
+const FeaturedProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const productArray = useSelector((store) => store.adminProduct.allProducts);
-  const deletedProduct = useSelector(
-    (store) => store.adminProduct.deletedProduct
-  );
-  const error = useSelector((store) => store.adminProduct.error);
-  const loading = useSelector((store) => store.adminProduct.loading);
-
+  const featuredProducts = useSelector((store) => store.product.featured);
+  const error = useSelector((store) => store.product.error);
+  const loading = useSelector((store) => store.product.loading);
   const [open, setOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getFeaturedProducts());
     console.log(error);
-  }, [deletedProduct, dispatch, error]);
+  }, [dispatch, error]);
 
-  const handleDeleteClick = (productId) => {
+  const handleRemoveClick = (productId) => {
     setSelectedProductId(productId);
     setOpen(true);
   };
 
   const handleConfirmDelete = () => {
     if (selectedProductId) {
-      dispatch(deleteProductByID(selectedProductId));
+      //   dispatch(deleteProductByID(selectedProductId));
     }
     setOpen(false);
   };
@@ -60,14 +53,10 @@ const ProductList = () => {
     setOpen(false);
   };
 
-  const handleUpdateClick = (productId) => {
-    navigate(`update-product/${productId}`);
-  };
-
   return (
     <div className="p-5">
       <Card className="mt-2">
-        <CardHeader title="All Products" />
+        <CardHeader title="Featured Products" />
 
         {loading ? (
           <Box
@@ -90,46 +79,42 @@ const ProductList = () => {
                   <TableCell align="left">Discounted Price</TableCell>
                   <TableCell align="left">Discount Percent</TableCell>
                   <TableCell align="left">QTY</TableCell>
-                  <TableCell align="center">Actions</TableCell>
+                  <TableCell align="center">Remove from featured</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {productArray &&
-                  productArray.map((item) => (
+                {featuredProducts &&
+                  featuredProducts.map((item) => (
                     <TableRow
-                      key={item._id}
+                      key={item.product._id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell align="left">
-                        <Avatar src={item.imageUrl} />
+                        <Avatar src={item.product.imageUrl} />
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "10rem" }}>
-                        {item.title}
+                        {item.product.title}
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
-                        {item.category?.level3}
+                        {item.product.category?.level3}
                       </TableCell>
-                      <TableCell align="left">₹{item.price}</TableCell>
+                      <TableCell align="left">₹{item.product.price}</TableCell>
                       <TableCell align="left">
-                        ₹{item.discountedPrice}
+                        ₹{item.product.discountedPrice}
                       </TableCell>
-                      <TableCell align="left">{item.discountPercent}</TableCell>
-                      <TableCell align="left">{item.quantity}</TableCell>
+                      <TableCell align="left">
+                        {item.product.discountPercent}
+                      </TableCell>
+                      <TableCell align="left">
+                        {item.product.quantity}
+                      </TableCell>
                       <TableCell align="center">
                         <Button
                           variant="text"
-                          color="primary"
-                          sx={{ marginY: 2 }}
-                          onClick={() => handleUpdateClick(item._id)}
-                        >
-                          <Edit />
-                        </Button>
-                        <Button
-                          variant="text"
                           color="error"
-                          onClick={() => handleDeleteClick(item._id)}
+                          onClick={() => handleRemoveClick(item.product._id)}
                         >
-                          <Delete />
+                          Remove
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -144,7 +129,7 @@ const ProductList = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Confirm Deletion</DialogTitle>
         <DialogContent>
-          Are you sure you want to delete this product?
+          Are you sure you want to remove this product from featured section?
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -159,4 +144,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default FeaturedProducts;
