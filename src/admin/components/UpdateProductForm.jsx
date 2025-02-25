@@ -22,8 +22,9 @@ const UpdateProductForm = () => {
   const updatedProduct = useSelector(
     (store) => store.adminProduct.updatedProduct
   );
-  const loading = useSelector((store) => store.product.loading);
-
+  const loading1 = useSelector((store) => store.product.loading);
+  const loading2 = useSelector((store) => store.adminProduct.loading);
+  const loading = loading1 || loading2;
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {
@@ -292,6 +293,23 @@ const UpdateProductForm = () => {
           </Grid>
           <Box mt={4} textAlign="center">
             <Button
+              variant="text"
+              sx={{
+                mx: 4,
+                my: 2,
+                textTransform: "none",
+                py: 1,
+                px: 4,
+                color: "#7f0000",
+                "&:hover": {
+                  backgroundColor: "#d3d3d3",
+                },
+              }}
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </Button>
+            <Button
               type="submit"
               variant="contained"
               sx={{
@@ -305,26 +323,6 @@ const UpdateProductForm = () => {
               }}
             >
               Submit
-            </Button>
-            <Button
-              variant="outlined"
-              sx={{
-                mx: 4,
-                my: 2,
-                textTransform: "none",
-                py: 1,
-                px: 4,
-                borderColor: "#7f0000",
-                color: "#7f0000",
-                "&:hover": {
-                  borderColor: "ffffff",
-                  color: "#ffffff",
-                  backgroundColor: "#500000",
-                },
-              }}
-              onClick={() => navigate(-1)}
-            >
-              Cancel
             </Button>
           </Box>
         </form>

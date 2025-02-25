@@ -85,11 +85,13 @@ const ProductList = () => {
                 <TableRow>
                   <TableCell align="left">IMG</TableCell>
                   <TableCell align="left">Title</TableCell>
+                  <TableCell align="left">Part Number</TableCell>
                   <TableCell align="left">Category</TableCell>
                   <TableCell align="left">Price</TableCell>
                   <TableCell align="left">Discounted Price</TableCell>
-                  <TableCell align="left">Discount Percent</TableCell>
+                  <TableCell align="left">Discount %</TableCell>
                   <TableCell align="left">QTY</TableCell>
+
                   <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
@@ -101,10 +103,17 @@ const ProductList = () => {
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell align="left">
-                        <Avatar src={item.imageUrl} />
+                        <Avatar
+                          src={item.imageUrl}
+                          variant="square"
+                          sx={{ width: 64, height: 64 }}
+                        />
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "10rem" }}>
                         {item.title}
+                      </TableCell>
+                      <TableCell align="left" sx={{ maxWidth: "10rem" }}>
+                        {item.specifications.partNumber}
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
                         {item.category?.level3}
@@ -115,6 +124,7 @@ const ProductList = () => {
                       </TableCell>
                       <TableCell align="left">{item.discountPercent}</TableCell>
                       <TableCell align="left">{item.quantity}</TableCell>
+
                       <TableCell align="center">
                         <Button
                           variant="text"

@@ -1,5 +1,8 @@
 import { api } from "../../../config/apiConfig";
 import {
+  ADD_PRODUCTS_TO_FEATURED_FAILURE,
+  ADD_PRODUCTS_TO_FEATURED_REQUEST,
+  ADD_PRODUCTS_TO_FEATURED_SUCCESS,
   CREATE_PRODUCT_FAILURE,
   CREATE_PRODUCT_REQUEST,
   CREATE_PRODUCT_SUCCESS,
@@ -9,6 +12,12 @@ import {
   GET_ALL_PRODUCTS_FAILURE,
   GET_ALL_PRODUCTS_REQUEST,
   GET_ALL_PRODUCTS_SUCCESS,
+  GET_NON_FEATURED_PRODUCTS_FAILURE,
+  GET_NON_FEATURED_PRODUCTS_REQUEST,
+  GET_NON_FEATURED_PRODUCTS_SUCCESS,
+  REMOVE_PRODUCT_FROM_FEATURED_FAILURE,
+  REMOVE_PRODUCT_FROM_FEATURED_REQUEST,
+  REMOVE_PRODUCT_FROM_FEATURED_SUCCESS,
   UPDATE_PRODUCT_FAILURE,
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
@@ -32,6 +41,29 @@ export const getAllProducts = () => async (dispatch) => {
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(getAllProductsFailure(errorMsg));
+  }
+};
+
+const getNonFeaturedProductsRequest = () => ({
+  type: GET_NON_FEATURED_PRODUCTS_REQUEST,
+});
+const getNonFeaturedProductsSuccess = (productArr) => ({
+  type: GET_NON_FEATURED_PRODUCTS_SUCCESS,
+  payload: productArr,
+});
+const getNonFeaturedProductsFailure = (error) => ({
+  type: GET_NON_FEATURED_PRODUCTS_FAILURE,
+  payload: error,
+});
+
+export const getNonFeaturedProducts = () => async (dispatch) => {
+  dispatch(getNonFeaturedProductsRequest);
+  try {
+    const response = await api.get("api/admin/products/non-featured");
+    dispatch(getNonFeaturedProductsSuccess(response.data));
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(getNonFeaturedProductsFailure(errorMsg));
   }
 };
 
@@ -103,5 +135,55 @@ export const deleteProductByID = (productId) => async (dispatch) => {
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.messag;
     dispatch(deleteProductByIdFailure(errorMsg));
+  }
+};
+
+const addProductsToFeaturedRequest = () => ({
+  type: ADD_PRODUCTS_TO_FEATURED_REQUEST,
+});
+const addProductsToFeaturedSuccess = (productId) => ({
+  type: ADD_PRODUCTS_TO_FEATURED_SUCCESS,
+  payload: productId,
+});
+const addProductsToFeaturedFailure = (error) => ({
+  type: ADD_PRODUCTS_TO_FEATURED_FAILURE,
+  payload: error,
+});
+
+export const addProductsToFeatured = (selectedProducts) => async (dispatch) => {
+  dispatch(addProductsToFeaturedRequest());
+  try {
+    await api.post(
+      `api/admin/products/featured/add-multiple`,
+      { productIds: selectedProducts },
+      { headers: { "Content-Type": "application/json" } }
+    );
+    dispatch(addProductsToFeaturedSuccess(selectedProducts));
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(addProductsToFeaturedFailure(errorMsg));
+  }
+};
+
+const removeProductFromFeaturedRequest = () => ({
+  type: REMOVE_PRODUCT_FROM_FEATURED_REQUEST,
+});
+const removeProductFromFeaturedSuccess = (productId) => ({
+  type: REMOVE_PRODUCT_FROM_FEATURED_SUCCESS,
+  payload: productId,
+});
+const removeProductFromFeaturedFailure = (error) => ({
+  type: REMOVE_PRODUCT_FROM_FEATURED_FAILURE,
+  payload: error,
+});
+
+export const removeProductfromFeatured = (productId) => async (dispatch) => {
+  dispatch(removeProductFromFeaturedRequest());
+  try {
+    await api.delete(`api/admin/products/featured/${productId}`);
+    dispatch(removeProductFromFeaturedSuccess(productId));
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    dispatch(removeProductFromFeaturedFailure(errorMsg));
   }
 };
