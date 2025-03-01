@@ -478,21 +478,66 @@ export default function Navigation() {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <Avatar
-                      className="text-white"
-                      onClick={handleUserClick}
-                      aria-controls={open ? "basic-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
-                      // onClick={handleUserClick}
-                      sx={{
-                        bgcolor: "#7f0000",
-                        color: "white",
-                        cursor: "pointer",
-                      }}
-                    >
-                      P
-                    </Avatar>
+                    {userFromState?.firstName ? (
+                      <div>
+                        <Avatar
+                          className="text-white"
+                          onClick={handleUserClick}
+                          aria-controls={open ? "basic-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          // onClick={handleUserClick}
+                          sx={{
+                            bgcolor: "#7f0000",
+                            color: "white",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {userFromState.firstName[0].toUpperCase()}
+                        </Avatar>
+                        {/* <Button
+                        id="basic-button"
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={handleUserClick}
+                      >
+                        Dashboard
+                      </Button> */}
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorEl}
+                          open={openUserMenu}
+                          onClose={handleCloseUserMenu}
+                          MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                          }}
+                        >
+                          <MenuItem onClick={handleCloseUserMenu}>
+                            Profile
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              handleCloseUserMenu();
+                              handleMyOrdersClick(() => setOpen(false));
+                            }}
+                          >
+                            My Orders
+                          </MenuItem>
+                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                        </Menu>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          navigateRegister();
+                          handleOpen();
+                        }}
+                        className="text-sm font-medium"
+                      >
+                        Signup
+                      </Button>
+                    )}
                   </div>
                 </div>
               </DialogPanel>

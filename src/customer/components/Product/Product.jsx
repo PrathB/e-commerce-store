@@ -12,7 +12,7 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ProductCard from "./ProductCard";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../../State/Product/action";
@@ -220,6 +220,7 @@ export default function Product() {
 
     dispatch(getProducts(data));
   }, [
+    dispatch,
     carMake,
     category,
     priceValue,

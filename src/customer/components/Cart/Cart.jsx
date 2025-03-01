@@ -18,7 +18,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(findUserCart());
-  }, [addedCartItem, updatedCartItem, removedCartItem]);
+  }, [dispatch,addedCartItem, updatedCartItem, removedCartItem]);
 
   if (loading) {
     return (
