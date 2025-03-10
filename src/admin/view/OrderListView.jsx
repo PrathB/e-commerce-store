@@ -78,10 +78,10 @@ const OrderListView = () => {
                           >
                             <Avatar
                               className="mr-1"
-                              src={orderItem.product.imageUrl}
+                              src={orderItem.product?.imageUrl}
                             />
                             <p>
-                              {orderItem.product.title} x {orderItem.quantity}
+                              {orderItem.product?.title} x {orderItem.quantity}
                             </p>
                           </div>
                         ))}
@@ -89,7 +89,7 @@ const OrderListView = () => {
                       <TableCell align="left">{item._id}</TableCell>
                       <TableCell align="left">₹{item.totalPrice}</TableCell>
                       <TableCell align="left">
-                        {item.user.firstName} {item.user.lastName}
+                        {item.user?.firstName} {item.user?.lastName}
                       </TableCell>
                       <TableCell align="left">
                         {formatDate(item.createdAt)}
