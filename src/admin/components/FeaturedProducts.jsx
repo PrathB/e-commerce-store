@@ -142,34 +142,34 @@ const FeaturedProducts = () => {
                 {featuredProducts &&
                   featuredProducts.map((item) => (
                     <TableRow
-                      key={item.product._id}
+                      key={item.product?._id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
                       <TableCell align="left">
                         <Avatar
-                          src={item.product.imageUrl}
+                          src={item.product?.imageUrl}
                           sx={{ width: 64, height: 64 }}
                           variant="square"
                         />
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "10rem" }}>
-                        {item.product.title}
+                        {item.product?.title}
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
-                        {item.product.category?.level3}
+                        {item.product?.category?.level3}
                       </TableCell>
-                      <TableCell align="left">₹{item.product.price}</TableCell>
+                      <TableCell align="left">₹{item.product?.price}</TableCell>
                       <TableCell align="left">
-                        ₹{item.product.discountedPrice}
+                        ₹{item.product?.discountedPrice}
                       </TableCell>
                       <TableCell align="left">
-                        {item.product.discountPercent}
+                        {item.product?.discountPercent}
                       </TableCell>
                       <TableCell align="center">
                         <Button
                           variant="text"
                           color="error"
-                          onClick={() => handleRemoveClick(item.product._id)}
+                          onClick={() => handleRemoveClick(item.product?._id)}
                         >
                           Remove
                         </Button>

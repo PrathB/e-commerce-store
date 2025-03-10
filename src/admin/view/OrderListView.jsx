@@ -74,14 +74,14 @@ const OrderListView = () => {
                         {item.orderItems.map((orderItem) => (
                           <div
                             className="flex py-1 items-center"
-                            key={orderItem.product._id}
+                            key={orderItem.product?._id}
                           >
                             <Avatar
                               className="mr-1"
                               src={orderItem.product?.imageUrl}
                             />
                             <p>
-                              {orderItem.product?.title} x {orderItem.quantity}
+                              {orderItem.product?.title} x {orderItem?.quantity}
                             </p>
                           </div>
                         ))}

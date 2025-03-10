@@ -113,7 +113,7 @@ const ProductList = () => {
                         {item.title}
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "10rem" }}>
-                        {item.specifications.partNumber}
+                        {item.specifications?.partNumber}
                       </TableCell>
                       <TableCell align="left" sx={{ maxWidth: "2rem" }}>
                         {item.category?.level3}

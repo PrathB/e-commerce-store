@@ -3,18 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 const HomeSectionCard = ({ product }) => {
   const navigate = useNavigate();
-  const productId = product._id;
+  const productId = product?._id;
 
   const handleProductClick = () => {
     navigate(`/product/${productId}`);
     window.scrollTo(0, 0);
   };
 
-
-  if (!product) {
-    return null; // Or show a loading state
-  }
-  
   return (
     <div
       onClick={handleProductClick}
@@ -23,27 +18,27 @@ const HomeSectionCard = ({ product }) => {
       <div className="h-auto w-auto sm:h-[15rem] sm:w-auto">
         <img
           className="object-cover w-full h-full"
-          src={product.imageUrl}
+          src={product?.imageUrl}
           alt="Product"
         />
       </div>
 
       <div className="textPart bg-white p-3">
         <div>
-          <p className="text-sm sm:text-base">{product.title}</p>
+          <p className="text-sm sm:text-base">{product?.title}</p>
         </div>
         <div className="flex items-center justify-center mt-2 space-x-2">
           <p className="font-semibold text-sm sm:text-base">
-            ₹{product.discountedPrice}
+            ₹{product?.discountedPrice}
           </p>
 
           {product?.discountPercent > 0 && (
             <>
               <p className="line-through opacity-50 text-sm sm:text-base">
-                ₹{product.price}
+                ₹{product?.price}
               </p>
               <p className="text-green-600 font-semibold text-sm sm:text-base">
-                {product.discountPercent}% off
+                {product?.discountPercent}% off
               </p>
             </>
           )}

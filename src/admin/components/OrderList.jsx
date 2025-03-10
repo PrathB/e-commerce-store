@@ -144,14 +144,14 @@ const OrderList = () => {
                         {item.orderItems.map((orderItem, index) => (
                           <div
                             className="flex py-1 items-center"
-                            key={`${item._id}-${orderItem.product.id}-${index}`}
+                            key={`${item._id}-${orderItem.product?.id}-${index}`}
                           >
                             <Avatar
                               className="mr-1"
-                              src={orderItem.product.imageUrl}
+                              src={orderItem.product?.imageUrl}
                             />
                             <p>
-                              {orderItem.product.title} x {orderItem.quantity}
+                              {orderItem.product?.title} x {orderItem?.quantity}
                             </p>
                           </div>
                         ))}
@@ -159,7 +159,7 @@ const OrderList = () => {
                       <TableCell align="left">{item._id}</TableCell>
                       <TableCell align="left">₹{item.totalPrice}</TableCell>
                       <TableCell align="left">
-                        {item.user.firstName} {item.user.lastName}
+                        {item.user?.firstName} {item.user?.lastName}
                       </TableCell>
                       <TableCell align="left">
                         {formatDate(item.createdAt)}
