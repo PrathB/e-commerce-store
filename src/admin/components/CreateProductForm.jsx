@@ -9,6 +9,7 @@ import {
   Box,
   Snackbar,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 
 const CreateProductForm = () => {
@@ -16,13 +17,24 @@ const CreateProductForm = () => {
   const createdProduct = useSelector(
     (store) => store.adminProduct.createdProduct
   );
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const error = useSelector((store) => store.adminProduct.error);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (createdProduct) {
-      setOpenSnackbar(true);
+      setOpenSuccessSnackbar(true);
+      setIsSubmitting(false);
     }
   }, [createdProduct]);
+
+  useEffect(() => {
+    if (error) {
+      setOpenErrorSnackbar(true);
+      setIsSubmitting(false);
+    }
+  }, [error]);
 
   const [productData, setProductData] = useState({
     title: "",
@@ -85,6 +97,8 @@ const CreateProductForm = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     const formData = new FormData();
 
     const formattedProductData = {
@@ -306,26 +320,50 @@ const CreateProductForm = () => {
           <Button
             type="submit"
             variant="contained"
+            disabled={isSubmitting}
             sx={{
               textTransform: "none",
               py: 1,
+              minWidth: "120px",
               backgroundColor: "#7f0000",
               "&:hover": { backgroundColor: "#500000" },
             }}
           >
-            Submit
+            {isSubmitting ? (
+              <Box
+                sx={{ display: "flex", alignItems: "center", color: "white" }}
+              >
+                <CircularProgress size={24} sx={{ color: "white", mr: 1 }} />
+                Submitting...
+              </Box>
+            ) : (
+              "Submit"
+            )}
           </Button>
         </Box>
       </form>
 
-      {/* Snackbar for Success Message */}
+      {/* Success Snackbar */}
       <Snackbar
-        open={openSnackbar}
-        autoHideDuration={2000}
-        onClose={() => setOpenSnackbar(false)}
+        open={openSuccessSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSuccessSnackbar(false)}
       >
-        <Alert severity="success" onClose={() => setOpenSnackbar(false)}>
+        <Alert severity="success" onClose={() => setOpenSuccessSnackbar(false)}>
           Product Created Successfully!
+        </Alert>
+      </Snackbar>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setOpenErrorSnackbar(false)}
+      >
+        <Alert severity="error" onClose={() => setOpenErrorSnackbar(false)}>
+          {error
+            ? error || "Failed to create product. Please try again."
+            : "An error occurred"}
         </Alert>
       </Snackbar>
     </Box>

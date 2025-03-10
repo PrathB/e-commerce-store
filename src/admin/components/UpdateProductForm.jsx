@@ -22,18 +22,27 @@ const UpdateProductForm = () => {
   const updatedProduct = useSelector(
     (store) => store.adminProduct.updatedProduct
   );
-  const loading1 = useSelector((store) => store.product.loading);
-  const loading2 = useSelector((store) => store.adminProduct.loading);
-  const loading = loading1 || loading2;
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const updateError = useSelector((store) => store.adminProduct.error);
+  const loading = useSelector((store) => store.product.loading);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
 
   useEffect(() => {
     dispatch(findProductById(productId));
   }, [dispatch, productId]);
 
   useEffect(() => {
+    if (updateError) {
+      setIsSubmitting(false);
+      setOpenErrorSnackbar(true);
+    }
+  }, [updateError]);
+
+  useEffect(() => {
     if (updatedProduct) {
-      setOpenSnackbar(true);
+      setOpenSuccessSnackbar(true);
+      setIsSubmitting(false);
       setTimeout(() => {
         dispatch({ type: "RESET_UPDATED_PRODUCT" });
         navigate(-1);
@@ -131,6 +140,7 @@ const UpdateProductForm = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     dispatch(updateProduct(productId, productData));
   };
 
@@ -322,7 +332,16 @@ const UpdateProductForm = () => {
                 "&:hover": { backgroundColor: "#500000" },
               }}
             >
-              Submit
+              {isSubmitting ? (
+                <Box
+                  sx={{ display: "flex", alignItems: "center", color: "white" }}
+                >
+                  <CircularProgress size={24} sx={{ color: "white", mr: 1 }} />
+                  Submitting...
+                </Box>
+              ) : (
+                "Submit"
+              )}
             </Button>
           </Box>
         </form>
@@ -330,12 +349,25 @@ const UpdateProductForm = () => {
 
       {/* Snackbar for Success Message */}
       <Snackbar
-        open={openSnackbar}
+        open={openSuccessSnackbar}
         autoHideDuration={2000}
-        onClose={() => setOpenSnackbar(false)}
+        onClose={() => setOpenSuccessSnackbar(false)}
       >
-        <Alert severity="success" onClose={() => setOpenSnackbar(false)}>
+        <Alert severity="success" onClose={() => setOpenSuccessSnackbar(false)}>
           Product Updated Successfully!
+        </Alert>
+      </Snackbar>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={4000}
+        onClose={() => setOpenErrorSnackbar(false)}
+      >
+        <Alert severity="error" onClose={() => setOpenErrorSnackbar(false)}>
+          {updateError
+            ? updateError || "Failed to create product. Please try again."
+            : "An error occurred"}
         </Alert>
       </Snackbar>
     </Box>

@@ -21,7 +21,7 @@ const Footer = () => {
           <h3>Caraid Automotive Pvt Ltd</h3>
           <h3>Delhi</h3>
           <p className="mt-10">
-            <EmailIcon></EmailIcon>Piyushbisht4954@gmail.com
+            <EmailIcon></EmailIcon>Teampiyushbisht@gmail.com
           </p>
 
           <p className="mt-2">
