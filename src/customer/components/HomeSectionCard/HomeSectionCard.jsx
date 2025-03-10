@@ -9,6 +9,12 @@ const HomeSectionCard = ({ product }) => {
     navigate(`/product/${productId}`);
     window.scrollTo(0, 0);
   };
+
+
+  if (!product) {
+    return null; // Or show a loading state
+  }
+  
   return (
     <div
       onClick={handleProductClick}
