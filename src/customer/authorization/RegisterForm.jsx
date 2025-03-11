@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from "@mui/material";
+import { Alert, Button, CircularProgress, Grid, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../State/Authorization/action";
@@ -6,6 +6,8 @@ import { register } from "../../State/Authorization/action";
 const RegisterForm = ({ switchToLogin }) => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.user);
+  const loading = useSelector((store) => store.auth.isLoading);
+  const error = useSelector((store) => store.auth.error);
   const [isOpen, setIsOpen] = useState(true);
   const formRef = useRef(null);
 
@@ -139,7 +141,11 @@ const RegisterForm = ({ switchToLogin }) => {
                 type="submit"
                 variant="contained"
               >
-                Register
+                {loading ? (
+                  <CircularProgress size={24} sx={{ color: "white" }} />
+                ) : (
+                  "Register"
+                )}
               </Button>
             </Grid>
           </Grid>
@@ -154,6 +160,9 @@ const RegisterForm = ({ switchToLogin }) => {
             >
               login
             </p>
+          </div>
+          <div className="w-full">
+            {error && <Alert severity="error">{error}</Alert>}
           </div>
         </div>
       </div>

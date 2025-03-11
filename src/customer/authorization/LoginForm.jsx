@@ -1,6 +1,7 @@
 import {
   Alert,
   Button,
+  CircularProgress,
   Grid,
   IconButton,
   InputAdornment,
@@ -15,6 +16,7 @@ const LoginForm = ({ switchToRegister }) => {
   const dispatch = useDispatch();
   const error = useSelector((store) => store.auth.error);
   const user = useSelector((store) => store.auth.user);
+  const loading = useSelector((store) => store.auth.isLoading);
   const [isOpen, setIsOpen] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const formRef = useRef(null);
@@ -98,7 +100,11 @@ const LoginForm = ({ switchToRegister }) => {
                 type="submit"
                 variant="contained"
               >
-                Login
+                {loading ? (
+                  <CircularProgress size={24} sx={{ color: "white" }} />
+                ) : (
+                  "Login"
+                )}
               </Button>
             </Grid>
           </Grid>
@@ -116,7 +122,7 @@ const LoginForm = ({ switchToRegister }) => {
           </div>
           <div className="w-full">
             {error && (
-              <Alert severity="error">Invalid email or password.</Alert>
+              <Alert severity="error">{error}</Alert>
             )}
           </div>
         </div>
