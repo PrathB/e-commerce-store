@@ -1,13 +1,22 @@
-import { Alert, Button, CircularProgress, Grid, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../State/Authorization/action";
+import { Close } from "@mui/icons-material";
 
 const RegisterForm = ({ switchToLogin }) => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.auth.user);
   const loading = useSelector((store) => store.auth.isLoading);
   const error = useSelector((store) => store.auth.error);
+  const [showError, setShowError] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const formRef = useRef(null);
 
@@ -54,6 +63,7 @@ const RegisterForm = ({ switchToLogin }) => {
     };
 
     dispatch(register(userData));
+    setShowError(true);
   };
 
   useEffect(() => {
@@ -162,7 +172,23 @@ const RegisterForm = ({ switchToLogin }) => {
             </p>
           </div>
           <div className="w-full">
-            {error && <Alert severity="error">{error}</Alert>}
+            {error && showError && (
+              <Alert
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => setShowError(false)}
+                  >
+                    <Close fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {error}
+              </Alert>
+            )}
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../State/Authorization/action";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Close, Visibility, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = ({ switchToRegister }) => {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const LoginForm = ({ switchToRegister }) => {
   const loading = useSelector((store) => store.auth.isLoading);
   const [isOpen, setIsOpen] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [showError, setShowError] = useState(false);
   const formRef = useRef(null);
 
   const handleSubmit = (event) => {
@@ -29,6 +30,7 @@ const LoginForm = ({ switchToRegister }) => {
       password: data.get("password"),
     };
     dispatch(login(userData));
+    setShowError(true);
   };
 
   const handleClickOutside = (event) => {
@@ -121,8 +123,22 @@ const LoginForm = ({ switchToRegister }) => {
             </p>
           </div>
           <div className="w-full">
-            {error && (
-              <Alert severity="error">{error}</Alert>
+            {error && showError && (
+              <Alert
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => setShowError(false)}
+                  >
+                    <Close fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {error}
+              </Alert>
             )}
           </div>
         </div>

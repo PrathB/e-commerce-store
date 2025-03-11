@@ -19,7 +19,7 @@ const Footer = () => {
             <strong>Contact Information</strong>
           </Typography>
           <h3>Caraid Automotive Pvt Ltd</h3>
-          <h3>Delhi</h3>
+          <h3>Kashmere gate, New Delhi</h3>
           <p className="mt-10">
             <EmailIcon></EmailIcon>Teampiyushbisht@gmail.com
           </p>
