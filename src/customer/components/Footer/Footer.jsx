@@ -146,7 +146,7 @@ const Footer = () => {
 
         <Grid className="pt-10 pb-2" item xs={12}>
           <Typography variant="body2" component="p" align="center">
-            &copy; 2024 Caraid. All rights reserved.
+            &copy; 2025 Caraid. All rights reserved.
           </Typography>
           <Typography variant="body2" component="p" align="center">
             Made with love by{" "}
