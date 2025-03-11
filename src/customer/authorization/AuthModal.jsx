@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Modal, useMediaQuery } from "@mui/material";
 import RegisterForm from "./RegisterForm";
 import LoginForm from "./LoginForm";
-import { useLocation } from "react-router-dom";
 
 const AuthModal = ({ handleClose, open }) => {
-  const location = useLocation();
   const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const [currentForm, setCurrentForm] = useState("login");
+
+  const switchToRegister = () => {
+    setCurrentForm("register");
+  };
+
+  const switchToLogin = () => {
+    setCurrentForm("login");
+  };
 
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: isSmallScreen ? "90%" : 500, // Adjust width based on screen size
-    maxWidth: 500, // Ensures it doesn't exceed 500px
+    width: isSmallScreen ? "90%" : 500,
+    maxWidth: 500,
     bgcolor: "background.paper",
     outline: "none",
     boxShadow: 24,
@@ -29,7 +36,11 @@ const AuthModal = ({ handleClose, open }) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        {location.pathname === "/login" ? <LoginForm /> : <RegisterForm />}
+        {currentForm === "login" ? (
+          <LoginForm switchToRegister={switchToRegister} />
+        ) : (
+          <RegisterForm switchToLogin={switchToLogin} />
+        )}
       </Box>
     </Modal>
   );

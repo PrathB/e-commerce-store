@@ -1,12 +1,11 @@
-import { Button, Grid, TextField} from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../State/Authorization/action";
 
-const RegisterForm = () => {
-  const navigate = useNavigate();
+const RegisterForm = ({ switchToLogin }) => {
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.auth.user);
   const [isOpen, setIsOpen] = useState(true);
   const formRef = useRef(null);
 
@@ -53,25 +52,26 @@ const RegisterForm = () => {
     };
 
     dispatch(register(userData));
-    setIsOpen(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (formRef.current && !formRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
   };
 
   useEffect(() => {
-    if (!isOpen) {
-      navigate("/");
-    }
-  }, [isOpen, navigate]);
+    const handleClickOutside = (event) => {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        setIsOpen(false);
+        switchToLogin();
+      }
+    };
 
-  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [switchToLogin]);
+
+  useEffect(() => {
+    if (user) {
+      setIsOpen(false);
+      switchToLogin();
+    }
+  }, [user, switchToLogin]);
 
   return isOpen ? (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -150,7 +150,7 @@ const RegisterForm = () => {
             <p>If you already have an account, </p>
             <p
               className="cursor-pointer font-semibold text-blue-600 hover:opacity-60 ml-1"
-              onClick={() => navigate("/login")}
+              onClick={switchToLogin}
             >
               login
             </p>

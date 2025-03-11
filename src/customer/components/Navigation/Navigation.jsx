@@ -269,10 +269,6 @@ export default function Navigation() {
     }
   };
 
-  const navigateRegister = () => {
-    navigate("/register");
-  };
-
   useEffect(() => {
     if (jwt) {
       dispatch(getUserProfile(jwt));
@@ -530,12 +526,11 @@ export default function Navigation() {
                     ) : (
                       <Button
                         onClick={() => {
-                          navigateRegister();
                           handleOpen();
                         }}
                         className="text-sm font-medium"
                       >
-                        Signup
+                        Sign In
                       </Button>
                     )}
                   </div>
@@ -800,13 +795,12 @@ export default function Navigation() {
                   ) : (
                     <Button
                       onClick={() => {
-                        navigateRegister();
                         handleOpen();
                       }}
                       className="text-sm font-medium hover:text-gray-500"
                       sx={{ color: "white" }}
                     >
-                      Signup
+                      Sign In
                     </Button>
                   )}
                 </div>

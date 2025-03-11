@@ -8,12 +8,10 @@ import {
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { login } from "../../State/Authorization/action";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+const LoginForm = ({ switchToRegister }) => {
   const dispatch = useDispatch();
   const error = useSelector((store) => store.auth.error);
   const user = useSelector((store) => store.auth.user);
@@ -29,7 +27,6 @@ const LoginForm = () => {
       password: data.get("password"),
     };
     dispatch(login(userData));
-    setIsOpen(false);
   };
 
   const handleClickOutside = (event) => {
@@ -43,12 +40,6 @@ const LoginForm = () => {
       setIsOpen(false);
     }
   }, [user]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      navigate("/");
-    }
-  }, [isOpen, navigate]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -118,7 +109,7 @@ const LoginForm = () => {
             <p>You don't have an account?</p>
             <p
               className="cursor-pointer font-semibold text-blue-600 hover:opacity-60 ml-1"
-              onClick={() => navigate("/register")}
+              onClick={switchToRegister}
             >
               Register
             </p>
