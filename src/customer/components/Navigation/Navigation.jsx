@@ -677,7 +677,7 @@ export default function Navigation() {
                                                       close
                                                     )
                                                   }
-                                                  className="text-gray-900"
+                                                  className="text-gray-900 mr-1"
                                                 >
                                                   {item.name}
                                                 </p>

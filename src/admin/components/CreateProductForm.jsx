@@ -10,6 +10,10 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 
 const CreateProductForm = () => {
@@ -21,6 +25,42 @@ const CreateProductForm = () => {
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const categoryOptions = {
+    "Suspension And Steering": [
+      "Strut And Shock Absorber",
+      "Control Arm",
+      "Stabilizer And Link",
+      "Bush Strut Mounting And Kit",
+    ],
+    "Engine Parts": ["Filter", "Mounting"],
+    "Braking System": ["Brake Pad", "Disc Rotor", "Brake Booster"],
+    Electrical: ["Sensor", "Ignition", "Electronic Control Unit", "Battery"],
+    "Cooling And HVAC": [
+      "Refrigerant System",
+      "Radiator",
+      "Condensor",
+      "Evaporator",
+      "Compressor",
+    ],
+    "Body Parts": [
+      "Rear View Mirror",
+      "Fender And Fender Liner",
+      "Wheel Rim",
+      "Wheel Cover",
+      "Bumper",
+      "Headlight",
+      "Tailight",
+    ],
+    "Safety System": ["Airbag System", "Seatbelt System"],
+    Accessories: [
+      "Windshield And Wiper",
+      "Seatcover And Mat",
+      "Entertainment System",
+    ],
+  };
+
+  const categoryLevel1Options = Object.keys(categoryOptions);
 
   useEffect(() => {
     if (createdProduct) {
@@ -77,10 +117,26 @@ const CreateProductForm = () => {
         ...prevState,
         [name]: value === "" ? "" : parseInt(value, 10),
       }));
-    } else if (
-      name.startsWith("category.") ||
-      name.startsWith("specifications.")
-    ) {
+    } else if (name.startsWith("category.")) {
+      const [parent, child] = name.split(".");
+
+      // If changing level1, reset level2
+      if (child === "level1") {
+        setProductData((prevState) => ({
+          ...prevState,
+          category: {
+            ...prevState.category,
+            [child]: value,
+            level2: "", // Reset level2 when level1 changes
+          },
+        }));
+      } else {
+        setProductData((prevState) => ({
+          ...prevState,
+          [parent]: { ...prevState[parent], [child]: value },
+        }));
+      }
+    } else if (name.startsWith("specifications.")) {
       const [parent, child] = name.split(".");
       setProductData((prevState) => ({
         ...prevState,
@@ -128,6 +184,12 @@ const CreateProductForm = () => {
     dispatch(createProduct(formData));
   };
 
+  // Get the available level2 options based on the selected level1
+  const getLevel2Options = () => {
+    const level1Selection = productData.category.level1;
+    return level1Selection ? categoryOptions[level1Selection] : [];
+  };
+
   return (
     <Box p={5}>
       <Typography variant="h3" textAlign="center" mb={4}>
@@ -173,19 +235,62 @@ const CreateProductForm = () => {
             />
           </Grid>
 
-          {/* Category Details */}
-          {["level1", "level2", "level3"].map((level, index) => (
-            <Grid item xs={12} sm={4} key={index}>
-              <TextField
-                required
-                fullWidth
-                label={`Category Level ${index + 1}`}
-                name={`category.${level}`}
-                value={productData.category[level]}
+          <Grid item xs={12} sm={4}>
+            <FormControl fullWidth required>
+              <InputLabel id="category-level1-label">
+                Category Level 1
+              </InputLabel>
+              <Select
+                labelId="category-level1-label"
+                id="category-level1"
+                name="category.level1"
+                value={productData.category.level1}
+                label="Category Level 1"
                 onChange={handleChange}
-              />
-            </Grid>
-          ))}
+              >
+                {categoryLevel1Options.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <FormControl
+              fullWidth
+              required
+              disabled={!productData.category.level1}
+            >
+              <InputLabel id="category-level2-label">
+                Category Level 2
+              </InputLabel>
+              <Select
+                labelId="category-level2-label"
+                id="category-level2"
+                name="category.level2"
+                value={productData.category.level2}
+                label="Category Level 2"
+                onChange={handleChange}
+              >
+                {getLevel2Options().map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <TextField
+              required
+              fullWidth
+              label="Category Level 3"
+              name="category.level3"
+              value={productData.category.level3}
+              onChange={handleChange}
+            />
+          </Grid>
 
           {/* Pricing and Quantity */}
           <Grid item xs={12} sm={3}>
