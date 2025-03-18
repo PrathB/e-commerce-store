@@ -23,6 +23,7 @@ const CreateProductForm = () => {
   );
   const error = useSelector((store) => store.adminProduct.error);
   const [openSuccessSnackbar, setOpenSuccessSnackbar] = useState(false);
+  const [openImageErrorSnackbar, setOpenImageErrorSnackbar] = useState(false);
   const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -175,6 +176,11 @@ const CreateProductForm = () => {
 
     if (image) {
       formData.append("image", image);
+    }
+    if (!image) {
+      setOpenImageErrorSnackbar(true);
+      setIsSubmitting(false);
+      return;
     }
 
     // for (let pair of formData.entries()) {
@@ -456,6 +462,20 @@ const CreateProductForm = () => {
       >
         <Alert severity="success" onClose={() => setOpenSuccessSnackbar(false)}>
           Product Created Successfully!
+        </Alert>
+      </Snackbar>
+
+      {/* Image missing Snackbar */}
+      <Snackbar
+        open={openImageErrorSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenImageErrorSnackbar(false)}
+      >
+        <Alert
+          severity="error"
+          onClose={() => setOpenImageErrorSnackbar(false)}
+        >
+          Upload Product Image!
         </Alert>
       </Snackbar>
 
