@@ -122,7 +122,7 @@ const Admin = () => {
     <Box sx={{ display: "flex", height: "100vh" }}>
       <CssBaseline />
       {!isLargeScreen && (
-        <AppBar position="fixed">
+        <AppBar position="fixed" sx={{ backgroundColor: "#7f0000" }}>
           <Toolbar>
             <IconButton
               color="inherit"

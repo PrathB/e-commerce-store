@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeCartItem, updateCartItem } from "../../../State/Cart/action";
@@ -24,7 +24,7 @@ const CartItem = ({ item }) => {
           <img
             className="w-full h-full object-cover"
             src={item.product.imageUrl}
-            alt="product image"
+            alt="product"
           ></img>
         </div>
 
