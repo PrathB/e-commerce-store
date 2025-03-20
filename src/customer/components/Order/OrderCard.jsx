@@ -15,10 +15,10 @@ const OrderCard = ({ order }) => {
           {order?.orderItems?.map((orderItem) => (
             <div
               key={orderItem?._id || orderItem?.product?._id}
-              className="flex"
+              className="flex items-center"
             >
               <img
-                className="w-[6rem] h-[6rem] object-cover"
+                className="w-[6rem] h-[6rem] object-cover my-2 border-2 border-gray-500"
                 src={orderItem?.product?.imageUrl}
                 alt="product"
               />
@@ -32,7 +32,7 @@ const OrderCard = ({ order }) => {
         </Grid>
         <Grid item xs={6} sm={2}>
           <p className="text-left mx-2 text-gray-700 font-medium">
-            Total Price: ₹{order?.totalPrice}
+            Total Price: ₹{order?.totalPrice.toLocaleString("en-IN")}
           </p>
         </Grid>
 

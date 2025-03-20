@@ -23,26 +23,28 @@ const HomeSectionCard = ({ product }) => {
         />
       </div>
 
-      <div className="textPart bg-white p-3">
+      <div className="textPart bg-white p-3 w-full">
         <div>
           <p className="text-sm sm:text-base">{product?.title}</p>
         </div>
-        <div className="flex items-center justify-center mt-2 space-x-2">
-          <p className="font-semibold text-sm sm:text-base">
-            ₹{product?.discountedPrice}
+        <div className="flex flex-wrap items-center justify-center mt-2 mb-1">
+          <p className="font-semibold text-sm sm:text-base mr-2">
+            ₹{product?.discountedPrice.toLocaleString("en-IN")}
           </p>
 
           {product?.discountPercent > 0 && (
-            <>
-              <p className="line-through opacity-50 text-sm sm:text-base">
-                ₹{product?.price}
-              </p>
-              <p className="text-green-600 font-semibold text-sm sm:text-base">
-                {product?.discountPercent}% off
-              </p>
-            </>
+            <p className="line-through opacity-50 text-sm sm:text-base">
+              ₹{product?.price.toLocaleString("en-IN")}
+            </p>
           )}
         </div>
+        {product?.discountPercent > 0 && (
+          <div className="text-center">
+            <p className="text-green-600 font-semibold text-sm sm:text-base">
+              {product?.discountPercent}% off
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

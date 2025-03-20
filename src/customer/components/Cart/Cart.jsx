@@ -51,16 +51,16 @@ const Cart = () => {
             <div className="space-y-3 font-semibold mb-6">
               <div className="flex justify-between pt-3 text-black">
                 <span>Subtotal</span>
-                <span>₹{cart?.subTotalPrice}</span>
+                <span>₹{cart?.subTotalPrice.toLocaleString('en-IN')}</span>
               </div>
               <div className="flex justify-between text-black">
                 <span>Shipping</span>
-                <span>₹{cart?.shippingCost}</span>
+                <span>₹{cart?.shippingCost.toLocaleString('en-IN')}</span>
               </div>
               <hr />
               <div className="flex justify-between text-black text-lg font-bold">
                 <span>Total</span>
-                <span>₹{cart?.totalPrice}</span>
+                <span>₹{cart?.totalPrice.toLocaleString('en-IN')}</span>
               </div>
             </div>
             <button

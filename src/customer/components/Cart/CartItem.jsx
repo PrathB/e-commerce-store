@@ -40,10 +40,10 @@ const CartItem = ({ item }) => {
           {/* Price Details */}
           <div className="flex space-x-5 items-center pt-4">
             <p className="tracking-tight text-gray-900 text-sm lg:text-base">
-              ₹{item.product.discountedPrice}
+              ₹{item.product.discountedPrice.toLocaleString("en-IN")}
             </p>
             <p className="tracking-tight text-gray-900 opacity-60 line-through text-sm lg:text-base">
-              ₹{item.product.price}
+              ₹{item.product.price.toLocaleString("en-IN")}
             </p>
             <p className="text-green-600 font-semibold text-xs lg:text-sm">
               {item.product.discountPercent}% off

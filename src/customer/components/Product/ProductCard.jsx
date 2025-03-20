@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
         <img
           className="h-full w-full object-cover"
           src={product.imageUrl}
-          alt="product image"
+          alt="product"
         />
       </div>
 
@@ -23,13 +23,13 @@ const ProductCard = ({ product }) => {
         </div>
         <div className="flex items-center justify-center mt-2 space-x-2">
           <p className="font-semibold text-sm sm:text-base">
-            ₹{product.discountedPrice}
+            ₹{product.discountedPrice.toLocaleString("en-IN")}
           </p>
 
           {product?.discountPercent > 0 && (
             <>
               <p className="line-through opacity-50 text-sm sm:text-base">
-                ₹{product.price}
+                ₹{product.price.toLocaleString("en-IN")}
               </p>
               <p className="text-green-600 font-semibold text-sm sm:text-base">
                 {product.discountPercent}% off

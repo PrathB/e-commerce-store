@@ -97,7 +97,7 @@ const OrderDetails = () => {
                 {/* Price Details */}
                 <div className="flex space-x-5 items-center pt-4">
                   <p className="tracking-tight text-gray-900 text-sm lg:text-base">
-                    ₹{orderItem?.price / orderItem?.quantity}
+                    ₹{(orderItem?.price / orderItem?.quantity).toLocaleString('en-IN')}
                   </p>
                   <p className="opacity-50 text-xs font-semibold">
                     Qty:{orderItem?.quantity}
@@ -105,7 +105,7 @@ const OrderDetails = () => {
                 </div>
                 <div className="flex space-x-5  items-center pt-4">
                   <p className="tracking-tight font-medium text-gray-900 text-sm lg:text-base">
-                    Total: ₹{orderItem?.price}
+                    Total: ₹{orderItem?.price.toLocaleString('en-IN')}
                   </p>
                 </div>
               </div>
@@ -131,16 +131,16 @@ const OrderDetails = () => {
           <div className="space-y-3 font-semibold mb-6">
             <div className="flex justify-between pt-3 text-black">
               <span>Subtotal</span>
-              <span>₹{order?.subTotalPrice}</span>
+              <span>₹{order?.subTotalPrice.toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between text-black">
               <span>Shipping</span>
-              <span>₹{order?.shippingCost}</span>
+              <span>₹{order?.shippingCost.toLocaleString('en-IN')}</span>
             </div>
             <hr />
             <div className="flex justify-between text-black text-lg font-bold">
               <span>Total</span>
-              <span>₹{order?.totalPrice}</span>
+              <span>₹{order?.totalPrice.toLocaleString('en-IN')}</span>
             </div>
           </div>
         </div>

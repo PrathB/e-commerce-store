@@ -168,7 +168,7 @@ export default function ProductDetails() {
         </nav>
 
         {/* Product overview */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10 lg:mb-10">
           {/* Image gallery */}
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
@@ -211,12 +211,12 @@ export default function ProductDetails() {
               <h2 className="sr-only">Product information</h2>
               <div className="flex space-x-5 items-center">
                 <p className="text-3xl tracking-tight text-gray-900">
-                  ₹{product?.discountedPrice}
+                  ₹{product?.discountedPrice.toLocaleString("en-IN")}
                 </p>
                 {product?.discountPercent > 0 && (
                   <>
                     <p className="text-xl tracking-tight text-gray-900 opacity-60 line-through">
-                      ₹{product?.price}
+                      ₹{product?.price.toLocaleString("en-IN")}
                     </p>
                     <p className="text-xl text-green-600 font-semibold">
                       {product?.discountPercent}% off
