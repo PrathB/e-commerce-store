@@ -1,9 +1,11 @@
 import { Box, Button, Grid, TextField, CircularProgress } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import AddressCard from "../AddressCard/AddressCard";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../../State/Order/action";
 import { useNavigate } from "react-router-dom";
+
+// TODO: handle error
 
 const DeliveryAddressForm = () => {
   const dispatch = useDispatch();
@@ -11,9 +13,11 @@ const DeliveryAddressForm = () => {
 
   const { user, loading } = useSelector((store) => store.auth);
   const addressArray = user?.address || [];
+  const [submittingId, setSubmittingId] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmittingId("form");
     const data = new FormData(e.currentTarget);
     const address = {
       firstName: data.get("firstName"),
@@ -25,11 +29,16 @@ const DeliveryAddressForm = () => {
       mobile: data.get("phoneNumber"),
     };
 
-    dispatch(createOrder(address, navigate));
+    dispatch(createOrder(address, navigate)).finally(() =>
+      setSubmittingId(null)
+    );
   };
 
-  const handleSelectAddress = (address) => {
-    dispatch(createOrder(address, navigate));
+  const handleSelectAddress = (address, id) => {
+    setSubmittingId(id);
+    dispatch(createOrder(address, navigate)).finally(() =>
+      setSubmittingId(null)
+    );
   };
 
   if (loading) {
@@ -62,9 +71,22 @@ const DeliveryAddressForm = () => {
                   sx={{ mt: 2, bgcolor: "#7f0000" }}
                   size="large"
                   variant="contained"
-                  onClick={() => handleSelectAddress(a)}
+                  disabled={submittingId !== null}
+                  onClick={() => handleSelectAddress(a, a._id)}
                 >
-                  Deliver Here
+                  {submittingId === a._id ? (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "white",
+                      }}
+                    >
+                      <CircularProgress size={24} sx={{ color: "white" }} />
+                    </Box>
+                  ) : (
+                    "Deliver here"
+                  )}
                 </Button>
               </div>
             ))
@@ -155,8 +177,25 @@ const DeliveryAddressForm = () => {
                     size="large"
                     variant="contained"
                     type="submit"
+                    disabled={submittingId !== null}
                   >
-                    Deliver Here
+                    {submittingId === "form" ? (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          color: "white",
+                        }}
+                      >
+                        <CircularProgress
+                          size={24}
+                          sx={{ color: "white", mr: 1 }}
+                        />
+                        Submitting...
+                      </Box>
+                    ) : (
+                      "Deliver here"
+                    )}
                   </Button>
                 </Grid>
               </Grid>
