@@ -3,7 +3,7 @@ import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findUserCart } from "../../../State/Cart/action";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(findUserCart());
-  }, [dispatch,addedCartItem, updatedCartItem, removedCartItem]);
+  }, [dispatch, addedCartItem, updatedCartItem, removedCartItem]);
 
   if (loading) {
     return (
@@ -51,25 +51,33 @@ const Cart = () => {
             <div className="space-y-3 font-semibold mb-6">
               <div className="flex justify-between pt-3 text-black">
                 <span>Subtotal</span>
-                <span>₹{cart?.subTotalPrice.toLocaleString('en-IN')}</span>
+                <span>₹{cart?.subTotalPrice.toLocaleString("en-IN")}</span>
               </div>
               <div className="flex justify-between text-black">
                 <span>Shipping</span>
-                <span>₹{cart?.shippingCost.toLocaleString('en-IN')}</span>
+                <span>₹{cart?.shippingCost.toLocaleString("en-IN")}</span>
               </div>
               <hr />
               <div className="flex justify-between text-black text-lg font-bold">
                 <span>Total</span>
-                <span>₹{cart?.totalPrice.toLocaleString('en-IN')}</span>
+                <span>₹{cart?.totalPrice.toLocaleString("en-IN")}</span>
               </div>
             </div>
-            <button
+            <Button
+              sx={{
+                mt: 2,
+                bgcolor: "#7f0000",
+                "&:hover": { backgroundColor: "#500000" },
+              }}
+              size="large"
+              variant="contained"
+              fullWidth="true"
               type="submit"
               onClick={handleCheckout}
-              className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
+              disabled={cart?.cartItems.length === 0}
             >
               Proceed to checkout
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { findOrderById } from "../../../State/Order/action";
 import { useLocation } from "react-router-dom";
 import OrderSummaryItem from "./OrderSummaryItem";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -81,12 +81,19 @@ const OrderSummary = () => {
               </div>
 
               {/* Proceed to Pay button */}
-              <button
+              <Button
+                sx={{
+                  mt: 2,
+                  bgcolor: "#7f0000",
+                  "&:hover": { backgroundColor: "#500000" },
+                }}
+                size="large"
+                variant="contained"
+                fullWidth="true"
                 type="submit"
-                className="flex w-full items-center justify-center rounded-md border border-transparent bg-[#7f0000] px-8 py-3 text-base font-medium text-white hover:bg-[#500000] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2"
               >
                 Proceed to pay
-              </button>
+              </Button>
             </div>
           </div>
         </div>

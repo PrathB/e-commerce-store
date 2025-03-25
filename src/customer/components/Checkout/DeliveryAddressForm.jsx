@@ -68,7 +68,11 @@ const DeliveryAddressForm = () => {
               <div key={a._id} className="p-5 py-7 border-b">
                 <AddressCard address={a} />
                 <Button
-                  sx={{ mt: 2, bgcolor: "#7f0000" }}
+                  sx={{
+                    mt: 2,
+                    bgcolor: "#7f0000",
+                    "&:hover": { backgroundColor: "#500000" },
+                  }}
                   size="large"
                   variant="contained"
                   disabled={submittingId !== null}
@@ -173,7 +177,11 @@ const DeliveryAddressForm = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} sx={{ textAlign: "left" }}>
                   <Button
-                    sx={{ mt: 2, bgcolor: "#7f0000" }}
+                    sx={{
+                      mt: 2,
+                      bgcolor: "#7f0000",
+                      "&:hover": { backgroundColor: "#500000" },
+                    }}
                     size="large"
                     variant="contained"
                     type="submit"
