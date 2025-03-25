@@ -34,7 +34,7 @@ const getAllProductsFailure = (error) => ({
 });
 
 export const getAllProducts = () => async (dispatch) => {
-  dispatch(getAllProductsRequest);
+  dispatch(getAllProductsRequest());
   try {
     const response = await api.get("api/admin/products");
     dispatch(getAllProductsSuccess(response.data));
@@ -57,7 +57,7 @@ const getNonFeaturedProductsFailure = (error) => ({
 });
 
 export const getNonFeaturedProducts = () => async (dispatch) => {
-  dispatch(getNonFeaturedProductsRequest);
+  dispatch(getNonFeaturedProductsRequest());
   try {
     const response = await api.get("api/admin/products/non-featured");
     dispatch(getNonFeaturedProductsSuccess(response.data));
@@ -109,7 +109,7 @@ export const updateProduct = (productId, productData) => async (dispatch) => {
       `api/admin/products/${productId}`,
       productData
     );
-    dispatch(updateProductSuccess(response.data));
+    dispatch(updateProductSuccess(response.data._id));
     console.log("Updated Product:", response.data._id);
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;

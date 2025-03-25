@@ -28,6 +28,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -111,7 +112,13 @@ const OrderList = () => {
   return (
     <div className="p-5">
       <Card className="mt-2">
-        <CardHeader title="All Orders" />
+        <CardHeader
+          title={
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              All Orders
+            </Typography>
+          }
+        />
 
         {loading ? (
           <Box

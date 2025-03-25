@@ -322,6 +322,7 @@ const UpdateProductForm = () => {
             <Button
               type="submit"
               variant="contained"
+              disabled={isSubmitting}
               sx={{
                 mx: 4,
                 my: 2,

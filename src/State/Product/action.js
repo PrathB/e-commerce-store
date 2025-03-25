@@ -83,7 +83,7 @@ const getFeaturedProductsFailure = (error) => ({
 });
 
 export const getFeaturedProducts = () => async (dispatch) => {
-  dispatch(getFeaturedProductsRequest);
+  dispatch(getFeaturedProductsRequest());
   try {
     const response = await api.get("api/products/featured");
     dispatch(getFeaturedProductsSuccess(response.data));

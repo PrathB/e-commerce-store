@@ -45,6 +45,7 @@ export const adminOrderReducer = (state = initialState, action) => {
 
     case GET_ORDERS_SUCCESS:
       return {
+        ...state,
         loading: false,
         orders: action.payload,
         error: null,
