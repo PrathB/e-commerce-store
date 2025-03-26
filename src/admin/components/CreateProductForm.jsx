@@ -109,15 +109,42 @@ const CreateProductForm = () => {
 
   const [image, setImage] = useState(null);
 
+  const calculateDiscountPercent = (price, discountedPrice) => {
+    if (price <= 0) return 0;
+    const discountPercent = ((price - discountedPrice) / price) * 100;
+    return Math.round(discountPercent);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (
-      ["quantity", "price", "discountedPrice", "discountPercent"].includes(name)
-    ) {
-      setProductData((prevState) => ({
-        ...prevState,
-        [name]: value === "" ? "" : parseInt(value, 10),
-      }));
+
+    if (["quantity", "price", "discountedPrice"].includes(name)) {
+      const numericValue = value === "" ? "" : parseInt(value, 10);
+
+      // Special logic for automatic discount percent calculation
+      if (name === "price" || name === "discountedPrice") {
+        const price = name === "price" ? numericValue : productData.price;
+        const discountedPrice =
+          name === "discountedPrice"
+            ? numericValue
+            : productData.discountedPrice;
+
+        const calculatedDiscountPercent = calculateDiscountPercent(
+          price,
+          discountedPrice
+        );
+
+        setProductData((prevState) => ({
+          ...prevState,
+          [name]: numericValue,
+          discountPercent: calculatedDiscountPercent,
+        }));
+      } else {
+        setProductData((prevState) => ({
+          ...prevState,
+          [name]: numericValue,
+        }));
+      }
     } else if (name.startsWith("category.")) {
       const [parent, child] = name.split(".");
 
@@ -341,6 +368,9 @@ const CreateProductForm = () => {
               type="number"
               value={productData.discountPercent}
               onChange={handleChange}
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </Grid>
 
