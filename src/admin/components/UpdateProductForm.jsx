@@ -69,6 +69,12 @@ const UpdateProductForm = () => {
     specifications: product?.specifications || {},
   });
 
+  const calculateDiscountPercent = (price, discountedPrice) => {
+    if (price <= 0) return 0;
+    const discountPercent = ((price - discountedPrice) / price) * 100;
+    return Math.round(discountPercent);
+  };
+
   useEffect(() => {
     if (product) {
       setProductData({
@@ -107,18 +113,35 @@ const UpdateProductForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    const numberFields = [
-      "quantity",
-      "price",
-      "discountedPrice",
-      "discountPercent",
-    ];
+    const numberFields = ["quantity", "price", "discountedPrice"];
 
     if (numberFields.includes(name)) {
-      setProductData((prevState) => ({
-        ...prevState,
-        [name]: value === "" ? "" : parseInt(value, 10),
-      }));
+      const numericValue = value === "" ? "" : parseInt(value, 10);
+
+      // Special logic for automatic discount percent calculation
+      if (name === "price" || name === "discountedPrice") {
+        const price = name === "price" ? numericValue : productData.price;
+        const discountedPrice =
+          name === "discountedPrice"
+            ? numericValue
+            : productData.discountedPrice;
+
+        const calculatedDiscountPercent = calculateDiscountPercent(
+          price,
+          discountedPrice
+        );
+
+        setProductData((prevState) => ({
+          ...prevState,
+          [name]: numericValue,
+          discountPercent: calculatedDiscountPercent,
+        }));
+      } else {
+        setProductData((prevState) => ({
+          ...prevState,
+          [name]: numericValue,
+        }));
+      }
     } else {
       const keys = name.split(".");
       if (keys.length === 2) {
@@ -221,6 +244,9 @@ const UpdateProductForm = () => {
                 type="number"
                 value={productData.discountPercent}
                 onChange={handleChange}
+                InputProps={{
+                  readOnly: true,
+                }}
               />
             </Grid>
 

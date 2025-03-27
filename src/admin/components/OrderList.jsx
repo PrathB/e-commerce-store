@@ -19,6 +19,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
   Menu,
   MenuItem,
   Paper,
@@ -29,6 +30,8 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -42,6 +45,9 @@ const OrderList = () => {
   const cancelledOrder = useSelector((store) => store.adminOrder.cancelled);
   const deletedOrder = useSelector((store) => store.adminOrder.deleted);
   const loading = useSelector((store) => store.adminOrder.loading);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const formatDate = (isoString) => {
     return new Date(isoString).toLocaleString("en-IN", {
@@ -109,6 +115,197 @@ const OrderList = () => {
     setOpenConfirmDialog(false);
   };
 
+  const MobileOrderCard = ({ order }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleStatusClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleStatusClose = () => {
+      setAnchorEl(null);
+    };
+
+    return (
+      <Card sx={{ mb: 2, position: "relative" }}>
+        <Box sx={{ p: 2 }}>
+          {/* Order Details */}
+          <Typography variant="subtitle1" fontWeight="bold">
+            Order ID: {order._id}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Created: {formatDate(order.createdAt)}
+          </Typography>
+
+          {/* Order Status Badge */}
+          <Box
+            sx={{
+              px: 2,
+              py: 1,
+              mt: 2,
+              borderRadius: 1,
+              color: "white",
+              backgroundColor:
+                order.orderStatus === "PENDING"
+                  ? "error.main"
+                  : order.orderStatus === "PLACED"
+                  ? "warning.main"
+                  : order.orderStatus === "CONFIRMED"
+                  ? "success.light"
+                  : order.orderStatus === "SHIPPED"
+                  ? "success.main"
+                  : order.orderStatus === "DELIVERED"
+                  ? "success.dark"
+                  : order.orderStatus === "CANCELLED"
+                  ? "error.dark"
+                  : "default",
+            }}
+          >
+            {order.orderStatus}
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
+
+          {/* Order Items */}
+          <Box>
+            {order.orderItems.map((item, index) => (
+              <Box
+                key={`${order._id}-${item.product?.id}-${index}`}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
+                <Avatar
+                  variant="square"
+                  src={item.product?.imageUrl}
+                  sx={{
+                    width: 64,
+                    height: 64,
+                    mr: 2,
+                    boxShadow: 1,
+                    border: "1px solid rgba(0,0,0,0.1)",
+                  }}
+                />
+                <Box>
+                  <Typography variant="body1">{item.product?.title}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Quantity: {item.quantity}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
+
+          {/* Order Summary */}
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="subtitle2">Total Price</Typography>
+            <Typography variant="subtitle1" fontWeight="bold">
+              ₹{order.totalPrice}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+            <Typography variant="subtitle2">User</Typography>
+            <Typography variant="body2">
+              {order.user?.firstName} {order.user?.lastName}
+            </Typography>
+          </Box>
+
+          {/* Actions */}
+          <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
+            <div style={{ position: "relative", width: "100%" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={handleStatusClick}
+              >
+                Update Status
+              </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleStatusClose}
+                anchorReference="anchorEl"
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      width: "auto",
+                      minWidth: anchorEl ? anchorEl.offsetWidth : "auto",
+                      maxWidth: "300px",
+                    },
+                  },
+                  root: {
+                    sx: {
+                      ".MuiMenu-list": {
+                        width: "auto",
+                        padding: 0,
+                      },
+                    },
+                  },
+                }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleConfirmOrder(order._id);
+                    handleStatusClose();
+                  }}
+                >
+                  CONFIRMED
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleShipOrder(order._id);
+                    handleStatusClose();
+                  }}
+                >
+                  SHIPPED
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleDeliverOrder(order._id);
+                    handleStatusClose();
+                  }}
+                >
+                  DELIVERED
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCancelOrder(order._id);
+                    handleStatusClose();
+                  }}
+                >
+                  CANCELLED
+                </MenuItem>
+              </Menu>
+            </div>
+
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<Delete />}
+              fullWidth
+              onClick={() => handleDeleteClick(order._id)}
+            >
+              Delete
+            </Button>
+          </Box>
+        </Box>
+      </Card>
+    );
+  };
+
   return (
     <div className="p-5">
       <Card className="mt-2">
@@ -128,6 +325,13 @@ const OrderList = () => {
             minHeight="50vh"
           >
             <CircularProgress />
+          </Box>
+        ) : isMobile ? (
+          <Box sx={{ p: 2 }}>
+            {orderArray &&
+              orderArray.map((item) => (
+                <MobileOrderCard key={item._id} order={item} />
+              ))}
           </Box>
         ) : (
           <TableContainer component={Paper}>
@@ -154,7 +358,9 @@ const OrderList = () => {
                             key={`${item._id}-${orderItem.product?.id}-${index}`}
                           >
                             <Avatar
-                              className="mr-1"
+                              className="m-2 shadow-sm border"
+                              sx={{ width: 64, height: 64 }}
+                              variant="square"
                               src={orderItem.product?.imageUrl}
                             />
                             <p>
@@ -194,43 +400,47 @@ const OrderList = () => {
                         </span>
                       </TableCell>
                       <TableCell align="left">
-                        <div className="my-2">
+                        <div className="flex flex-col items-center">
+                          <div className="my-2">
+                            <Button
+                              onClick={(event) => handleClick(event, item._id)}
+                            >
+                              Update Status
+                            </Button>
+                            <Menu
+                              anchorEl={anchorElMap[item._id]}
+                              open={Boolean(anchorElMap[item._id])}
+                              onClose={() => handleClose(item._id)}
+                            >
+                              <MenuItem
+                                onClick={() => handleConfirmOrder(item._id)}
+                              >
+                                CONFIRMED
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => handleShipOrder(item._id)}
+                              >
+                                SHIPPED
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => handleDeliverOrder(item._id)}
+                              >
+                                DELIVERED
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => handleCancelOrder(item._id)}
+                              >
+                                CANCELLED
+                              </MenuItem>
+                            </Menu>
+                          </div>
                           <Button
-                            onClick={(event) => handleClick(event, item._id)}
+                            onClick={() => handleDeleteClick(item._id)}
+                            color="error"
                           >
-                            Status
+                            <Delete />
                           </Button>
-                          <Menu
-                            anchorEl={anchorElMap[item._id]}
-                            open={Boolean(anchorElMap[item._id])}
-                            onClose={() => handleClose(item._id)}
-                          >
-                            <MenuItem
-                              onClick={() => handleConfirmOrder(item._id)}
-                            >
-                              CONFIRMED
-                            </MenuItem>
-                            <MenuItem onClick={() => handleShipOrder(item._id)}>
-                              SHIPPED
-                            </MenuItem>
-                            <MenuItem
-                              onClick={() => handleDeliverOrder(item._id)}
-                            >
-                              DELIVERED
-                            </MenuItem>
-                            <MenuItem
-                              onClick={() => handleCancelOrder(item._id)}
-                            >
-                              CANCELLED
-                            </MenuItem>
-                          </Menu>
                         </div>
-                        <Button
-                          onClick={() => handleDeleteClick(item._id)}
-                          color="error"
-                        >
-                          <Delete />
-                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
