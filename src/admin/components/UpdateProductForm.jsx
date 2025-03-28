@@ -329,23 +329,6 @@ const UpdateProductForm = () => {
           </Grid>
           <Box mt={4} textAlign="center">
             <Button
-              variant="text"
-              sx={{
-                mx: 4,
-                my: 2,
-                textTransform: "none",
-                py: 1,
-                px: 4,
-                color: "#7f0000",
-                "&:hover": {
-                  backgroundColor: "#d3d3d3",
-                },
-              }}
-              onClick={() => navigate(-1)}
-            >
-              Cancel
-            </Button>
-            <Button
               type="submit"
               variant="contained"
               disabled={isSubmitting}
@@ -369,6 +352,23 @@ const UpdateProductForm = () => {
               ) : (
                 "Submit"
               )}
+            </Button>
+            <Button
+              variant="text"
+              sx={{
+                mx: 4,
+                my: 2,
+                textTransform: "none",
+                py: 1,
+                px: 4,
+                color: "#7f0000",
+                "&:hover": {
+                  backgroundColor: "#d3d3d3",
+                },
+              }}
+              onClick={() => navigate(-1)}
+            >
+              Cancel
             </Button>
           </Box>
         </form>

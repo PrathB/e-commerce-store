@@ -19,6 +19,9 @@ import {
   useMediaQuery,
   useTheme,
   Typography,
+  CardContent,
+  Grid,
+  Divider,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,74 +73,134 @@ const ProductList = () => {
   };
 
   const MobileProductCard = ({ product }) => (
-    <div className="p-5 shadow-lg border rounded-md mb-5">
-      <div className="flex flex-col lg:flex-row items-center lg:items-start">
-        {/* Product Image */}
-        <div className="w-[7.5rem] h-[7.5rem] lg:w-[9rem] lg:h-[9rem] flex-shrink-0">
-          <img
-            className="w-full h-full object-cover"
-            src={product.imageUrl}
-            alt="product"
-          />
-        </div>
-
-        {/* Product Description */}
-        <div className="ml-0 lg:ml-5 space-y-1 text-left flex-1 mt-4 lg:mt-0">
-          <p className="font-semibold text-sm lg:text-base">{product.title}</p>
-          <p className="opacity-70 mt-2 text-xs lg:text-sm">
-            Category: {product.category?.level3}
-          </p>
-          <p className="opacity-70 mt-2 text-xs lg:text-sm">
-            Part Number: {product.specifications?.partNumber}
-          </p>
-
-          {/* Price Details */}
-          <div className="flex space-x-5 items-center pt-4">
-            <p className="tracking-tight text-gray-900 text-sm lg:text-base">
-              ₹{product.discountedPrice}
-            </p>
-            <p className="tracking-tight text-gray-900 opacity-60 line-through text-sm lg:text-base">
-              ₹{product.price}
-            </p>
-            <p className="text-green-600 font-semibold text-xs lg:text-sm">
-              {product.discountPercent}% off
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Quantity and Action Buttons */}
-      <div className="flex flex-col lg:flex-row lg:space-x-10 pt-4">
-        <div className="flex flex-col items-start mr-4 mb-4 lg:mb-0">
-          <div className="flex flex-row items-center space-x-3">
-            <p className="font-semibold">Qty:</p>
-            <span className="text-sm">{product.quantity}</span>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex space-x-4">
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => handleUpdateClick(product._id)}
-            startIcon={<Edit />}
-            size="small"
+    <Card
+      sx={{
+        mb: 2,
+        boxShadow: 3,
+        borderRadius: 2,
+      }}
+    >
+      <CardContent>
+        <Grid container spacing={2} alignItems="center">
+          {/* Product Image */}
+          <Grid
+            item
+            xs={12}
+            sm={3}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            color="error"
-            onClick={() => handleDeleteClick(product._id)}
-            startIcon={<Delete />}
-            size="small"
-          >
-            Delete
-          </Button>
-        </div>
-      </div>
-    </div>
+            <Box
+              sx={{
+                width: { xs: 120, sm: 140 },
+                height: { xs: 120, sm: 140 },
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={product.imageUrl}
+                alt="product"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </Box>
+          </Grid>
+
+          {/* Product Description */}
+          <Grid item xs={12} sm={9}>
+            <Box>
+              <Typography variant="subtitle1" fontWeight="bold">
+                {product.title}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                Category: {product.category?.level3}
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary">
+                Part Number: {product.specifications?.partNumber}
+              </Typography>
+
+              {/* Price Details */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  mt: 2,
+                }}
+              >
+                <Typography variant="subtitle1">
+                  ₹{product.discountedPrice}
+                </Typography>
+
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{
+                    textDecoration: "line-through",
+                  }}
+                >
+                  ₹{product.price}
+                </Typography>
+
+                <Typography variant="body2" color="success.main">
+                  {product.discountPercent}% off
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Divider sx={{ my: 2 }} />
+
+        {/* Quantity and Action Buttons */}
+        <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Grid item>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="subtitle2" fontWeight="bold">
+                Qty:
+              </Typography>
+              <Typography variant="body2">{product.quantity}</Typography>
+            </Box>
+          </Grid>
+
+          <Grid item>
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<Edit />}
+                size="small"
+                onClick={() => handleUpdateClick(product._id)}
+              >
+                Edit
+              </Button>
+
+              <Button
+                variant="outlined"
+                color="error"
+                startIcon={<Delete />}
+                size="small"
+                onClick={() => handleDeleteClick(product._id)}
+              >
+                Delete
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 
   return (
