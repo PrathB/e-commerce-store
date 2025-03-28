@@ -33,12 +33,16 @@ const Cart = () => {
     );
   }
 
+  if (!cart) {
+    return <p>No cart data available</p>;
+  }
+
   return (
     <div>
       <div className="lg:grid grid-cols-3 pt-6 px-4 lg:px-16 relative">
         <div className="col-span-2 space-y-4">
-          {cart?.cartItems.length === 0 && <p>Your Cart Is Empty!</p>}
-          {cart?.cartItems.map((item, index) => (
+          {cart.cartItems?.length === 0 && <p>Your Cart Is Empty!</p>}
+          {cart.cartItems?.map((item, index) => (
             <CartItem key={index} item={item} />
           ))}
         </div>
@@ -51,16 +55,16 @@ const Cart = () => {
             <div className="space-y-3 font-semibold mb-6">
               <div className="flex justify-between pt-3 text-black">
                 <span>Subtotal</span>
-                <span>₹{cart?.subTotalPrice.toLocaleString("en-IN")}</span>
+                <span>₹{cart.subTotalPrice.toLocaleString("en-IN")}</span>
               </div>
               <div className="flex justify-between text-black">
                 <span>Shipping</span>
-                <span>₹{cart?.shippingCost.toLocaleString("en-IN")}</span>
+                <span>₹{cart.shippingCost.toLocaleString("en-IN")}</span>
               </div>
               <hr />
               <div className="flex justify-between text-black text-lg font-bold">
                 <span>Total</span>
-                <span>₹{cart?.totalPrice.toLocaleString("en-IN")}</span>
+                <span>₹{cart.totalPrice.toLocaleString("en-IN")}</span>
               </div>
             </div>
             <Button
@@ -71,10 +75,10 @@ const Cart = () => {
               }}
               size="large"
               variant="contained"
-              fullWidth="true"
+              fullWidth={true}
               type="submit"
               onClick={handleCheckout}
-              disabled={cart?.cartItems.length === 0}
+              disabled={cart.cartItems?.length === 0}
             >
               Proceed to checkout
             </Button>
