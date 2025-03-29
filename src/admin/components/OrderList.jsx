@@ -147,17 +147,17 @@ const OrderList = () => {
               color: "white",
               backgroundColor:
                 order.orderStatus === "PENDING"
-                  ? "error.main"
+                  ? "#ef4444" // red-500
                   : order.orderStatus === "PLACED"
-                  ? "warning.main"
+                  ? "#fb923c" // orange-400
                   : order.orderStatus === "CONFIRMED"
-                  ? "success.light"
+                  ? "#86efac" // green-300
                   : order.orderStatus === "SHIPPED"
-                  ? "success.main"
+                  ? "#4ade80" // green-400
                   : order.orderStatus === "DELIVERED"
-                  ? "success.dark"
+                  ? "#22c55e" // green-500
                   : order.orderStatus === "CANCELLED"
-                  ? "error.dark"
+                  ? "#991b1b" // red-800
                   : "default",
             }}
           >
