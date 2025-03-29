@@ -202,17 +202,72 @@ const OrderList = () => {
 
           {/* Order Summary */}
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="subtitle2">Total Price</Typography>
-            <Typography variant="subtitle1" fontWeight="bold">
-              ₹{order.totalPrice}
+            <Typography variant="subtitle2" color="text.secondary">
+              Total Price:
             </Typography>
+            <Typography variant="subtitle2">₹{order.totalPrice}</Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
-            <Typography variant="subtitle2">User</Typography>
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ mr: 2 }}
+            >
+              User:
+            </Typography>
             <Typography variant="body2">
               {order.user?.firstName} {order.user?.lastName}
             </Typography>
           </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ mr: 2 }}
+            >
+              Email:
+            </Typography>
+            <Typography variant="body2">{order.user?.email}</Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ mr: 2 }}
+            >
+              Mobile No.:
+            </Typography>
+            <Typography variant="body2">
+              {order.shippingAddress?.mobile}
+            </Typography>
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              mt: 1,
+            }}
+          >
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ mr: 2, mb: 1 }}
+            >
+              Shipping Address:
+            </Typography>
+            <Typography variant="body2">
+              {order.shippingAddress?.streetAddress},{" "}
+              {order.shippingAddress?.city}, {order.shippingAddress?.state},{" "}
+              {order.shippingAddress?.pinCode}
+            </Typography>
+          </Box>
+
+          <Divider sx={{ my: 2 }} />
 
           {/* Actions */}
           <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
@@ -341,7 +396,8 @@ const OrderList = () => {
                   <TableCell align="left">Items</TableCell>
                   <TableCell align="left">Order ID</TableCell>
                   <TableCell align="left">Total Price</TableCell>
-                  <TableCell align="left">User Name</TableCell>
+                  <TableCell align="left">User</TableCell>
+                  <TableCell align="left">Shipping Address</TableCell>
                   <TableCell align="left">Created At</TableCell>
                   <TableCell align="left">Order Status</TableCell>
                   <TableCell align="center">Actions</TableCell>
@@ -372,7 +428,19 @@ const OrderList = () => {
                       <TableCell align="left">{item._id}</TableCell>
                       <TableCell align="left">₹{item.totalPrice}</TableCell>
                       <TableCell align="left">
-                        {item.user?.firstName} {item.user?.lastName}
+                        <div className="flex flex-col space-y-1">
+                          <div>
+                            {item.user?.firstName} {item.user?.lastName}
+                          </div>
+                          <div>{item.user?.email}</div>
+                          <div>{item.shippingAddress?.mobile}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        {item.shippingAddress?.streetAddress},{" "}
+                        {item.shippingAddress?.city},{" "}
+                        {item.shippingAddress?.state},{" "}
+                        {item.shippingAddress?.pinCode}
                       </TableCell>
                       <TableCell align="left">
                         {formatDate(item.createdAt)}

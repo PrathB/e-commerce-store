@@ -184,7 +184,7 @@ const FeaturedProducts = () => {
 
       {/* Remove Product Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogTitle>Confirm Removal</DialogTitle>
         <DialogContent>
           Are you sure you want to remove this product from featured section?
         </DialogContent>
