@@ -19,7 +19,16 @@ const OrderSummary = () => {
     if (orderId) {
       dispatch(findOrderById(orderId));
     }
-  }, [orderId]);
+  }, [dispatch,orderId]);
+
+  const whatsappNumber = "+918810277242";
+  const whatsappMessage = `Hello! I have placed an order on your website and i want to proceed with payment. Order ID: ${orderId} `;
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
+  const navigateToPayment = () =>{ 
+    window.open(whatsappUrl, "_blank");
+  }
 
   if (loading) {
     return (
@@ -91,6 +100,7 @@ const OrderSummary = () => {
                 variant="contained"
                 fullWidth="true"
                 type="submit"
+                onClick={navigateToPayment}
               >
                 Proceed to pay
               </Button>
