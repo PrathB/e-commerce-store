@@ -550,7 +550,7 @@ export default function Navigation() {
         <nav aria-label="Top" className="mx-auto">
           <div className="border-y border-gray-500">
             <div
-              className="flex h-16 items-center px-2 lg:px-11 "
+              className="flex h-16 items-center px-2 lg:px-11"
               style={{ backgroundColor: "#2c2c2c" }}
             >
               <button
@@ -742,6 +742,54 @@ export default function Navigation() {
               </PopoverGroup>
 
               <div className="ml-auto flex items-center">
+                {/* Search Bar */}
+                <div className="hidden sm:flex items-center lg:mr-6 bg-gray-300 rounded-md px-2 py-1 w-96">
+                  <MagnifyingGlassIcon
+                    className="h-5 w-5 text-black"
+                    aria-hidden="true"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Search for products"
+                    className="ml-2 bg-transparent focus:outline-none text-black placeholder-gray-600 w-full"
+                    // value={searchQuery}
+                    // onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+
+                {/* Cart */}
+                <div className="flow-root lg:mr-6">
+                  <Button
+                    onClick={handleAddToCart}
+                    className="group -m-2 flex items-center p-2"
+                  >
+                    <ShoppingBagIcon
+                      className="h-6 w-6 flex-shrink-0 text-white group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
+                    {/* <span className="ml-2 text-sm font-medium text-white group-hover:text-gray-500">
+                      2
+                    </span> */}
+                    <span className="sr-only">items in cart, view bag</span>
+                  </Button>
+                  
+                  {/* Snackbar Notification */}
+                  <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={3000} // Auto-hide after 3 seconds
+                    onClose={() => setOpenSnackbar(false)}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                  >
+                    <Alert
+                      onClose={() => setOpenSnackbar(false)}
+                      severity="warning"
+                      sx={{ width: "100%" }}
+                    >
+                      You must be signed in to view your cart!
+                    </Alert>
+                  </Snackbar>
+                </div>
+
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   {userFromState?.firstName ? (
                     <div>
@@ -804,50 +852,25 @@ export default function Navigation() {
                     </Button>
                   )}
                 </div>
-
-                {/* Search */}
-                <div className="flex items-center lg:ml-6">
-                  <p className="p-2 text-white hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
-                  </p>
-                </div>
-
-                {/* Cart */}
-                <div className="ml-4 flow-root lg:ml-6">
-                  <Button
-                    onClick={handleAddToCart}
-                    className="group -m-2 flex items-center p-2"
-                  >
-                    <ShoppingBagIcon
-                      className="h-6 w-6 flex-shrink-0 text-white group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    {/* <span className="ml-2 text-sm font-medium text-white group-hover:text-gray-500">
-                      2
-                    </span> */}
-                    <span className="sr-only">items in cart, view bag</span>
-                  </Button>
-                  {/* Snackbar Notification */}
-                  <Snackbar
-                    open={openSnackbar}
-                    autoHideDuration={3000} // Auto-hide after 3 seconds
-                    onClose={() => setOpenSnackbar(false)}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                  >
-                    <Alert
-                      onClose={() => setOpenSnackbar(false)}
-                      severity="warning"
-                      sx={{ width: "100%" }}
-                    >
-                      You must be signed in to view your cart!
-                    </Alert>
-                  </Snackbar>
-                </div>
+              </div>
+            </div>
+            <div
+              className="flex sm:hidden items-center justify-center px-2 py-2"
+              style={{ backgroundColor: "#2c2c2c" }}
+            >
+              {/* Search Bar */}
+              <div className="flex items-center bg-gray-300 rounded-md px-2 py-1 mb-2 w-full mx-5">
+                <MagnifyingGlassIcon
+                  className="h-5 w-5 text-black"
+                  aria-hidden="true"
+                />
+                <input
+                  type="text"
+                  placeholder="Search for products"
+                  className="ml-2 bg-transparent focus:outline-none text-black placeholder-gray-600 w-full"
+                  // value={searchQuery}
+                  // onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
             </div>
           </div>
