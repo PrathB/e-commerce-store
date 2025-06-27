@@ -9,6 +9,7 @@ import ProductDetails from "../customer/components/ProductDetails/ProductDetails
 import Checkout from "../customer/components/Checkout/Checkout";
 import OrderHistory from "../customer/components/Order/OrderHistory";
 import OrderDetails from "../customer/components/Order/OrderDetails";
+import ProductSearchPage from "../customer/pages/ProductSearchPage";
 
 const CustomerRouter = () => {
   return (
@@ -29,6 +30,7 @@ const CustomerRouter = () => {
           path="/account/order-history/:orderId"
           element={<OrderDetails />}
         />
+        <Route path="/search" element={<ProductSearchPage/>}/>
       </Routes>
       <div>
         <Footer />
