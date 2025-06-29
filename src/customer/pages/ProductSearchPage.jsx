@@ -1,8 +1,10 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Box, CircularProgress, Pagination } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../components/Product/ProductCard";
+import { useDispatch } from "react-redux";
+import { searchProducts } from "../../State/Product/action";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -15,6 +17,13 @@ function classNames(...classes) {
 
 const ProductSearchPage = () => {
   const handlePaginationChange = (event, value) => {};
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      searchProducts({ query: "steering", pageNumber: 1, pageSize: 10 })
+    );
+  }, [dispatch]);
 
   const dummyDataObject = {
     brand: "Hyundai",
@@ -55,11 +64,6 @@ const ProductSearchPage = () => {
   };
   const pageData = {
     content: [
-      dummyDataObject,
-      dummyDataObject,
-      dummyDataObject,
-      dummyDataObject,
-      dummyDataObject,
       
     ],
     currentPage: "1",
@@ -70,7 +74,9 @@ const ProductSearchPage = () => {
     <div className="bg-white">
       <main className="mx-auto px-4 sm:px-6 lg:px-20">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-          <h1 className="text-l sm:text-xl lg:text-2xl font-bold tracking-tight text-gray-800">Search Results</h1>
+          <h1 className="text-l sm:text-xl lg:text-2xl font-bold tracking-tight text-gray-800">
+            Search Results
+          </h1>
 
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">

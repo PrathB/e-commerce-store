@@ -8,10 +8,19 @@ import {
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
+  SEARCH_PRODUCTS_FAILURE,
+  SEARCH_PRODUCTS_REQUEST,
+  SEARCH_PRODUCTS_SUCCESS,
 } from "./actionType";
 
 const initialState = {
   pageData: { content: [], currentPage: 0, totalPages: 0 },
+  searchPageData: {
+    totalResults: 0,
+    currentPage: 0,
+    totalPages: 0,
+    products: [],
+  },
   product: null,
   featured: [],
   loading: false,
@@ -25,6 +34,8 @@ export const customerProductReducer = (state = initialState, action) => {
       return { ...state, loading: true, error: null };
     case FIND_PRODUCT_BY_ID_REQUEST:
       return { ...state, loading: true, error: null, product: null };
+    case SEARCH_PRODUCTS_REQUEST:
+      return { ...state, loading: true, error: null };
 
     case FIND_PRODUCT_BY_ID_SUCCESS:
       return { ...state, loading: false, error: null, product: action.payload };
@@ -45,9 +56,18 @@ export const customerProductReducer = (state = initialState, action) => {
         error: null,
       };
 
+    case SEARCH_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        searchPageData: action.payload,
+      };
+
     case FIND_PRODUCT_BY_ID_FAILURE:
     case GET_PRODUCTS_FAILURE:
     case GET_FEATURED_PRODUCTS_FAILURE:
+    case SEARCH_PRODUCTS_FAILURE:
       return { ...state, loading: false, error: action.payload };
 
     default:

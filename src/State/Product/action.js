@@ -9,6 +9,9 @@ import {
   GET_PRODUCTS_FAILURE,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
+  SEARCH_PRODUCTS_FAILURE,
+  SEARCH_PRODUCTS_REQUEST,
+  SEARCH_PRODUCTS_SUCCESS,
 } from "./actionType";
 
 const findProductByIdRequest = () => ({ type: FIND_PRODUCT_BY_ID_REQUEST });
@@ -90,5 +93,32 @@ export const getFeaturedProducts = () => async (dispatch) => {
   } catch (error) {
     const errorMsg = error.response?.data?.message || error.message;
     dispatch(getFeaturedProductsFailure(errorMsg));
+  }
+};
+
+const searchProductsRequest = () => ({ type: SEARCH_PRODUCTS_REQUEST });
+const searchProductsSuccess = (searchPageData) => ({
+  type: SEARCH_PRODUCTS_SUCCESS,
+  payload: searchPageData,
+});
+const searchProductsFailure = (error) => ({
+  type: SEARCH_PRODUCTS_FAILURE,
+  payload: error,
+});
+
+export const searchProducts = (data) => async (dispatch) => {
+  dispatch(searchProductsRequest());
+  const { query, pageNumber, pageSize } = data;
+  try {
+    console.log(data);
+    const response = await api.get(
+      `/api/products/search?q=${query}&page=${pageNumber}&limit=${pageSize}`
+    );
+    console.log(response.data);
+    dispatch(searchProductsSuccess(response.data));
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || error.message;
+    console.log(errorMsg);
+    dispatch(searchProductsFailure(errorMsg));
   }
 };
