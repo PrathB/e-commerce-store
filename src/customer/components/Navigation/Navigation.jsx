@@ -225,6 +225,21 @@ export default function Navigation() {
   const jwtFromState = useSelector((store) => store.auth.jwt);
   const userFromState = useSelector((store) => store.auth.user);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearch();
+    }
+  };
+
   const toggleDropdown = (itemId) => {
     setOpenDropdown((prev) => ({
       prev: false,
@@ -549,6 +564,7 @@ export default function Navigation() {
 
         <nav aria-label="Top" className="mx-auto">
           <div className="border-y border-gray-500">
+            {/* nav bar div visible on all devices */}
             <div
               className="flex h-16 items-center px-2 lg:px-11"
               style={{ backgroundColor: "#2c2c2c" }}
@@ -741,19 +757,21 @@ export default function Navigation() {
                 </div>
               </PopoverGroup>
 
+              {/* Search Bar */}
               <div className="ml-auto flex items-center">
-                {/* Search Bar */}
-                <div className="hidden sm:flex items-center lg:mr-6 bg-gray-300 rounded-md px-2 py-1 w-96">
+                <div className="hidden sm:flex items-center lg:mr-6 bg-gray-300 rounded-md px-2 py-1 w-full md:w-64 xl:w-96 2xl:w-[32rem] transition-all duration-300">
                   <MagnifyingGlassIcon
-                    className="h-5 w-5 text-black"
+                    onClick={handleSearch}
+                    className="h-5 w-5 text-black cursor-pointer"
                     aria-hidden="true"
                   />
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
                     placeholder="Search for products"
                     className="ml-2 bg-transparent focus:outline-none text-black placeholder-gray-600 w-full"
-                    // value={searchQuery}
-                    // onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
 
@@ -772,7 +790,7 @@ export default function Navigation() {
                     </span> */}
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
-                  
+
                   {/* Snackbar Notification */}
                   <Snackbar
                     open={openSnackbar}
@@ -854,6 +872,8 @@ export default function Navigation() {
                 </div>
               </div>
             </div>
+
+            {/* search bar div visible on only mobile devices */}
             <div
               className="flex sm:hidden items-center justify-center px-2 py-2"
               style={{ backgroundColor: "#2c2c2c" }}
@@ -861,15 +881,17 @@ export default function Navigation() {
               {/* Search Bar */}
               <div className="flex items-center bg-gray-300 rounded-md px-2 py-1 mb-2 w-full mx-5">
                 <MagnifyingGlassIcon
-                  className="h-5 w-5 text-black"
+                  onClick={handleSearch}
+                  className="h-5 w-5 text-black cursor-pointer"
                   aria-hidden="true"
                 />
                 <input
                   type="text"
                   placeholder="Search for products"
                   className="ml-2 bg-transparent focus:outline-none text-black placeholder-gray-600 w-full"
-                  // value={searchQuery}
-                  // onChange={(e) => setSearchQuery(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleKeyDown}
                 />
               </div>
             </div>
