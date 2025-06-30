@@ -3,8 +3,9 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { Box, CircularProgress, Pagination } from "@mui/material";
 import React, { useEffect } from "react";
 import ProductCard from "../components/Product/ProductCard";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { searchProducts } from "../../State/Product/action";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -16,66 +17,41 @@ function classNames(...classes) {
 }
 
 const ProductSearchPage = () => {
-  const handlePaginationChange = (event, value) => {};
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+  const query = searchParams.get("q");
+  const pageNumber = searchParams.get("page") || 1;
+  const pageSize = 10;
+
+  const handlePaginationChange = (event, value) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set("page", value);
+    const query = searchParams.toString();
+    navigate({ search: query });
+  };
 
   useEffect(() => {
     dispatch(
-      searchProducts({ query: "steering", pageNumber: 1, pageSize: 10 })
+      searchProducts({
+        query,
+        pageNumber,
+        pageSize,
+      })
     );
-  }, [dispatch]);
+  }, [dispatch, query, pageNumber]);
 
-  const dummyDataObject = {
-    brand: "Hyundai",
-    category: {
-      level1: "Suspension And Steering",
-      level2: "Control Arm",
-      level3: "Lower arm",
-    },
-    compatibility: ["Creta"],
-    createdAt: "2025-03-15T16:34:42.838Z",
-    description: "Lower arm ",
-    discountPercent: 67,
-    discountedPrice: 1000,
-    highlights: ["Oem"],
-    imageUrl:
-      "https://res.cloudinary.com/daaxbw157/image/upload/v1742058302/ecommerce-products/zg6ciper2gttzhlkke9l.png",
-    numRatings: 0,
-    price: 3000,
-    quantity: 100,
-    ratings: [],
-    reviews: [],
-    specifications: {
-      carMake: "Honda",
-      carModel: "Crv",
-      carSubModel: "Crv",
-      countryOfOrigin: "India",
-      dimensions: "1",
-      netQuantity: "10",
-      partBrand: "Honda",
-      partCategory: "Steering rack",
-      partNumber: "808080",
-      partOrigin: "India",
-      weight: "10",
-    },
-    title: "Lower arm creta",
-    __v: 0,
-    _id: "67d5b33ea821c5bd2579a2b4",
-  };
-  const pageData = {
-    content: [
-      
-    ],
-    currentPage: "1",
-    totalPages: 3,
-  };
-  const loading = false;
+  const pageData = useSelector((store) => store.product.searchPageData);
+  const loading = useSelector((store) => store.product.loading);
   return (
     <div className="bg-white">
       <main className="mx-auto px-4 sm:px-6 lg:px-20">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
           <h1 className="text-l sm:text-xl lg:text-2xl font-bold tracking-tight text-gray-800">
-            Search Results
+            Search Results for <b>{query}</b>
           </h1>
 
           <div className="flex items-center">
@@ -138,13 +114,13 @@ const ProductSearchPage = () => {
                 </Box>
               ) : (
                 <div className="flex flex-wrap justify-center sm:justify-start bg-white py-5">
-                  {pageData?.content.length === 0 && (
+                  {pageData?.totalResults === 0 && (
                     <h1 className="text-center w-full text-2xl font-semibold opacity-70">
                       Sorry, no products found!
                     </h1>
                   )}
-                  {pageData?.content.length > 0 &&
-                    pageData.content.map((item) => (
+                  {pageData?.totalResults > 0 &&
+                    pageData?.products?.map((item) => (
                       <ProductCard product={item} key={item.title} />
                     ))}
                 </div>
