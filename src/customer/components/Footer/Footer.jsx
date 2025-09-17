@@ -24,9 +24,9 @@ const Footer = () => {
             <EmailIcon></EmailIcon>Teampiyushbisht@gmail.com
           </p>
 
-          <p className="mt-2">
-            <PhoneIcon></PhoneIcon> +91 88102 77242
-          </p>
+          {/* <p className="mt-2">
+            <PhoneIcon></PhoneIcon> +91 **********
+          </p> */}
 
           <div className="flex flex-row justify-center mt-5">
             <a
