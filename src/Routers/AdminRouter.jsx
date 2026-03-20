@@ -15,7 +15,7 @@ const AdminRouter = () => {
     if (jwt) {
       dispatch(getUserProfile(jwt));
     }
-  }, [jwt,jwtFromState]);
+  }, [jwt,jwtFromState,dispatch]);
 
   if (loading) {
     return <p>Loading...</p>;

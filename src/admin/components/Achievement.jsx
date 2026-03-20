@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, styled, Typography } from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 
 const Achievement = () => {

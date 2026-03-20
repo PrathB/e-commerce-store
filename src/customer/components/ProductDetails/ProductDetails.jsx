@@ -5,13 +5,13 @@ import {
   Alert,
   Box,
   CircularProgress,
-  Grid,
-  LinearProgress,
-  Rating,
+  // Grid,
+  // LinearProgress,
+  // Rating,
   Snackbar,
-  Typography,
+  // Typography,
 } from "@mui/material";
-import ProductReviewCard from "./ProductReviewCard";
+// import ProductReviewCard from "./ProductReviewCard";
 import { useDispatch, useSelector } from "react-redux";
 import { findProductById, getProducts } from "../../../State/Product/action";
 import { addItemToCart } from "../../../State/Cart/action";
@@ -30,9 +30,9 @@ const specs = [
   { id: "partCategory", label: "Part Category", value: "-" },
 ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function ProductDetails() {
   // Functions to handle quantity selector

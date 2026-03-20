@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { removeCartItem, updateCartItem } from "../../../State/Cart/action";
+import React from "react";
+// import  { useEffect, useState } from "react";
+// import { Button } from "@mui/material";
+// import { useDispatch } from "react-redux";
+// import { removeCartItem, updateCartItem } from "../../../State/Cart/action";
 
 const OrderSummaryItem = ({ item }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <div className="p-5 shadow-lg border rounded-md mb-5">
@@ -14,7 +15,7 @@ const OrderSummaryItem = ({ item }) => {
           <img
             className="w-full h-full object-cover"
             src={item.product.imageUrl}
-            alt="product image"
+            alt="product"
           ></img>
         </div>
 
